@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/katynko">
+        <file>katynko/clear.png</file>
+        <file>katynko/deviceisdisconnected.png</file>
+        <file>katynko/deviceisnotused.png</file>
+        <file>katynko/deviceisready.png</file>
+        <file>katynko/exit.png</file>
+        <file>katynko/help_about.png</file>
+        <file>katynko/help.png</file>
+        <file>katynko/kts-intek-logo-happy.png</file>
+        <file>katynko/kts-intek-logo.png</file>
+        <file>katynko/matilda.jpg</file>
+        <file>katynko/peredavalko.png</file>
+        <file>katynko/refresh2.png</file>
+    </qresource>
+</RCC>
