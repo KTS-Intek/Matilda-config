@@ -542,11 +542,11 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     switch (command) {
     case COMMAND_AUTHORIZE:{
         ui->cbAddMeterModel->clear();
-        QStringList l = hash.value("b").toString().split("\n", QString::SkipEmptyParts);
+        QStringList l = hash.value("b").toString().split("\n\n\n", QString::SkipEmptyParts);
 
         QStringList ll;
         for(int i = 0, iMax = l.size(); i < iMax; i++){
-            QStringList oneMeter = l.at(i).split("\t");
+            QStringList oneMeter = l.at(i).split("\t\t\t");
             ll.append(oneMeter.first());
             qDebug() << oneMeter;
         }
@@ -565,7 +565,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->pteMeterPlg->clear();
         ui->pteMeterPlg->appendPlainText(tr("#  Plugin\tCreate Date and Time\t\tInfo"));
         for(int i = 0, iMax = l.size(); i < iMax; i++){
-            QStringList sl = hash.value(l.at(i)).toString().split("\n", QString::SkipEmptyParts);
+            QStringList sl = hash.value(l.at(i)).toString().split("\n\n\n", QString::SkipEmptyParts);
             if(sl.size() > 2)
                 sl.removeLast();
             ui->pteMeterPlg->appendPlainText( QString("%1. %2\t%3")
@@ -676,7 +676,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
     case COMMAND_READ_POLL_SCHEDULE:{
 
-        QStringList l = hash.value(QString::number(POLL_CODE_READ_CURRENT)).toString().split("\n");
+        QStringList l = hash.value(QString::number(POLL_CODE_READ_CURRENT)).toString().split("\n\n\n");
         while(l.size() < 5)
             l.append("0");
 
@@ -685,7 +685,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->cbProfileNow->setCurrentIndex( comboIndxFromKftntAndIntrvl(l.at(4).toUInt(), l.at(3).toUInt()));
 
 
-        l = hash.value(QString::number(POLL_CODE_READ_END_DAY)).toString().split("\n");
+        l = hash.value(QString::number(POLL_CODE_READ_END_DAY)).toString().split("\n\n\n");
         while(l.size() < 5)
             l.append("0");
 
@@ -703,7 +703,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbGlbnDay->setValue(l.at(2).toUInt());
 
 
-        l = hash.value(QString::number(POLL_CODE_READ_END_MONTH)).toString().split("\n");
+        l = hash.value(QString::number(POLL_CODE_READ_END_MONTH)).toString().split("\n\n\n");
         while(l.size() < 5)
             l.append("0");
 
@@ -720,7 +720,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         }
         ui->cbProfileEOM->setCurrentIndex(indx);
 
-        l = hash.value(QString::number(POLL_CODE_READ_POWER)).toString().split("\n");
+        l = hash.value(QString::number(POLL_CODE_READ_POWER)).toString().split("\n\n\n");
         while(l.size() < 5)
             l.append("0");
 
@@ -732,7 +732,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbProfilePower->setValue(l.at(1).toUInt());
 
 
-        l = hash.value(QString::number(POLL_CODE_READ_VOLTAGE)).toString().split("\n");
+        l = hash.value(QString::number(POLL_CODE_READ_VOLTAGE)).toString().split("\n\n\n");
         while(l.size() < 5)
             l.append("0");
 
@@ -741,7 +741,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbProfileVoltage->setValue(l.at(1).toUInt());
 //        ui->sbGlbnVoltage->setValue(l.at(2).toUInt());
 
-        l = hash.value(QString::number(POLL_CODE_METER_STATUS)).toString().split("\n");
+        l = hash.value(QString::number(POLL_CODE_METER_STATUS)).toString().split("\n\n\n");
         while(l.size() < 5)
             l.append("0");
 
@@ -749,7 +749,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbProfileMeterLog->setValue( l.at(1).toUInt());
         ui->sbGlbnMeterLog->setValue(l.at(2).toUInt());
 
-        l = hash.value("dow").toString().split("\n");//1 - mon, 2 - tue, 3 - wed
+        l = hash.value("dow").toString().split("\n\n\n");//1 - mon, 2 - tue, 3 - wed
         unCheckEvrDay();
         bool checked = false;
         ui->cbMon->setChecked(checked);
@@ -783,8 +783,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         if(evrDay == 28 && l.size() == 7)
             ui->cbEvrDay->setChecked(true);
 
-        ui->teFrom->setTime(QTime::fromString(hash.value("tiFrom").toString(), "hh:mm:ss"));
-        ui->teTo->setTime(QTime::fromString(hash.value("tiTo").toString(), "hh:mm:ss"));
+        ui->teFrom->setTime(QTime::fromString(hash.value("tiFrom").toString(), "hh:mm"));
+        ui->teTo->setTime(QTime::fromString(hash.value("tiTo").toString(), "hh:mm"));
 
 
 
@@ -793,7 +793,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     case COMMAND_READ_DATABASE:{
 
 
-        QStringList strTimeList = hash.value("d").toString().split("\n", QString::SkipEmptyParts), strTimeStartIndx = hash.value("di").toString().split("\n", QString::SkipEmptyParts);
+        QStringList strTimeList = hash.value("d").toString().split("\n\n\n", QString::SkipEmptyParts), strTimeStartIndx = hash.value("di").toString().split("\n\n\n", QString::SkipEmptyParts);
 
 
         bool ok;
@@ -805,7 +805,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         bool itIsGeliks = hash.value("g", false).toBool();// versionName != "Geliks"; if(pollCode == 140 || pollCode == 100) //миттєві значення
 
         if(hash.contains("c")){
-            QStringList columnList = hash.value("c").toString().split("\n", QString::SkipEmptyParts);
+            QStringList columnList = hash.value("c").toString().split("\n\n\n", QString::SkipEmptyParts);
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -817,7 +817,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             modelDbData->setHorizontalHeaderLabels(columnList);
         }
-        QStringList listData = hash.value("a").toString().split("\n", QString::SkipEmptyParts);
+        QStringList listData = hash.value("a").toString().split("\n\n\n", QString::SkipEmptyParts);
 
         if(listData.isEmpty())
             itIsGeliks = true;//інакше буде показувати повідомлення "error dateTimeMask" якщо даних не буде
@@ -897,7 +897,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             }
 
             QString meterSN("");
-            QStringList list = listData.at(hashIndex).split("\t");
+            QStringList list = listData.at(hashIndex).split("\t\t\t");
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -968,7 +968,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     case COMMAND_READ_DATABASE_GET_TABLES:{
 
 
-        QStringList list = hash.value("t").toString().split("\n", QString::SkipEmptyParts);
+        QStringList list = hash.value("t").toString().split("\n\n\n", QString::SkipEmptyParts);
         bool ok;
         qint64 lastTableRowId = hash.value("lRwId").toLongLong(&ok);
 
@@ -1014,7 +1014,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         bool itIsGeliks = (hash.value("g", 0).toInt() != 0);//  140 || 100) //миттєві значення
 
         if(hash.contains("c")){
-            QStringList columnList = hash.value("c").toString().split("\n", QString::SkipEmptyParts);
+            QStringList columnList = hash.value("c").toString().split("\n\n\n", QString::SkipEmptyParts);
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -1054,7 +1054,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             columnListSize--;
 
 
-        QStringList listData = hash.value("a").toString().split("\n", QString::SkipEmptyParts);
+        QStringList listData = hash.value("a").toString().split("\n\n\n", QString::SkipEmptyParts);
 
         int meterSnIndx = itIsGeliks ? 1 : 0;
 
@@ -1069,7 +1069,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             }
 
             QString meterSN("");
-            QStringList list = listData.at(hashIndex).split("\t");// hash.value(QString::number(hashIndex)).toStringList();
+            QStringList list = listData.at(hashIndex).split("\t\t\t");// hash.value(QString::number(hashIndex)).toStringList();
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -1144,7 +1144,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         qint64 tableCount = hash.value("t").toLongLong();
         if(hash.contains("c")){
-            QStringList columnList = hash.value("c").toString().split("\n", QString::SkipEmptyParts);
+            QStringList columnList = hash.value("c").toString().split("\n\n\n", QString::SkipEmptyParts);
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -1160,7 +1160,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         int columnListSize = modelDbDataEv->columnCount() ;
 
 
-        QStringList listData = hash.value("a").toString().split("\n", QString::SkipEmptyParts);
+        QStringList listData = hash.value("a").toString().split("\n\n\n", QString::SkipEmptyParts);
 
         int meterSnIndx = 1;
 
@@ -1170,7 +1170,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             QList<QStandardItem*> listRowItem;
 
             QString meterSN("");
-            QStringList list = listData.at(hashIndex).split("\t");// h.value(QString::number(hashIndex)).toStringList();
+            QStringList list = listData.at(hashIndex).split("\t\t\t");// h.value(QString::number(hashIndex)).toStringList();
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -1237,7 +1237,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
     case COMMAND_READ_METER_LOGS_GET_TABLES:{
 
-        QStringList list = hash.value("t").toString().split("\n", QString::SkipEmptyParts);
+        QStringList list = hash.value("t").toString().split("\n\n\n", QString::SkipEmptyParts);
         lastTableList.append(list);
 
         bool ok;
@@ -1288,7 +1288,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
 
         if(hash.contains("c")){
-            QStringList columnList = hash.value("c").toString().split("\n", QString::SkipEmptyParts);
+            QStringList columnList = hash.value("c").toString().split("\n\n\n", QString::SkipEmptyParts);
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -1304,7 +1304,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         int columnListSize = modelDbDataEv->columnCount() ;
 
 
-        QStringList listData = hash.value("a").toString().split("\n", QString::SkipEmptyParts);
+        QStringList listData = hash.value("a").toString().split("\n\n\n", QString::SkipEmptyParts);
 
         int meterSnIndx = 1;
 
@@ -1313,7 +1313,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             QList<QStandardItem*> listRowItem;
 
             QString meterSN("");
-            QStringList list = listData.at(hashIndex).split("\t");// h.value(QString::number(hashIndex)).toStringList();
+            QStringList list = listData.at(hashIndex).split("\t\t\t");// h.value(QString::number(hashIndex)).toStringList();
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -1377,7 +1377,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             doneTables = 0;
         }
 
-        QStringList l = hash.value("m").toString().split("\n", QString::SkipEmptyParts);
+        QStringList l = hash.value("m").toString().split("\n\n\n", QString::SkipEmptyParts);
         int lastIndx = hash.value("i").toInt();
 
         if((l.isEmpty() || !hash.contains("i")) && !ignoreEmptyList){
@@ -1391,7 +1391,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         int rowF = modelAddMeter->rowCount();
 
         for(int i = 0, colMax = k.size(); i < iMax; i++){
-            QStringList lh = l.at(i).split("\t");
+            QStringList lh = l.at(i).split("\t\t\t");
             QList<QStandardItem*> m ;
 
 
@@ -1452,11 +1452,11 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
     case COMMAND_READ_POLL_STATISTIC:{
         modelPollStat->clear();
-        QStringList list = hash.value("s").toString().split("\n", QString::SkipEmptyParts);
+        QStringList list = hash.value("s").toString().split("\n\n\n", QString::SkipEmptyParts);
         if(list.isEmpty())
             return;
 
-        QStringList header = list.first().split("\t", QString::SkipEmptyParts);
+        QStringList header = list.first().split("\t\t\t", QString::SkipEmptyParts);
         if(header.size() < 7)
             break;
 
@@ -1466,7 +1466,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         for(int i = 1, iMax = list.size(), colSize = modelPollStat->columnCount(); i < iMax; i++){
             QList<QStandardItem*> l;
             int j = 0;
-            QStringList ll = list.at(i).split("\t", QString::SkipEmptyParts);
+            QStringList ll = list.at(i).split("\t\t\t", QString::SkipEmptyParts);
             for(int jMax = ll.size(); j < jMax; j++ )
                 l.append(new QStandardItem(ll.at(j)));
             for( ; j < colSize; j++)
@@ -1511,16 +1511,16 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             for(int col = 0; col < colMax; col++)
                 l.append(modelAddMeter->item(row,col)->text());
 
-            bytes += l.join("\t").size();
+            bytes += l.join("\t\t\t").size();
             if(bytes > MAX_PACKET_LEN_RECOMENDATION){
                 row--;
                 break;
             }
 
-            listM.append(l.join("\t"));
+            listM.append(l.join("\t\t\t"));
         }
 
-        hash.insert("m", listM.join("\n"));
+        hash.insert("m", listM.join("\n\n\n"));
 
         emit uploadProgress( ((row * 100) / rowCount), tr("Total count: %1 meters, Uploaded: %2 meters")
                              .arg(rowCount).arg(row) );
@@ -1590,7 +1590,23 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         break;}
 
 
+    case COMMAND_I_NEED_MORE_TIME:{
 
+        switch(hash.value("lcmd").toInt()){
+        case COMMAND_WRITE_DROP_TABLE:{
+
+            qreal diff = hash.value("im").toInt() - doneTables;
+            doneTables = hash.value("im").toInt();
+
+            qreal speed = (diff / hash.value("et").toReal()) * (qreal)1000;
+
+            emit uploadProgress( ((doneTables * 100) / totalTables), tr("Total count: %1 tables, Deleted: %2 tables.<br>Speed: %3 tables per secound.")
+                                 .arg(totalTables).arg(doneTables).arg( QString::number(speed, 'f', 2) ) );
+
+            break;}
+        }
+
+        return;}
 
     default:
         qDebug() << "data2gui unknown command " << command << hash;
@@ -1912,6 +1928,11 @@ bool MainWindow::connectionDown()
 void MainWindow::on_pbLogIn_clicked()
 {
 
+    byteSend = 0;
+    byteReceiv = 0;
+    byteSendNotComprssd = 0;
+    byteReceivNotComprssd = 0;
+
     ui->pteAboutConnObj->clear();
     ui->swDeviceOperations->setCurrentIndex( 0);
     ui->pbWrite->setVisible( false );
@@ -2076,11 +2097,11 @@ void MainWindow::on_pbRead_clicked()
 
     case COMMAND_READ_DATABASE:{
 
-//        if(ui->cbEnTableBuffering->isChecked()){
-//            readCommand = COMMAND_READ_DATABASE_GET_TABLES;
-//            QTimer::singleShot(10, this, SLOT(on_pbRead_clicked()));
-//            return;
-//        }
+        if(ui->cbEnblTblBuff->isChecked()){
+            readCommand = COMMAND_READ_DATABASE_GET_TABLES;
+            QTimer::singleShot(10, this, SLOT(on_pbRead_clicked()));
+            return;
+        }
 
         modelDbData->clear();
         ui->leMeterDataFIlter->clear();
@@ -2089,6 +2110,7 @@ void MainWindow::on_pbRead_clicked()
         quint8 code = modelProfile4DB->itemData(ui->lvMeterDataProfile->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
         hash.insert("code", code);
+        hash.insert("max_len", ui->sbReadData->value());
 
         allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
@@ -2142,7 +2164,7 @@ void MainWindow::on_pbRead_clicked()
             if(listTariff.isEmpty() )
                 mess.append(tr("The tariff list is empty.<br>"));
             else
-                hash.insert(QString("tarif"), listTariff.join("\n"));
+                hash.insert(QString("tarif"), listTariff.join("\n\n\n"));
         }
 
         QStringList listEnrg;
@@ -2154,7 +2176,7 @@ void MainWindow::on_pbRead_clicked()
         if(listEnrg.isEmpty())
             mess.append(tr("The energy list is empty.<br>"));
         else
-            hash.insert("enrg", listEnrg.join("\n"));
+            hash.insert("enrg", listEnrg.join("\n\n\n"));
 
 
         hash.insert("msec", ui->sbTimeOut->value() * 500);
@@ -2181,11 +2203,11 @@ void MainWindow::on_pbRead_clicked()
 
     case COMMAND_READ_DATABASE_GET_TABLES:{
 
-//        if(!ui->cbEnTableBuffering->isChecked()){
-//            readCommand = COMMAND_READ_DATABASE;
-//            QTimer::singleShot(10, this, SLOT(on_pbRead_clicked()));
-//            return;
-//        }
+        if(!ui->cbEnblTblBuff->isChecked()){
+            readCommand = COMMAND_READ_DATABASE;
+            QTimer::singleShot(10, this, SLOT(on_pbRead_clicked()));
+            return;
+        }
 
 
         modelDbData->clear();
@@ -2195,6 +2217,7 @@ void MainWindow::on_pbRead_clicked()
         quint8 code = modelProfile4DB->itemData(ui->lvMeterDataProfile->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
         hash.insert("code", code);
+        hash.insert("len", ui->sbReadData->value());
 
         allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
@@ -2247,7 +2270,7 @@ void MainWindow::on_pbRead_clicked()
             if(listTariff.isEmpty() )
                 mess.append(tr("The tariff list is empty.<br>"));
             else
-                hash.insert(QString("tarif"), listTariff.join("\n"));
+                hash.insert(QString("tarif"), listTariff.join("\n\n\n"));
         }
 
         QStringList listEnrg;
@@ -2259,7 +2282,7 @@ void MainWindow::on_pbRead_clicked()
         if(listEnrg.isEmpty())
             mess.append(tr("The energy list is empty.<br>"));
         else
-            hash.insert("enrg", listEnrg.join("\n"));
+            hash.insert("enrg", listEnrg.join("\n\n\n"));
 
 
         hash.insert("msec", ui->sbTimeOut->value() * 500);
@@ -2299,6 +2322,7 @@ void MainWindow::on_pbRead_clicked()
         quint8 code = modelEvent4DB->itemData(ui->lvMeterDataProfile_2->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
         hash.insert("code", code);
+        hash.insert("max_len", ui->sbReadLenML->value());
 
         if(ui->gbMeterDataFromTo_2->isChecked()){
 
@@ -2352,19 +2376,19 @@ void MainWindow::on_pbRead_clicked()
         ui->tvMeterDataPollData_2->resizeColumnsToContents();
         if(mess.isEmpty()){
             lastTableList.clear();
-//            if(!ui->cbEnTableBuffering_2->isChecked()){
-//                readCommand = COMMAND_READ_METER_LOGS;
-//                hash.insert("lTbRwId", (qint64)0);
-//                hash.insert("msec", ui->sbTimeOut->value() * 500);
-//                doneTables = 0;
-//                totalTables = 5000;
-//                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS, hash);
-//                hash.insert("gcl", 1);
-//            }else{
+            if(!ui->cbEnblTableBuffML->isChecked()){
+                readCommand = COMMAND_READ_METER_LOGS;
+                hash.insert("lTbRwId", (qint64)0);
+                hash.insert("msec", ui->sbTimeOut->value() * 500);
+                doneTables = 0;
+                totalTables = 5000;
+                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS, hash);
+                hash.insert("gcl", 1);
+            }else{
                 readCommand = COMMAND_READ_METER_LOGS_GET_TABLES;
                 this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS_GET_TABLES, hash);
                 this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS_GET_VAL, hash);
-//            }
+            }
         }else{
             showMess(mess);
             return;
@@ -2429,7 +2453,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(QString::number(ui->sbGlbnNow->value()));
         l.append(QString::number( intrvalValFromComboIndx(ui->cbProfileNow->currentIndex())));
         l.append( (ui->cbProfileNow->currentIndex() == 0) ? "1" : "2");
-        hash.insert(QString::number(POLL_CODE_READ_CURRENT), l.join("\n"));
+        hash.insert(QString::number(POLL_CODE_READ_CURRENT), l.join("\n\n\n"));
 
 
         //POLL_CODE_READ_END_DAY
@@ -2440,7 +2464,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(QString::number( ui->cbProfileEOD->currentIndex() + 1));
         l.append("3");
 
-        hash.insert(QString::number(POLL_CODE_READ_END_DAY), l.join("\n"));
+        hash.insert(QString::number(POLL_CODE_READ_END_DAY), l.join("\n\n\n"));
 
         //POLL_CODE_READ_END_MONTH
         l.clear();
@@ -2450,7 +2474,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(QString::number( ui->cbProfileEOM->currentIndex() + 1));
         l.append("4");
 
-        hash.insert(QString::number(POLL_CODE_READ_END_MONTH), l.join("\n"));
+        hash.insert(QString::number(POLL_CODE_READ_END_MONTH), l.join("\n\n\n"));
 
 
         //POLL_CODE_READ_POWER
@@ -2461,7 +2485,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(QString::number(intrvalValFromComboIndx(ui->cbProfilePower->currentIndex())));
         l.append( (ui->cbProfilePower->currentIndex() == 0) ? "1" : "2");
 
-        hash.insert(QString::number(POLL_CODE_READ_POWER), l.join("\n"));
+        hash.insert(QString::number(POLL_CODE_READ_POWER), l.join("\n\n\n"));
 
 
         //POLL_CODE_READ_VOLTAGE
@@ -2472,7 +2496,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(QString::number(intrvalValFromComboIndx(ui->cbProfileVoltage->currentIndex())));
         l.append((ui->cbProfileVoltage->currentIndex() == 0) ? "1" : "2");
 
-        hash.insert(QString::number(POLL_CODE_READ_VOLTAGE), l.join("\n"));
+        hash.insert(QString::number(POLL_CODE_READ_VOLTAGE), l.join("\n\n\n"));
 
         //POLL_CODE_METER_STATUS enable,prtt,glbn,intrvl,kftnt
         l.clear();
@@ -2482,7 +2506,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(QString::number(ui->cbProfileML->currentIndex() + 1));
         l.append("3");
 
-        hash.insert(QString::number(POLL_CODE_METER_STATUS), l.join("\n"));
+        hash.insert(QString::number(POLL_CODE_METER_STATUS), l.join("\n\n\n"));
 
         l.clear();//1 - mon, 2 - tue
 
@@ -2501,7 +2525,7 @@ void MainWindow::on_pbWrite_clicked()
         if(ui->cbSun->isChecked())
             l.append("7");
 
-        hash.insert("dow", l.join("\n"));
+        hash.insert("dow", l.join("\n\n\n"));
 
         if(l.isEmpty()){
             showMess(tr("Days of week is empty!"));
@@ -2513,8 +2537,8 @@ void MainWindow::on_pbWrite_clicked()
             return;
         }
 
-        hash.insert("tiFrom", ui->teFrom->time().toString("hh:mm:ss"));
-        hash.insert("tiTo", ui->teTo->time().toString("hh:mm:ss") );
+        hash.insert("tiFrom", ui->teFrom->time().toString("hh:mm"));
+        hash.insert("tiTo", ui->teTo->time().toString("hh:mm") );
         break;}
 
     case COMMAND_WRITE_METER_LIST_FRAMED:{
@@ -2531,13 +2555,17 @@ void MainWindow::on_pbWrite_clicked()
         QStringList k = QString("model,SN,NI,memo,passwd,on,politic,trff").split(',');//,vrsn
 
         int row = 0;
+         int maxSize = ui->sbReadWriteMeterLen->value();
+         if(maxSize < 300)
+             maxSize = MAX_PACKET_LEN_RECOMENDATION;
+
         for(int j = 0, colMax = k.size(), bts = 50; row < rowCount; row++, j++){
             QStringList lOneMeter;
             for(int col = 0; col < colMax; col++)
                 lOneMeter.append( modelAddMeter->item(row,col)->text());
 
-            bts += lOneMeter.join("\t").size();
-            if(bts > MAX_PACKET_LEN_RECOMENDATION){
+            bts += lOneMeter.join("\t\t\t").size();
+            if(bts > maxSize){
                 row--;
                 break;
             }
@@ -2545,7 +2573,7 @@ void MainWindow::on_pbWrite_clicked()
         }
 
         row++;
-        hash.insert("m", l.join("\n"));
+        hash.insert("m", l.join("\n\n\n"));
         hash.insert("i", (row >= rowCount) ? -1 : row);
         break;}
 
@@ -2746,5 +2774,41 @@ void MainWindow::on_toolButton_5_clicked()
     connect(d, SIGNAL(onPhysValChanged(QStringList,QStringList)), this, SLOT(onPhysValChanged(QStringList,QStringList)) );
     d->exec();
     d->deleteLater();
+}
+//##########################################################################################
+
+void MainWindow::on_gbMeterDataFromTo_2_clicked(bool checked)
+{
+    ui->gbMeterDataYangerThan_2->setChecked(!checked);
+}
+//##########################################################################################
+void MainWindow::on_gbMeterDataYangerThan_2_clicked(bool checked)
+{
+    ui->gbMeterDataFromTo_2->setChecked(!checked);
+}
+//##########################################################################################
+
+void MainWindow::on_gbMeterDataFromTo_clicked(bool checked)
+{
+    ui->gbMeterDataYangerThan->setChecked(!checked);
+}
+//##########################################################################################
+void MainWindow::on_gbMeterDataYangerThan_clicked(bool checked)
+{
+    ui->gbMeterDataFromTo->setChecked(!checked);
+
+}
+//##########################################################################################
+
+void MainWindow::on_toolButton_9_clicked()
+{
+    ui->dteMeterDataFrom->setDateTime(QDateTime::currentDateTime().addDays(-5));
+    ui->dteMeterDataTo->setDateTime(QDateTime::currentDateTime());
+}
+//##########################################################################################
+void MainWindow::on_toolButton_10_clicked()
+{
+    ui->dteMeterDataFrom_2->setDateTime(QDateTime::currentDateTime().addDays(-5));
+    ui->dteMeterDataTo_2->setDateTime(QDateTime::currentDateTime());
 }
 //##########################################################################################

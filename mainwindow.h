@@ -83,6 +83,18 @@ private slots:
 
     void on_toolButton_5_clicked();
 
+    void on_gbMeterDataFromTo_2_clicked(bool checked);
+
+    void on_gbMeterDataYangerThan_2_clicked(bool checked);
+
+    void on_gbMeterDataFromTo_clicked(bool checked);
+
+    void on_gbMeterDataYangerThan_clicked(bool checked);
+
+    void on_toolButton_9_clicked();
+
+    void on_toolButton_10_clicked();
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);

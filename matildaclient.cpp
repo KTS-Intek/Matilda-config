@@ -88,7 +88,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     QJsonDocument jDoc = QJsonDocument::fromJson( dataArr, &jErr);
 
     QVariantHash hash = jDoc.object().toVariantHash();
-    qDebug() << hash;
+//    qDebug() << hash;
 
 
     qint64 len = dataArr.length();
@@ -107,8 +107,11 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 
     emit changeCounters(len, lenUn, true);
 
+    if(command != COMMAND_READ_DATABASE && command != COMMAND_READ_DATABASE_GET_VAL  ){
     qDebug() << "decodeReadData" << command << stopAfter << stopAll;
     qDebug()  << jDoc.object();
+
+    }
 
     if(checkHash){
         QByteArray myHash;
@@ -134,7 +137,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         if(myHash != hshBase64){
             qDebug() << "if(myHash != hshBase64 " << myHash.toBase64() << hshBase64.toBase64();
             emit showMess(tr("Received uncorrect request"));
-            onDisconn();
+//            onDisconn();
             return;
         }
         hash.remove(hshName);
@@ -196,7 +199,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 //                    jObj.insert("QDS", QString::number(dataStreamVersion));//активація режиму QDataStream
 
                     if(allowCompress)
-                        jObj.insert("cmmprssn", "zlib");//дозволити стиснення
+                        jObj.insert("cmprssn", "zlib");//дозволити стиснення
                     lastHashSumm = getHshNames().indexOf("Sha1");
 
                     stopAfter = false;
@@ -263,22 +266,29 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 void matildaclient::mReadyRead()
 {
 
+    emit startWait4AnswerTimer(timeOutG);
 
     QByteArray readarr = readAll();
     QTime time;
     time.start();
-    while(readarr.right(1) != "}" && readarr.size() < 160 && time.elapsed() < timeOutG){
+    while(readarr.right(1) != "}" && readarr.size() < MAX_PACKET_LEN && time.elapsed() < timeOutG){
         if(waitForReadyRead(timeOut)){
             readarr.append(readAll());
+            waitForReadyRead(100);
             emit startWait4AnswerTimer(timeOutG);
+            waitForReadyRead(100);
         }
     }
+
+    emit startWait4AnswerTimer(timeOutG);
+
 
     emit stopWait4AnswerTimer();
     stopAfter = true;
 
     int lastIndx = 0;
     int duzkaIndx = readarr.indexOf("}");
+
 
     if(duzkaIndx < 1){
         emit changeCounters(readarr.length(), -1 , true);
@@ -289,7 +299,7 @@ void matildaclient::mReadyRead()
 
         int len = readarr.length();
         while(duzkaIndx > 1 && lastIndx < len){
-            qDebug() << lastIndx << duzkaIndx << readarr.mid(lastIndx, duzkaIndx + 1) << len;
+//            qDebug() << lastIndx << duzkaIndx << readarr.mid(lastIndx, duzkaIndx + 1) << len;
 
             decodeReadDataJSON(readarr.mid(lastIndx, duzkaIndx + 1));
             duzkaIndx = readarr.indexOf("}", lastIndx);
@@ -309,7 +319,6 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
     jObj.insert("cmd", s_command);
     stopAll = false;
 
-    qDebug() << jObj;
 
     qint64 blSize = 0;
     QByteArray writeArr;
@@ -355,6 +364,9 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
 
     QJsonDocument jDoc(jObj);
     qint64 len = write(jDoc.toJson(QJsonDocument::Compact));
+
+    qDebug() << jObj;
+
 
     emit changeCounters(len, blSize , false);
 
