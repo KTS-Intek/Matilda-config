@@ -37,7 +37,7 @@ void Wait4AnswerDialog::showAnimation(int count)
 
     ui->lblWait->setText(tr("Wait %1 s. %2").arg(QString::number(counter) ).arg(rotateStr()));
     ui->lblRotate->setVisible(true);
-
+    ui->pushButton->setEnabled(true);
 
     emit startTimr();
     this->exec();
@@ -108,4 +108,10 @@ QString Wait4AnswerDialog::rotateStr()
 
     }
     return "";
+}
+
+void Wait4AnswerDialog::on_pushButton_clicked()
+{
+    ui->pushButton->setEnabled(false);
+    emit stopNow();
 }

@@ -20,7 +20,7 @@ public:
     ~MainWindow();
 
 signals:
-    void conn2thisDev(QString ,QString, QString , QString , quint16 , int , bool, bool);
+    void conn2thisDev(int ,QString, QString , QString , quint16 , int , bool, bool);
     void data2matilda(quint16 , QVariantHash );
     void closeConnection();
 
@@ -95,6 +95,37 @@ private slots:
 
     void on_toolButton_10_clicked();
 
+    void on_gbMeterDataFromTo_3_clicked(bool checked);
+
+    void on_gbMeterDataYangerThan_3_clicked(bool checked);
+
+    void on_pbReadHashSumm_clicked();
+
+    void on_tvAddMeterTable_customContextMenuRequested(const QPoint &pos);
+
+    void onActEditAddMeterTable();
+
+    void onActWriteSeleted();
+
+    void onActWriteSeletedOn();
+
+    void onActWriteSeletedOff();
+
+    void onActWriteSeletedDeletePart();
+
+    void onActSelectedPollOnAddMeterTable();
+
+    void onActSelectedPollOffAddMeterTable();
+
+    void onActResetSortingAddMeterTable();
+
+    void onActDeleteSelectedAddMeterTable();
+
+    void on_tvAddMeterTable_doubleClicked(const QModelIndex &index);
+
+    void checkLineAddMeterNIandPasswd();
+
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);
@@ -114,8 +145,8 @@ public slots:
 
 private:
     QList<int> getFilterList(const int &startIndx, const int &count) const;
-    int comboIndxFromKftntAndIntrvl(const quint32 &kftnt, const quint32 &intrvl) const;
-    quint32 intrvalValFromComboIndx(const int &indx) const;
+    int comboIndxFromKftntAndIntrvl(const qint32 &kftnt, const qint32 &intrvl) const;
+    qint32 intrvalValFromComboIndx(const int &indx) const;
     QStringList listNiFromLine(const QString &aLine) const;
 
     QString emailUtcOffset(const int &offst);
@@ -133,6 +164,11 @@ private:
     QString humanByteView(const qint64 &val);
     bool connectionDown();
 
+    QStringList varList2strList(const QVariantList &list);
+
+    QVariantList strList2VarList(const QStringList &list);
+
+    QVariant strList2Var(const QStringList &list);
 
 
 private:
@@ -148,6 +184,8 @@ private:
     QStandardItemModel *modelDbDataEv;
     QStandardItemModel *modelEvent4DB;
     QStandardItemModel *modelPollStat;
+    QStandardItemModel *modelProfile4Hash;
+
 
 
     MySortFilterProxyModel *proxy_modelDevOptions;

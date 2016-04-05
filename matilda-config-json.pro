@@ -17,18 +17,21 @@ SOURCES += main.cpp\
     energydialog.cpp \
     matildaclient.cpp \
     mysortfilterproxymodel.cpp \
-    wait4answerdialog.cpp
+    wait4answerdialog.cpp \
+    insertmeterdialog.cpp
 
 HEADERS  += mainwindow.h \
     ../../matilda-bbb/moji_defy.h \
     energydialog.h \
     matildaclient.h \
     mysortfilterproxymodel.h \
-    wait4answerdialog.h
+    wait4answerdialog.h \
+    insertmeterdialog.h
 
 FORMS    += mainwindow.ui \
     energydialog.ui \
-    wait4answerdialog.ui
+    wait4answerdialog.ui \
+    insertmeterdialog.ui
 
 RESOURCES += \
     res.qrc

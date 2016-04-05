@@ -19,6 +19,7 @@ signals:
     void stopTimer();
     void startTimr();
     void noAnswerFromDev();
+    void stopNow();
 
 public slots:
     void showAnimation(int count);
@@ -33,6 +34,8 @@ private slots:
     void onTimerTo();
 
 
+
+    void on_pushButton_clicked();
 
 private:
     QString rotateStr();

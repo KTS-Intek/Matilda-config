@@ -21,12 +21,13 @@ matildaclient::matildaclient(QObject *parent) : QTcpSocket(parent)
     connect(timerWait4Answer, SIGNAL(timeout()), this, SLOT(onWaitTimerTimeOut()) );
 }
 //################################################################################################
-void matildaclient::conn2thisDev(QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss)
+void matildaclient::conn2thisDev(int hashIndx, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss)
 {
+    Q_UNUSED(add2list);
     loginPasswd.clear();
     disconnect(this, SIGNAL(disconnected()), this, SLOT(onDisconn()) );
     iAmDone = false;
-
+    accessLevel = 0;
     if(isConnOpen())
         close();
 //    waitForDisconnected();
@@ -41,7 +42,10 @@ void matildaclient::conn2thisDev(QString objN, QString login, QString passwd, QS
 
 //    dataStreamVersion = QDataStream::Qt_DefaultCompiledVersion;
     connectToHost(add,port);
-    if(waitForConnected(timeOut)){
+    lastHashSumm = hashIndx;
+
+
+    if(waitForConnected((timeOut > 9000) ? 9000 : timeOut)){
         connect(this, SIGNAL(disconnected()), this, SLOT(onDisconn()) );
 
 
@@ -51,8 +55,6 @@ void matildaclient::conn2thisDev(QString objN, QString login, QString passwd, QS
         loginPasswd.append("");
         allowCompress = allwCmprss;
         stopAll = false;
-        if(add2list)
-            emit addThisLogin2list(objN, login, passwd, add, port);
     }else{
 
         emit showMess(tr("Can't connect to device. Error: %1").arg(errorString()));
@@ -63,11 +65,8 @@ void matildaclient::conn2thisDev(QString objN, QString login, QString passwd, QS
 //################################################################################################
 void matildaclient::data2matilda(quint16 command, QVariantHash hash)
 {    
-    QJsonObject obj;
-    foreach (QString key, hash.keys()) {
-        obj.insert(key, hash.value(key).toString());
-    }
-    mWrite2SocketJSON(obj, command);
+
+    mWrite2SocketJSON(QJsonObject::fromVariantHash(hash), command);
 }
 //################################################################################################
 void matildaclient::closeConnection()
@@ -79,6 +78,9 @@ void matildaclient::closeConnection()
 void matildaclient::stopAllNow()
 {
     stopAll = true;
+
+    if(accessLevel < 1)
+        QTimer::singleShot(1, this, SLOT( onDisconn()));
 }
 
 //################################################################################################
@@ -88,62 +90,40 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     QJsonDocument jDoc = QJsonDocument::fromJson( dataArr, &jErr);
 
     QVariantHash hash = jDoc.object().toVariantHash();
-//    qDebug() << hash;
-
 
     qint64 len = dataArr.length();
     qint64 lenUn = -1;
     quint16 command = hash.take("cmd").toUInt();
 
-    bool checkHash = true;
     if(command == COMMAND_COMPRESSED_PACKET){
-        checkHash = false;
-        jDoc = QJsonDocument::fromJson( qUncompress( QByteArray::fromBase64( hash.value("zlib").toByteArray() )  ), &jErr);
-        hash = jDoc.object().toVariantHash();
-        lenUn = jDoc.toJson(QJsonDocument::Compact).length();
-        command = hash.take("cmd").toUInt();
+
+        if(messHshIsValid(jDoc.object())){
+
+            jDoc = QJsonDocument::fromJson( qUncompress( QByteArray::fromBase64( hash.value("zlib").toByteArray() )  ), &jErr);//qUncompress( <quint32 not compressed data len><comprssed data> )
+            hash = jDoc.object().toVariantHash();
+            lenUn = jDoc.toJson(QJsonDocument::Compact).length();
+            command = hash.take("cmd").toUInt();
+
+        }else{
+            emit showMess(tr("Received uncorrect request"));
+            return;
+        }
 
     }
 
     emit changeCounters(len, lenUn, true);
 
-    if(command != COMMAND_READ_DATABASE && command != COMMAND_READ_DATABASE_GET_VAL  ){
-    qDebug() << "decodeReadData" << command << stopAfter << stopAll;
-    qDebug()  << jDoc.object();
+    if(command < COMMAND_READ_DATABASE || command > COMMAND_READ_METER_LOGS_GET_VAL  ){
+        qDebug() << "decodeReadData" << command << stopAfter << stopAll;
+        qDebug()  << jDoc.object();
 
     }
 
-    if(checkHash){
-        QByteArray myHash;
-        QByteArray hshBase64;
-        QString hshName;
-        QJsonObject jObj = jDoc.object();
-
-        if(hash.contains("Md5")){ //default hash sum
-            hshName = "Md5";
-            hshBase64 = QByteArray::fromBase64(jObj.take(hshName).toString().toLocal8Bit());
-            jObj.insert(hshName, QString("0"));
-            QJsonDocument jDoc2h(jObj);
-            myHash = QCryptographicHash::hash(jDoc2h.toJson(QJsonDocument::Compact), QCryptographicHash::Md5);
-
-        }else{
-            hshName = getHshNames().at(lastHashSumm);
-            hshBase64 = QByteArray::fromBase64(jObj.take(hshName).toString().toLocal8Bit());
-            jObj.insert(hshName, QString("0"));
-            QJsonDocument jDoc2h(jObj);
-            myHash = QCryptographicHash::hash(jDoc2h.toJson(QJsonDocument::Compact), static_cast<QCryptographicHash::Algorithm>(lastHashSumm));
-        }
-
-        if(myHash != hshBase64){
-            qDebug() << "if(myHash != hshBase64 " << myHash.toBase64() << hshBase64.toBase64();
-            emit showMess(tr("Received uncorrect request"));
-//            onDisconn();
-            return;
-        }
-        hash.remove(hshName);
-
-
+    if(!messHshIsValid(jDoc.object())){
+        emit showMess(tr("Received uncorrect request"));
+        return;
     }
+
 
     if(stopAll && command != COMMAND_AUTHORIZE && command != COMMAND_I_AM_ZOMBIE && command != COMMAND_I_NEED_MORE_TIME){
         return;
@@ -152,7 +132,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     if(command != COMMAND_READ_DATABASE_GET_VAL && command != COMMAND_READ_DATABASE && command != COMMAND_READ_DATABASE_GET_TABLES && command != COMMAND_READ_METER_LIST_FRAMED
             && command != COMMAND_WRITE_METER_LIST_FRAMED && command != COMMAND_WRITE_DROP_TABLE  && command != COMMAND_WRITE_DROP_TABLE_GET_COUNT
             && command != COMMAND_READ_METER_LOGS_GET_TABLES && command != COMMAND_READ_METER_LOGS_GET_VAL && command != COMMAND_I_NEED_MORE_TIME
-            && command != COMMAND_READ_METER_LOGS){
+            && command != COMMAND_READ_METER_LOGS && command != COMMAND_READ_TABLE_HASH_SUMM){
         emit hideAnimation();
     }
 
@@ -187,20 +167,15 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                                   );
 
                 if(hash.value("version").toInt() == MATILDA_PROTOCOL_VERSION){
-//                    dataStreamVersion = hash.value("QDS").toInt();
-
-
                     QJsonObject jObj;
 
                     jObj.insert("version", hash.value("version").toInt());
-                    jObj.insert("hsh", QString(QCryptographicHash::hash(loginPasswd.at(0) + "\n" + dataArr + "\n" + loginPasswd.at(1), QCryptographicHash::Sha3_256).toBase64()));
-//
-                    //mode JSON and QDataStream
-//                    jObj.insert("QDS", QString::number(dataStreamVersion));//активація режиму QDataStream
+                    jObj.insert("hsh", QString(QCryptographicHash::hash(loginPasswd.at(0) + "\n" + dataArr + "\n" + loginPasswd.at(1), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals)));
 
-                    if(allowCompress)
-                        jObj.insert("cmprssn", "zlib");//дозволити стиснення
-                    lastHashSumm = getHshNames().indexOf("Sha1");
+                    jObj.insert("plg", true); //Передати інфо по плагінам (не обов’язкове значення, але потрібне для додавання лічильників)
+                    if(allowCompress){
+                        jObj.insert("cmprssn", QJsonArray::fromStringList(QString("zlib").split(" ")));
+                    }
 
                     stopAfter = false;
                     mWrite2SocketJSON(jObj, COMMAND_AUTHORIZE);
@@ -228,6 +203,11 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         qDebug() << "access = " << hash;
 
         switch(hash.value("a").toUInt()){
+        case MTD_USER_ADMIN:{
+            emit authrizeAccess(hash.value("a").toUInt());
+            emit data2gui(command, hash);
+            emit showMess(tr("Hello, you admin!"));
+            break;}
         case MTD_USER_OPER:{
             emit authrizeAccess(hash.value("a").toUInt());
             emit data2gui(command, hash);
@@ -267,18 +247,26 @@ void matildaclient::mReadyRead()
 {
 
     emit startWait4AnswerTimer(timeOutG);
-
+qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz");
     QByteArray readarr = readAll();
     QTime time;
     time.start();
-    while(readarr.right(1) != "}" && readarr.size() < MAX_PACKET_LEN && time.elapsed() < timeOutG){
+    int razivDuzkaL = readarr.count('{'), razivDuzkaR = readarr.count('}');
+
+    while( razivDuzkaR < razivDuzkaL && readarr.size() < MAX_PACKET_LEN && time.elapsed() < timeOutG){
         if(waitForReadyRead(timeOut)){
             readarr.append(readAll());
             waitForReadyRead(100);
             emit startWait4AnswerTimer(timeOutG);
             waitForReadyRead(100);
+            readarr.append(readAll());
+            razivDuzkaL = readarr.count('{');
+            razivDuzkaR = readarr.count('}');
+//            qDebug() << "razivDuzkaL razivDuzkaR " << razivDuzkaL << razivDuzkaR;
         }
     }
+
+    qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz") << time.elapsed();
 
     emit startWait4AnswerTimer(timeOutG);
 
@@ -286,21 +274,19 @@ void matildaclient::mReadyRead()
     emit stopWait4AnswerTimer();
     stopAfter = true;
 
-    int lastIndx = 0;
-    int duzkaIndx = readarr.indexOf("}");
 
 
-    if(duzkaIndx < 1){
+    if(razivDuzkaL != razivDuzkaR){
         emit changeCounters(readarr.length(), -1 , true);
         emit showMess("corrupted data.");
         qDebug()<< "readServer:"<< readarr;
         return ;
     }else{
+        int duzkaIndx = readarr.indexOf("}");
+        int lastIndx = 0;
 
         int len = readarr.length();
         while(duzkaIndx > 1 && lastIndx < len){
-//            qDebug() << lastIndx << duzkaIndx << readarr.mid(lastIndx, duzkaIndx + 1) << len;
-
             decodeReadDataJSON(readarr.mid(lastIndx, duzkaIndx + 1));
             duzkaIndx = readarr.indexOf("}", lastIndx);
             lastIndx = duzkaIndx + 1;
@@ -322,50 +308,76 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
 
     qint64 blSize = 0;
     QByteArray writeArr;
+    //хеш повідомлення або хеш стисненого повідомлення
+    switch(lastHashSumm){
+    case 0:{
+        jObj.insert("Md4", QString("0"));
+        QJsonDocument jDoc2DST(jObj);
+        jObj.insert("Md4", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md4).toBase64(QByteArray::OmitTrailingEquals) ));
+        break;}
+    case 2:{ jObj.insert("Sha1", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha1", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha1).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 3:{ jObj.insert("Sha224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha224).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 4:{ jObj.insert("Sha256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha256).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 5:{ jObj.insert("Sha384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha384).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 6:{ jObj.insert("Sha512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha512).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 7:{ jObj.insert("Sha3_224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 8:{ jObj.insert("Sha3_256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 9:{ jObj.insert("Sha3_384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals))); break;}
+    case 10:{ jObj.insert("Sha3_512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals))); break;}
+
+    default:{
+        jObj.insert("Md5", QString("0"));
+        QJsonDocument jDoc2DST(jObj);
+        jObj.insert("Md5", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md5).toBase64(QByteArray::OmitTrailingEquals)));
+        break;}
+
+    }
+
     if(blSize < 10){
         QJsonDocument jDoc2DST(jObj);
         writeArr = jDoc2DST.toJson(QJsonDocument::Compact);
         blSize = writeArr.length() ;
     }
 
-    if(blSize < SETT_MAX_UNCOMPRSS_PACkET_SIZE || s_command == 0 || s_command == COMMAND_COMPRESSED_STREAM || !allowCompress){
+    if(blSize >= SETT_MAX_UNCOMPRSS_PACkET_SIZE && allowCompress){
 
+        QJsonObject jObjCmprss;
+        jObjCmprss.insert("cmd", QString::number(COMMAND_COMPRESSED_PACKET));
+        jObjCmprss.insert("zlib", QString(qCompress(writeArr, 9).toBase64(QByteArray::OmitTrailingEquals))); // <quint32 data len><zlib compressed data> = qCompress()
+
+        jObj = jObjCmprss;
         switch(lastHashSumm){
         case 0:{
             jObj.insert("Md4", QString("0"));
             QJsonDocument jDoc2DST(jObj);
-            jObj.insert("Md4", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md4).toBase64() ));
+            jObj.insert("Md4", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md4).toBase64(QByteArray::OmitTrailingEquals) ));
             break;}
-        case 2:{ jObj.insert("Sha1", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha1", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha1).toBase64())); break;}
-        case 3:{ jObj.insert("Sha224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha224).toBase64())); break;}
-        case 4:{ jObj.insert("Sha256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha256).toBase64())); break;}
-        case 5:{ jObj.insert("Sha384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha384).toBase64())); break;}
-        case 6:{ jObj.insert("Sha512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha512).toBase64())); break;}
-        case 7:{ jObj.insert("Sha3_224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_224).toBase64())); break;}
-        case 8:{ jObj.insert("Sha3_256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_256).toBase64())); break;}
-        case 9:{ jObj.insert("Sha3_384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_384).toBase64())); break;}
-        case 10:{ jObj.insert("Sha3_512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_512).toBase64())); break;}
+        case 2:{ jObj.insert("Sha1", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha1", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha1).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 3:{ jObj.insert("Sha224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha224).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 4:{ jObj.insert("Sha256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha256).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 5:{ jObj.insert("Sha384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha384).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 6:{ jObj.insert("Sha512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha512).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 7:{ jObj.insert("Sha3_224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 8:{ jObj.insert("Sha3_256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 9:{ jObj.insert("Sha3_384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals))); break;}
+        case 10:{ jObj.insert("Sha3_512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals))); break;}
 
         default:{
             jObj.insert("Md5", QString("0"));
             QJsonDocument jDoc2DST(jObj);
-            jObj.insert("Md5", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md5).toBase64()));
+            jObj.insert("Md5", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md5).toBase64(QByteArray::OmitTrailingEquals)));
             break;}
 
         }
-        blSize = -1;
     }else{
-        QList<QString> l = jObj.toVariantMap().keys();
-        while(!l.isEmpty())
-            jObj.remove(l.takeFirst());
-        jObj.insert("cmd", QString::number(COMMAND_COMPRESSED_PACKET));
-        jObj.insert("zlib", QString(qCompress(writeArr, 9).toBase64()));
+       blSize = -1;
     }
 
     QJsonDocument jDoc(jObj);
     qint64 len = write(jDoc.toJson(QJsonDocument::Compact));
 
-    qDebug() << jObj;
+    qDebug() << len << jDoc.toJson(QJsonDocument::Compact);
+    qDebug() << "write " << QTime::currentTime().toString("hh:mm:ss.zzz");
 
 
     emit changeCounters(len, blSize , false);
@@ -421,6 +433,36 @@ QString matildaclient::hshSummName(const int &indx) const
 QStringList matildaclient::getHshNames() const
 {
     return QString("Md4,Md5,Sha1,Sha224,Sha256,Sha384,Sha512,Sha3_224,Sha3_256,Sha3_384,Sha3_512").split(",");
+}
+//################################################################################################
+bool matildaclient::messHshIsValid(QJsonObject jObj)
+{
+    QByteArray myHash;
+    QByteArray hshBase64;
+    QString hshName;
+    if(jObj.contains("Md5")){ //default hash sum
+        hshName = "Md5";
+        hshBase64 = QByteArray::fromBase64(jObj.take(hshName).toString().toLocal8Bit());
+        jObj.insert(hshName, QString("0"));
+        QJsonDocument jDoc2h(jObj);
+        myHash = QCryptographicHash::hash(jDoc2h.toJson(QJsonDocument::Compact), QCryptographicHash::Md5);
+
+    }else{
+        hshName = getHshNames().at(lastHashSumm);
+        hshBase64 = QByteArray::fromBase64(jObj.take(hshName).toString().toLocal8Bit());
+        jObj.insert(hshName, QString("0"));
+        QJsonDocument jDoc2h(jObj);
+        myHash = QCryptographicHash::hash(jDoc2h.toJson(QJsonDocument::Compact), static_cast<QCryptographicHash::Algorithm>(lastHashSumm));
+    }
+
+    if(myHash == hshBase64){
+        return true;
+    }else{
+        qDebug() << "if(myHash != hshBase64 " << myHash.toBase64(QByteArray::OmitTrailingEquals) << hshBase64.toBase64(QByteArray::OmitTrailingEquals);
+//            onDisconn();
+        return false;
+    }
+
 }
 //################################################################################################
 bool matildaclient::isConnOpen()

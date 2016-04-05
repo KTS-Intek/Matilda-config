@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -194,23 +194,6 @@
                <string>Connection settings</string>
               </property>
               <layout class="QGridLayout" name="gridLayout">
-               <item row="4" column="2">
-                <widget class="QCheckBox" name="cbZlib">
-                 <property name="text">
-                  <string>Enable</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Port</string>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="2">
                 <widget class="QLineEdit" name="leIp">
                  <property name="text">
@@ -221,6 +204,44 @@
                  </property>
                  <property name="clearButtonEnabled">
                   <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QCheckBox" name="cbZlib">
+                 <property name="text">
+                  <string>Enable</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Time out</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Port</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_11">
+                 <property name="text">
+                  <string>zlib</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>IP</string>
                  </property>
                 </widget>
                </item>
@@ -236,26 +257,6 @@
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item row="2" column="2">
-                <widget class="QSpinBox" name="sbPort">
-                 <property name="minimum">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <number>65534</number>
-                 </property>
-                 <property name="value">
-                  <number>9090</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>IP</string>
-                 </property>
-                </widget>
                </item>
                <item row="3" column="2">
                 <widget class="QSpinBox" name="sbTimeOut">
@@ -276,17 +277,26 @@
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>zlib</string>
+               <item row="2" column="2">
+                <widget class="QSpinBox" name="sbPort">
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>65534</number>
+                 </property>
+                 <property name="value">
+                  <number>9090</number>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_5">
+               <item row="5" column="2">
+                <widget class="QComboBox" name="cbHashSumm"/>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_20">
                  <property name="text">
-                  <string>Time out</string>
+                  <string>Hash summ</string>
                  </property>
                 </widget>
                </item>
@@ -483,30 +493,10 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>15</number>
+                   <number>13</number>
                   </property>
                   <widget class="QWidget" name="page_3">
-                   <layout class="QGridLayout" name="gridLayout_3">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_6">
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="pixmap">
-                       <pixmap>:/katynko/kts-intek-logo.png</pixmap>
-                      </property>
-                      <property name="scaledContents">
-                       <bool>false</bool>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                      <property name="textInteractionFlags">
-                       <set>Qt::NoTextInteraction</set>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
+                   <layout class="QGridLayout" name="gridLayout_3"/>
                   </widget>
                   <widget class="QWidget" name="page_20">
                    <layout class="QGridLayout" name="gridLayout_18">
@@ -2268,7 +2258,7 @@
                       <item>
                        <widget class="QTimeEdit" name="teFrom">
                         <property name="displayFormat">
-                         <string>HH:mm:ss</string>
+                         <string>HH:mm</string>
                         </property>
                         <property name="calendarPopup">
                          <bool>true</bool>
@@ -2285,7 +2275,7 @@
                       <item>
                        <widget class="QTimeEdit" name="teTo">
                         <property name="displayFormat">
-                         <string>HH:mm:ss</string>
+                         <string>HH:mm</string>
                         </property>
                         <property name="calendarPopup">
                          <bool>true</bool>
@@ -2365,6 +2355,13 @@
                        </widget>
                       </item>
                       <item>
+                       <widget class="QPushButton" name="pbReadHashSumm">
+                        <property name="text">
+                         <string>Read Hash Summ</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <spacer name="horizontalSpacer_11">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
@@ -2376,6 +2373,13 @@
                          </size>
                         </property>
                        </spacer>
+                      </item>
+                      <item>
+                       <widget class="QCheckBox" name="cbCmprssMeterList">
+                        <property name="text">
+                         <string>Always comprss</string>
+                        </property>
+                       </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="label_17">
@@ -2433,6 +2437,9 @@
                           </item>
                           <item row="0" column="1">
                            <widget class="QLineEdit" name="leAddMeterSN">
+                            <property name="maxLength">
+                             <number>255</number>
+                            </property>
                             <property name="clearButtonEnabled">
                              <bool>true</bool>
                             </property>
@@ -2447,6 +2454,9 @@
                           </item>
                           <item row="1" column="1">
                            <widget class="QLineEdit" name="leAddMeterMemo">
+                            <property name="maxLength">
+                             <number>255</number>
+                            </property>
                             <property name="clearButtonEnabled">
                              <bool>true</bool>
                             </property>
@@ -2466,12 +2476,9 @@
                            </widget>
                           </item>
                           <item row="2" column="1">
-                           <widget class="QComboBox" name="cbAddMeterPasswd">
-                            <property name="editable">
-                             <bool>true</bool>
-                            </property>
-                            <property name="maxCount">
-                             <number>32</number>
+                           <widget class="QLineEdit" name="leAddMeterPasswd">
+                            <property name="maxLength">
+                             <number>255</number>
                             </property>
                            </widget>
                           </item>
@@ -2526,6 +2533,9 @@
                          <layout class="QGridLayout" name="gridLayout_9">
                           <item row="1" column="1">
                            <widget class="QLineEdit" name="leAddMeterNI">
+                            <property name="maxLength">
+                             <number>32</number>
+                            </property>
                             <property name="clearButtonEnabled">
                              <bool>true</bool>
                             </property>
@@ -2745,6 +2755,13 @@
                        </spacer>
                       </item>
                       <item>
+                       <widget class="QCheckBox" name="cbCmprssDb">
+                        <property name="text">
+                         <string>Always Comprss</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="QLabel" name="label_18">
                         <property name="text">
                          <string>Read len</string>
@@ -2772,37 +2789,6 @@
                        <string>Select from database</string>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_12">
-                       <item row="0" column="0" colspan="7">
-                        <layout class="QHBoxLayout" name="horizontalLayout_37">
-                         <item>
-                          <widget class="QLabel" name="label_48">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="text">
-                            <string>Select only Meter NI</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLineEdit" name="leMeterDataOnlyThisNI">
-                           <property name="clearButtonEnabled">
-                            <bool>true</bool>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="label_35">
-                           <property name="text">
-                            <string>(0,1,2-11)</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </item>
                        <item row="1" column="2" rowspan="3">
                         <widget class="QListView" name="lvMeterDataTariff">
                          <property name="sizePolicy">
@@ -2917,25 +2903,43 @@
                          </layout>
                         </widget>
                        </item>
-                       <item row="1" column="5">
-                        <widget class="QToolButton" name="toolButton_8">
-                         <property name="text">
-                          <string>...</string>
+                       <item row="1" column="3" colspan="2">
+                        <widget class="QLineEdit" name="leAddMeterPhysicalVal">
+                         <property name="clearButtonEnabled">
+                          <bool>true</bool>
                          </property>
                         </widget>
                        </item>
-                       <item row="1" column="6" rowspan="3">
-                        <spacer name="horizontalSpacer_14">
-                         <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
-                         </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>130</width>
-                           <height>20</height>
-                          </size>
-                         </property>
-                        </spacer>
+                       <item row="0" column="0" colspan="7">
+                        <layout class="QHBoxLayout" name="horizontalLayout_37">
+                         <item>
+                          <widget class="QLabel" name="label_48">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="text">
+                            <string>Select only Meter NI</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="leMeterDataOnlyThisNI">
+                           <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_35">
+                           <property name="text">
+                            <string>(0,1,2-11)</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </item>
                        <item row="1" column="0" rowspan="3">
                         <widget class="QListView" name="lvMeterDataProfile">
@@ -3061,12 +3065,18 @@
                          </property>
                         </widget>
                        </item>
-                       <item row="1" column="3" colspan="2">
-                        <widget class="QLineEdit" name="leAddMeterPhysicalVal">
-                         <property name="clearButtonEnabled">
-                          <bool>true</bool>
+                       <item row="1" column="6" rowspan="3">
+                        <spacer name="horizontalSpacer_14">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
                          </property>
-                        </widget>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>130</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
                        </item>
                       </layout>
                      </widget>
@@ -3186,6 +3196,13 @@
                        </spacer>
                       </item>
                       <item>
+                       <widget class="QCheckBox" name="cbCmprssMeterLog">
+                        <property name="text">
+                         <string>Always comprss</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="QLabel" name="label_19">
                         <property name="text">
                          <string>Read len</string>
@@ -3210,6 +3227,37 @@
                        <string>Select from database</string>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_16">
+                       <item row="0" column="0" colspan="3">
+                        <layout class="QHBoxLayout" name="horizontalLayout_39">
+                         <item>
+                          <widget class="QLabel" name="label_53">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="text">
+                            <string>Select only Meter NI</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="leMeterDataOnlyThisNI_2">
+                           <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_41">
+                           <property name="text">
+                            <string>(0,1,2-11)</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
                        <item row="1" column="0" rowspan="3">
                         <widget class="QListView" name="lvMeterDataProfile_2">
                          <property name="sizePolicy">
@@ -3242,111 +3290,6 @@
                           <enum>QAbstractItemView::SelectItems</enum>
                          </property>
                         </widget>
-                       </item>
-                       <item row="3" column="1">
-                        <widget class="QGroupBox" name="gbMeterDataYangerThan_2">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="title">
-                          <string>Time from now</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>true</bool>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_31">
-                          <item>
-                           <widget class="QComboBox" name="cbMeterDataKftnt_2">
-                            <property name="currentIndex">
-                             <number>2</number>
-                            </property>
-                            <item>
-                             <property name="text">
-                              <string>Minute(s)</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Hour(s)</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Day(s)</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Month(s)</string>
-                             </property>
-                            </item>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QSpinBox" name="sbMeterDataInterval_2">
-                            <property name="minimum">
-                             <number>1</number>
-                            </property>
-                            <property name="maximum">
-                             <number>99</number>
-                            </property>
-                            <property name="value">
-                             <number>1</number>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item row="1" column="2" rowspan="3">
-                        <spacer name="horizontalSpacer_21">
-                         <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
-                         </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>130</width>
-                           <height>20</height>
-                          </size>
-                         </property>
-                        </spacer>
-                       </item>
-                       <item row="0" column="0" colspan="3">
-                        <layout class="QHBoxLayout" name="horizontalLayout_39">
-                         <item>
-                          <widget class="QLabel" name="label_53">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="text">
-                            <string>Select only Meter NI</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLineEdit" name="leMeterDataOnlyThisNI_2">
-                           <property name="clearButtonEnabled">
-                            <bool>true</bool>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="label_41">
-                           <property name="text">
-                            <string>(0,1,2-11)</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
                        </item>
                        <item row="1" column="1" rowspan="2">
                         <widget class="QGroupBox" name="gbMeterDataFromTo_2">
@@ -3432,6 +3375,80 @@
                          </layout>
                         </widget>
                        </item>
+                       <item row="3" column="1">
+                        <widget class="QGroupBox" name="gbMeterDataYangerThan_2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="title">
+                          <string>Time from now</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>true</bool>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_31">
+                          <item>
+                           <widget class="QComboBox" name="cbMeterDataKftnt_2">
+                            <property name="currentIndex">
+                             <number>2</number>
+                            </property>
+                            <item>
+                             <property name="text">
+                              <string>Minute(s)</string>
+                             </property>
+                            </item>
+                            <item>
+                             <property name="text">
+                              <string>Hour(s)</string>
+                             </property>
+                            </item>
+                            <item>
+                             <property name="text">
+                              <string>Day(s)</string>
+                             </property>
+                            </item>
+                            <item>
+                             <property name="text">
+                              <string>Month(s)</string>
+                             </property>
+                            </item>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QSpinBox" name="sbMeterDataInterval_2">
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
+                            <property name="maximum">
+                             <number>99</number>
+                            </property>
+                            <property name="value">
+                             <number>1</number>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="1" column="2" rowspan="3">
+                        <spacer name="horizontalSpacer_21">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>130</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
                       </layout>
                      </widget>
                     </item>
@@ -3506,6 +3523,238 @@
                        </item>
                       </layout>
                      </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_5">
+                   <layout class="QGridLayout" name="gridLayout_13">
+                    <item row="0" column="0" rowspan="2">
+                     <widget class="QTabWidget" name="tbwHashSumm">
+                      <property name="currentIndex">
+                       <number>0</number>
+                      </property>
+                      <widget class="QWidget" name="tab_4">
+                       <attribute name="title">
+                        <string>Date</string>
+                       </attribute>
+                       <layout class="QGridLayout" name="gridLayout_7">
+                        <item row="0" column="0" rowspan="2">
+                         <widget class="QListView" name="lvMeterDataProfile_3">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <pointsize>12</pointsize>
+                           </font>
+                          </property>
+                          <property name="mouseTracking">
+                           <bool>false</bool>
+                          </property>
+                          <property name="editTriggers">
+                           <set>QAbstractItemView::NoEditTriggers</set>
+                          </property>
+                          <property name="showDropIndicator" stdset="0">
+                           <bool>false</bool>
+                          </property>
+                          <property name="alternatingRowColors">
+                           <bool>true</bool>
+                          </property>
+                          <property name="selectionMode">
+                           <enum>QAbstractItemView::SingleSelection</enum>
+                          </property>
+                          <property name="selectionBehavior">
+                           <enum>QAbstractItemView::SelectItems</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QGroupBox" name="gbMeterDataFromTo_3">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="title">
+                           <string>Time interval</string>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                          <property name="checked">
+                           <bool>false</bool>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_21">
+                           <item row="0" column="0">
+                            <widget class="QDateTimeEdit" name="dteMeterDataFrom_3">
+                             <property name="showGroupSeparator" stdset="0">
+                              <bool>true</bool>
+                             </property>
+                             <property name="minimumDateTime">
+                              <datetime>
+                               <hour>0</hour>
+                               <minute>0</minute>
+                               <second>0</second>
+                               <year>2013</year>
+                               <month>1</month>
+                               <day>1</day>
+                              </datetime>
+                             </property>
+                             <property name="minimumDate">
+                              <date>
+                               <year>2013</year>
+                               <month>1</month>
+                               <day>1</day>
+                              </date>
+                             </property>
+                             <property name="currentSection">
+                              <enum>QDateTimeEdit::YearSection</enum>
+                             </property>
+                             <property name="displayFormat">
+                              <string>yyyy/MM/dd HH:mm</string>
+                             </property>
+                             <property name="calendarPopup">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="0">
+                            <widget class="QDateTimeEdit" name="dteMeterDataTo_3">
+                             <property name="showGroupSeparator" stdset="0">
+                              <bool>true</bool>
+                             </property>
+                             <property name="minimumDate">
+                              <date>
+                               <year>2013</year>
+                               <month>1</month>
+                               <day>1</day>
+                              </date>
+                             </property>
+                             <property name="currentSection">
+                              <enum>QDateTimeEdit::YearSection</enum>
+                             </property>
+                             <property name="displayFormat">
+                              <string>yyyy/MM/dd HH:mm</string>
+                             </property>
+                             <property name="calendarPopup">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QToolButton" name="toolButton_11">
+                             <property name="text">
+                              <string>...</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item row="1" column="1">
+                         <widget class="QGroupBox" name="gbMeterDataYangerThan_3">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="title">
+                           <string>Time from now</string>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_32">
+                           <item>
+                            <widget class="QComboBox" name="cbMeterDataKftnt_3">
+                             <property name="currentIndex">
+                              <number>2</number>
+                             </property>
+                             <item>
+                              <property name="text">
+                               <string>Minute(s)</string>
+                              </property>
+                             </item>
+                             <item>
+                              <property name="text">
+                               <string>Hour(s)</string>
+                              </property>
+                             </item>
+                             <item>
+                              <property name="text">
+                               <string>Day(s)</string>
+                              </property>
+                             </item>
+                             <item>
+                              <property name="text">
+                               <string>Month(s)</string>
+                              </property>
+                             </item>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="sbMeterDataInterval_3">
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>99</number>
+                             </property>
+                             <property name="value">
+                              <number>1</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                      <widget class="QWidget" name="tab_5">
+                       <attribute name="title">
+                        <string>Table names</string>
+                       </attribute>
+                       <layout class="QVBoxLayout" name="verticalLayout_6">
+                        <item>
+                         <widget class="QPlainTextEdit" name="pteHashSumm_2"/>
+                        </item>
+                       </layout>
+                      </widget>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QCheckBox" name="cbCmprssHsh">
+                      <property name="text">
+                       <string>Always comprss</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <spacer name="horizontalSpacer_29">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>311</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QComboBox" name="cbHashSumm_2"/>
+                    </item>
+                    <item row="3" column="0" colspan="2">
+                     <widget class="QPlainTextEdit" name="pteHashSumm"/>
                     </item>
                    </layout>
                   </widget>

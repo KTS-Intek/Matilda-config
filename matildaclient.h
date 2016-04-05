@@ -34,7 +34,7 @@ signals:
 
 
 public slots:
-    void conn2thisDev(QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss);
+    void conn2thisDev(int hashIndx, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss);
     void data2matilda(quint16 command, QVariantHash hash);
     void closeConnection();
 
@@ -53,6 +53,10 @@ private slots:
 
     void onWaitTimerTimeOut();
 
+
+
+
+private:
     QString humanByteView(QString str);
 
     QString humanByteView(const int &val);
@@ -60,6 +64,7 @@ private slots:
     QString hshSummName(const int &indx) const;
     QStringList getHshNames() const;
 
+    bool messHshIsValid(QJsonObject jObj);
 
 
 
