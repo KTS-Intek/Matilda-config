@@ -17,8 +17,8 @@ InsertMeterDialog::~InsertMeterDialog()
 
 void InsertMeterDialog::on_buttonBox_accepted()
 {
-    QVariantHash h;
-    h.insert("m", hashmeter);
+    QJsonObject h;
+    h.insert("m", QJsonArray::fromVariantList( hashmeter));
     int pos = ui->sbPosition->value();
     if(ui->rbAppend->isChecked())
         pos = 20000;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1259</width>
-    <height>727</height>
+    <width>1237</width>
+    <height>634</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -126,7 +126,7 @@
                <item row="1" column="1">
                 <widget class="QLineEdit" name="lePasswd">
                  <property name="text">
-                  <string>intek</string>
+                  <string>1</string>
                  </property>
                  <property name="echoMode">
                   <enum>QLineEdit::Normal</enum>
@@ -142,7 +142,7 @@
                <item row="0" column="1">
                 <widget class="QLineEdit" name="leLogin">
                  <property name="text">
-                  <string>admin</string>
+                  <string>oper</string>
                  </property>
                  <property name="placeholderText">
                   <string>Login</string>
@@ -194,111 +194,320 @@
                <string>Connection settings</string>
               </property>
               <layout class="QGridLayout" name="gridLayout">
-               <item row="1" column="2">
-                <widget class="QLineEdit" name="leIp">
-                 <property name="text">
-                  <string>192.168.88.233</string>
+               <item row="0" column="0" colspan="2">
+                <widget class="QTabWidget" name="tabWidget_2">
+                 <property name="currentIndex">
+                  <number>0</number>
                  </property>
-                 <property name="placeholderText">
-                  <string>Remote IP or URL</string>
-                 </property>
-                 <property name="clearButtonEnabled">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="2">
-                <widget class="QCheckBox" name="cbZlib">
-                 <property name="text">
-                  <string>Enable</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_5">
-                 <property name="text">
-                  <string>Time out</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Port</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>zlib</string>
-                 </property>
+                 <widget class="QWidget" name="tab_6">
+                  <attribute name="title">
+                   <string>Direct Connection</string>
+                  </attribute>
+                  <layout class="QGridLayout" name="gridLayout_30">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_21">
+                     <property name="text">
+                      <string>Object</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="leObjectName">
+                     <property name="placeholderText">
+                      <string>Object name</string>
+                     </property>
+                     <property name="clearButtonEnabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_3">
+                     <property name="text">
+                      <string>IP</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLineEdit" name="leIp">
+                     <property name="text">
+                      <string>::1</string>
+                     </property>
+                     <property name="placeholderText">
+                      <string>Remote IP or URL</string>
+                     </property>
+                     <property name="clearButtonEnabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="2">
+                    <widget class="QToolButton" name="toolButton_12">
+                     <property name="text">
+                      <string>scan</string>
+                     </property>
+                     <property name="autoRaise">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_4">
+                     <property name="text">
+                      <string>Port</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QSpinBox" name="sbPort">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>65534</number>
+                     </property>
+                     <property name="value">
+                      <number>9090</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="3">
+                    <spacer name="horizontalSpacer">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>378</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_5">
+                     <property name="text">
+                      <string>Time out</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QSpinBox" name="sbTimeOut">
+                     <property name="suffix">
+                      <string> s</string>
+                     </property>
+                     <property name="minimum">
+                      <number>2</number>
+                     </property>
+                     <property name="maximum">
+                      <number>99</number>
+                     </property>
+                     <property name="singleStep">
+                      <number>2</number>
+                     </property>
+                     <property name="value">
+                      <number>15</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                 <widget class="QWidget" name="tab_7">
+                  <attribute name="title">
+                   <string>MAC</string>
+                  </attribute>
+                  <layout class="QGridLayout" name="gridLayout_31">
+                   <item row="2" column="1" rowspan="2">
+                    <widget class="QLineEdit" name="leIp_2">
+                     <property name="placeholderText">
+                      <string>svaha service IP or URL</string>
+                     </property>
+                     <property name="clearButtonEnabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_76">
+                     <property name="text">
+                      <string>Object ID</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="leObjectName_2">
+                     <property name="placeholderText">
+                      <string>Object name</string>
+                     </property>
+                     <property name="clearButtonEnabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLineEdit" name="leObjectMac">
+                     <property name="placeholderText">
+                      <string>Device MAC address</string>
+                     </property>
+                     <property name="clearButtonEnabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="1" rowspan="2">
+                    <widget class="QSpinBox" name="sbPort_2">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>65534</number>
+                     </property>
+                     <property name="value">
+                      <number>65000</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="6" column="1">
+                    <widget class="QSpinBox" name="sbTimeOut_2">
+                     <property name="suffix">
+                      <string> s</string>
+                     </property>
+                     <property name="minimum">
+                      <number>2</number>
+                     </property>
+                     <property name="maximum">
+                      <number>99</number>
+                     </property>
+                     <property name="singleStep">
+                      <number>2</number>
+                     </property>
+                     <property name="value">
+                      <number>15</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="6" column="0">
+                    <widget class="QLabel" name="label_77">
+                     <property name="text">
+                      <string>Time out</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0" rowspan="2">
+                    <widget class="QLabel" name="label_79">
+                     <property name="text">
+                      <string>Port</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0" rowspan="2">
+                    <widget class="QLabel" name="label_78">
+                     <property name="text">
+                      <string>IP</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_80">
+                     <property name="text">
+                      <string>MAC</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="2" rowspan="2">
+                    <spacer name="horizontalSpacer_37">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>400</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item row="0" column="2">
+                    <widget class="QRadioButton" name="rbUseObjID">
+                     <property name="text">
+                      <string>Connect using Object ID</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="2">
+                    <widget class="QRadioButton" name="rbUseMac">
+                     <property name="text">
+                      <string>Connect using MAC</string>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>IP</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QLabel" name="label_11">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>zlib</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="cbZlib">
+                   <property name="text">
+                    <string>Enable</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
-               <item row="2" column="3">
-                <spacer name="horizontalSpacer">
+               <item row="1" column="1" rowspan="2">
+                <spacer name="horizontalSpacer_7">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>216</width>
+                   <width>569</width>
                    <height>20</height>
                   </size>
                  </property>
                 </spacer>
                </item>
-               <item row="3" column="2">
-                <widget class="QSpinBox" name="sbTimeOut">
-                 <property name="suffix">
-                  <string> s</string>
-                 </property>
-                 <property name="minimum">
-                  <number>2</number>
-                 </property>
-                 <property name="maximum">
-                  <number>999</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>2</number>
-                 </property>
-                 <property name="value">
-                  <number>15</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2">
-                <widget class="QSpinBox" name="sbPort">
-                 <property name="minimum">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <number>65534</number>
-                 </property>
-                 <property name="value">
-                  <number>9090</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="2">
-                <widget class="QComboBox" name="cbHashSumm"/>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_20">
-                 <property name="text">
-                  <string>Hash summ</string>
-                 </property>
-                </widget>
+               <item row="2" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <item>
+                  <widget class="QLabel" name="label_20">
+                   <property name="text">
+                    <string>Hash summ</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="cbHashSumm">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </widget>
@@ -464,8 +673,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>795</width>
-                 <height>634</height>
+                 <width>781</width>
+                 <height>541</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -493,7 +702,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>13</number>
+                   <number>17</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
@@ -1078,6 +1287,17 @@
                     </item>
                    </layout>
                   </widget>
+                  <widget class="QWidget" name="page_6">
+                   <layout class="QVBoxLayout" name="verticalLayout_7">
+                    <item>
+                     <widget class="QPlainTextEdit" name="pteSysInfo">
+                      <property name="readOnly">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
                   <widget class="QWidget" name="page_13">
                    <layout class="QVBoxLayout" name="verticalLayout_11">
                     <property name="spacing">
@@ -1254,6 +1474,1030 @@
                     </item>
                    </layout>
                   </widget>
+                  <widget class="QWidget" name="page_7">
+                   <layout class="QVBoxLayout" name="verticalLayout_8">
+                    <item>
+                     <widget class="QPlainTextEdit" name="pteSerialLog_2">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="readOnly">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_12">
+                   <layout class="QVBoxLayout" name="verticalLayout_9">
+                    <item>
+                     <widget class="QPlainTextEdit" name="pteErrorLog">
+                      <property name="readOnly">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_23">
+                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <item>
+                     <widget class="QPlainTextEdit" name="pteWarningLog">
+                      <property name="readOnly">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_24">
+                   <layout class="QVBoxLayout" name="verticalLayout_27">
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_22">
+                      <property name="title">
+                       <string>Direct Access service</string>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_29">
+                       <item row="1" column="3" rowspan="2">
+                        <spacer name="horizontalSpacer_34">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>320</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="0">
+                        <widget class="QRadioButton" name="rbDasAlwaysOn">
+                         <property name="text">
+                          <string>Always ready</string>
+                         </property>
+                         <property name="checked">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QRadioButton" name="rbDasAlwaysOnMgc">
+                         <property name="text">
+                          <string>Always ready + Magic sequence</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <widget class="QLineEdit" name="leDasAlwaysOnMS">
+                         <property name="maxLength">
+                          <number>500</number>
+                         </property>
+                         <property name="placeholderText">
+                          <string>Magic sequence</string>
+                         </property>
+                         <property name="clearButtonEnabled">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0">
+                        <widget class="QRadioButton" name="rbDasAlwaysOff">
+                         <property name="text">
+                          <string>Disable always ready mode</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="2">
+                        <widget class="QCheckBox" name="cbDasAlwaysInHex">
+                         <property name="text">
+                          <string>In hex</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_21">
+                      <property name="title">
+                       <string>Direct Access over Matilda</string>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_28">
+                       <item row="0" column="0">
+                        <widget class="QRadioButton" name="rbOnlyIPv4">
+                         <property name="text">
+                          <string>Only Local IPv4</string>
+                         </property>
+                         <property name="checked">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QRadioButton" name="rbOnlyIPv6">
+                         <property name="text">
+                          <string>Only Local IPv6</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="2">
+                        <spacer name="horizontalSpacer_33">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="2" column="0">
+                        <widget class="QRadioButton" name="rbAllInrfc">
+                         <property name="text">
+                          <string>All interfaces</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="3" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_23">
+                         <item>
+                          <widget class="QLabel" name="label_75">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="text">
+                            <string>Port</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QSpinBox" name="sbListenPort">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimum">
+                            <number>1000</number>
+                           </property>
+                           <property name="maximum">
+                            <number>65534</number>
+                           </property>
+                           <property name="value">
+                            <number>8989</number>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="4" column="0">
+                        <widget class="QPushButton" name="pbOpenCloseDA">
+                         <property name="text">
+                          <string>Open</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="1" rowspan="3">
+                        <widget class="QPlainTextEdit" name="pteDasIpList">
+                         <property name="readOnly">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="5" column="0" colspan="3">
+                        <widget class="QLabel" name="lblDaState">
+                         <property name="text">
+                          <string>State: Closed</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_8">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>190</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_25">
+                   <layout class="QVBoxLayout" name="verticalLayout_28">
+                    <item>
+                     <widget class="QCheckBox" name="cbEnablePAC">
+                      <property name="text">
+                       <string>Enable Direct Access Socket</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_23">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="title">
+                       <string>Direct Access Service List</string>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_36">
+                       <item row="0" column="2">
+                        <spacer name="horizontalSpacer_38">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeType">
+                          <enum>QSizePolicy::Preferred</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>95</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QToolButton" name="toolButton_15">
+                         <property name="enabled">
+                          <bool>false</bool>
+                         </property>
+                         <property name="text">
+                          <string>x</string>
+                         </property>
+                         <property name="autoRaise">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0" colspan="2">
+                        <layout class="QHBoxLayout" name="horizontalLayout_29">
+                         <item>
+                          <widget class="QComboBox" name="cbAcProfile_2">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="leAdd2SvahaService_2">
+                           <property name="placeholderText">
+                            <string>IPv4:Port or [IPv4 or IPv6]:Port or URL:Port</string>
+                           </property>
+                           <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="tbAdd2SvahaService_2">
+                           <property name="text">
+                            <string>Add</string>
+                           </property>
+                           <property name="autoRaise">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="1" column="1">
+                        <spacer name="verticalSpacer_17">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>20</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="0" rowspan="2">
+                        <widget class="QTableView" name="tvSvahaService_2">
+                         <property name="editTriggers">
+                          <set>QAbstractItemView::NoEditTriggers</set>
+                         </property>
+                         <property name="alternatingRowColors">
+                          <bool>true</bool>
+                         </property>
+                         <property name="selectionBehavior">
+                          <enum>QAbstractItemView::SelectRows</enum>
+                         </property>
+                         <attribute name="horizontalHeaderDefaultSectionSize">
+                          <number>200</number>
+                         </attribute>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_24">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="title">
+                       <string>Day Profiles</string>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_37">
+                       <item row="0" column="1">
+                        <widget class="QToolButton" name="toolButton_16">
+                         <property name="enabled">
+                          <bool>false</bool>
+                         </property>
+                         <property name="text">
+                          <string>x</string>
+                         </property>
+                         <property name="autoRaise">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="8" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_32">
+                         <item>
+                          <widget class="QLabel" name="label_81">
+                           <property name="text">
+                            <string>From</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QTimeEdit" name="teFrom_2">
+                           <property name="displayFormat">
+                            <string>HH:mm</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_82">
+                           <property name="text">
+                            <string>To</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QTimeEdit" name="teTo_2">
+                           <property name="displayFormat">
+                            <string>HH:mm</string>
+                           </property>
+                           <property name="time">
+                            <time>
+                             <hour>23</hour>
+                             <minute>59</minute>
+                             <second>59</second>
+                            </time>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_39">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="3" column="0">
+                        <widget class="Line" name="line_9">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="4" column="1" rowspan="2">
+                        <spacer name="horizontalSpacer_40">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeType">
+                          <enum>QSizePolicy::Preferred</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="5" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_31">
+                         <item>
+                          <widget class="QCheckBox" name="cbMon_2">
+                           <property name="text">
+                            <string>Mon</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbTue_2">
+                           <property name="text">
+                            <string>Tue</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbWed_2">
+                           <property name="text">
+                            <string>Wed</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbThu_2">
+                           <property name="text">
+                            <string>Thu</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbFri_2">
+                           <property name="text">
+                            <string>Fri</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbSat_2">
+                           <property name="text">
+                            <string>Sat</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbSun_2">
+                           <property name="text">
+                            <string>Sun</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_41">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="9" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_33">
+                         <item>
+                          <widget class="QToolButton" name="tbAddDayProfile_2">
+                           <property name="text">
+                            <string>Add</string>
+                           </property>
+                           <property name="autoRaise">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_42">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="6" column="0">
+                        <widget class="Line" name="line_10">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="4" column="0">
+                        <widget class="QLabel" name="label_83">
+                         <property name="text">
+                          <string>Connect to remote service: Days of week</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_30">
+                         <item>
+                          <widget class="QLabel" name="label_84">
+                           <property name="text">
+                            <string>Name</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="leName4dayProfileSvaha_2">
+                           <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="7" column="0">
+                        <widget class="QLabel" name="label_85">
+                         <property name="text">
+                          <string>Connect to remote service: Time Interval</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <spacer name="verticalSpacer_18">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>20</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="0" rowspan="2">
+                        <widget class="QTableView" name="tvDayProfiles4svaha_2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="editTriggers">
+                          <set>QAbstractItemView::NoEditTriggers</set>
+                         </property>
+                         <property name="alternatingRowColors">
+                          <bool>true</bool>
+                         </property>
+                         <property name="selectionMode">
+                          <enum>QAbstractItemView::SingleSelection</enum>
+                         </property>
+                         <property name="selectionBehavior">
+                          <enum>QAbstractItemView::SelectRows</enum>
+                         </property>
+                         <attribute name="horizontalHeaderDefaultSectionSize">
+                          <number>200</number>
+                         </attribute>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_9">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>31</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_26">
+                   <layout class="QVBoxLayout" name="verticalLayout_29">
+                    <item>
+                     <widget class="QCheckBox" name="cbEnableMAC">
+                      <property name="text">
+                       <string>Enable Matilda Active Socket</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_25">
+                      <property name="title">
+                       <string>Svaha Service List</string>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_33">
+                       <item row="0" column="2">
+                        <widget class="QToolButton" name="toolButton_17">
+                         <property name="enabled">
+                          <bool>false</bool>
+                         </property>
+                         <property name="text">
+                          <string>x</string>
+                         </property>
+                         <property name="autoRaise">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0" colspan="2">
+                        <layout class="QHBoxLayout" name="horizontalLayout_28">
+                         <item>
+                          <widget class="QComboBox" name="cbAcProfile">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="leAdd2SvahaService">
+                           <property name="placeholderText">
+                            <string>IPv4:Port or [IPv4 or IPv6]:Port or URL:Port</string>
+                           </property>
+                           <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="tbAdd2SvahaService">
+                           <property name="text">
+                            <string>Add</string>
+                           </property>
+                           <property name="autoRaise">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="0" column="3">
+                        <spacer name="horizontalSpacer_43">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeType">
+                          <enum>QSizePolicy::Preferred</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>95</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="1" column="2">
+                        <spacer name="verticalSpacer_10">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>20</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="0" rowspan="2">
+                        <widget class="QTableView" name="tvSvahaService">
+                         <property name="editTriggers">
+                          <set>QAbstractItemView::NoEditTriggers</set>
+                         </property>
+                         <property name="alternatingRowColors">
+                          <bool>true</bool>
+                         </property>
+                         <property name="selectionBehavior">
+                          <enum>QAbstractItemView::SelectRows</enum>
+                         </property>
+                         <attribute name="horizontalHeaderDefaultSectionSize">
+                          <number>200</number>
+                         </attribute>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_26">
+                      <property name="title">
+                       <string>Day Profiles</string>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_34">
+                       <item row="5" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_34">
+                         <item>
+                          <widget class="QCheckBox" name="cbMon_3">
+                           <property name="text">
+                            <string>Mon</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbTue_3">
+                           <property name="text">
+                            <string>Tue</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbWed_3">
+                           <property name="text">
+                            <string>Wed</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbThu_3">
+                           <property name="text">
+                            <string>Thu</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbFri_3">
+                           <property name="text">
+                            <string>Fri</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbSat_3">
+                           <property name="text">
+                            <string>Sat</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="cbSun_3">
+                           <property name="text">
+                            <string>Sun</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_44">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="7" column="0">
+                        <widget class="QLabel" name="label_86">
+                         <property name="text">
+                          <string>Connect to Svaha service: Time Interval</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="6" column="0">
+                        <widget class="Line" name="line_11">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="8" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_35">
+                         <item>
+                          <widget class="QLabel" name="label_87">
+                           <property name="text">
+                            <string>From</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QTimeEdit" name="teFrom_3">
+                           <property name="displayFormat">
+                            <string>HH:mm</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_88">
+                           <property name="text">
+                            <string>To</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QTimeEdit" name="teTo_3">
+                           <property name="displayFormat">
+                            <string>HH:mm</string>
+                           </property>
+                           <property name="time">
+                            <time>
+                             <hour>23</hour>
+                             <minute>59</minute>
+                             <second>59</second>
+                            </time>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_45">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="4" column="1" rowspan="2">
+                        <spacer name="horizontalSpacer_46">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeType">
+                          <enum>QSizePolicy::Preferred</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QToolButton" name="toolButton_18">
+                         <property name="enabled">
+                          <bool>false</bool>
+                         </property>
+                         <property name="text">
+                          <string>x</string>
+                         </property>
+                         <property name="autoRaise">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="9" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_40">
+                         <item>
+                          <widget class="QToolButton" name="tbAddDayProfile">
+                           <property name="text">
+                            <string>Add</string>
+                           </property>
+                           <property name="autoRaise">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_47">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="4" column="0">
+                        <widget class="QLabel" name="label_89">
+                         <property name="text">
+                          <string>Connect to Svaha service: Days of week</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="3" column="0">
+                        <widget class="Line" name="line_12">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_41">
+                         <item>
+                          <widget class="QLabel" name="label_90">
+                           <property name="text">
+                            <string>Name</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLineEdit" name="leName4dayProfileSvaha">
+                           <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="1" column="1">
+                        <spacer name="verticalSpacer_16">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>20</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="0" rowspan="2">
+                        <widget class="QTableView" name="tvDayProfiles4svaha">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="editTriggers">
+                          <set>QAbstractItemView::NoEditTriggers</set>
+                         </property>
+                         <property name="alternatingRowColors">
+                          <bool>true</bool>
+                         </property>
+                         <property name="selectionMode">
+                          <enum>QAbstractItemView::SingleSelection</enum>
+                         </property>
+                         <property name="selectionBehavior">
+                          <enum>QAbstractItemView::SelectRows</enum>
+                         </property>
+                         <attribute name="horizontalHeaderDefaultSectionSize">
+                          <number>200</number>
+                         </attribute>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_11">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>31</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
                   <widget class="QWidget" name="page_11">
                    <layout class="QVBoxLayout" name="verticalLayout_13">
                     <item>
@@ -1313,155 +2557,82 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QGroupBox" name="groupBox_5">
-                      <property name="title">
-                       <string>Delete Tables</string>
+                     <widget class="QGroupBox" name="groupBox_20">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
-                      <layout class="QGridLayout" name="gridLayout_8">
-                       <item row="0" column="0" rowspan="4">
-                        <widget class="QListView" name="lvDeleteTable">
+                      <property name="title">
+                       <string>Device Commands</string>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_27">
+                       <item row="0" column="0">
+                        <layout class="QHBoxLayout" name="horizontalLayout_25">
+                         <item>
+                          <widget class="QComboBox" name="cbDevCommand">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="pbDevCommands">
+                           <property name="text">
+                            <string>Read</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_32">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeType">
+                            <enum>QSizePolicy::Preferred</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>755</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QLineEdit" name="leDevCommand">
                          <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="editTriggers">
-                          <set>QAbstractItemView::NoEditTriggers</set>
+                         <property name="maxLength">
+                          <number>1400</number>
                          </property>
-                         <property name="showDropIndicator" stdset="0">
-                          <bool>false</bool>
+                         <property name="placeholderText">
+                          <string>Command line</string>
                          </property>
-                         <property name="alternatingRowColors">
-                          <bool>true</bool>
-                         </property>
-                         <property name="selectionMode">
-                          <enum>QAbstractItemView::SingleSelection</enum>
-                         </property>
-                         <property name="selectionBehavior">
-                          <enum>QAbstractItemView::SelectItems</enum>
-                         </property>
-                         <property name="batchSize">
-                          <number>50</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="3" column="1">
-                        <widget class="QPushButton" name="pbDeleteTable">
-                         <property name="text">
-                          <string>Delete</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="4">
-                        <widget class="QDateTimeEdit" name="dteDeleteTo">
-                         <property name="minimumDate">
-                          <date>
-                           <year>2014</year>
-                           <month>1</month>
-                           <day>1</day>
-                          </date>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="2">
-                        <widget class="QSpinBox" name="sbDeleteIntrvl">
-                         <property name="minimum">
-                          <number>1</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <widget class="QRadioButton" name="rbDeleteTableFrom">
-                         <property name="text">
-                          <string>From</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="4">
-                        <widget class="QComboBox" name="cbDeleteKftnt">
-                         <item>
-                          <property name="text">
-                           <string>Year(s)</string>
-                          </property>
-                         </item>
-                         <item>
-                          <property name="text">
-                           <string>Month(s)</string>
-                          </property>
-                         </item>
-                         <item>
-                          <property name="text">
-                           <string>Day(s)</string>
-                          </property>
-                         </item>
-                         <item>
-                          <property name="text">
-                           <string>Hour(s)</string>
-                          </property>
-                         </item>
-                        </widget>
-                       </item>
-                       <item row="1" column="1">
-                        <widget class="QRadioButton" name="rbDeleteOlder">
-                         <property name="text">
-                          <string>Older than</string>
-                         </property>
-                         <property name="checked">
+                         <property name="clearButtonEnabled">
                           <bool>true</bool>
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="6">
-                        <widget class="QPushButton" name="pbDeleteAllTables">
-                         <property name="text">
-                          <string>Delete All Tables</string>
+                       <item row="2" column="0">
+                        <widget class="QPlainTextEdit" name="pteMan4commands">
+                         <property name="readOnly">
+                          <bool>true</bool>
+                         </property>
+                         <property name="plainText">
+                          <string>Please press &quot;Read&quot; to show help</string>
                          </property>
                         </widget>
-                       </item>
-                       <item row="0" column="2">
-                        <widget class="QDateTimeEdit" name="dteDeleteFrom">
-                         <property name="minimumDate">
-                          <date>
-                           <year>2014</year>
-                           <month>1</month>
-                           <day>1</day>
-                          </date>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="2" column="1">
-                        <spacer name="verticalSpacer_4">
-                         <property name="orientation">
-                          <enum>Qt::Vertical</enum>
-                         </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>20</width>
-                           <height>100</height>
-                          </size>
-                         </property>
-                        </spacer>
-                       </item>
-                       <item row="0" column="3">
-                        <widget class="QLabel" name="label_27">
-                         <property name="text">
-                          <string>to</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="5">
-                        <spacer name="horizontalSpacer_10">
-                         <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
-                         </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>12</width>
-                           <height>20</height>
-                          </size>
-                         </property>
-                        </spacer>
                        </item>
                       </layout>
                      </widget>
@@ -1483,6 +2654,16 @@
                   </widget>
                   <widget class="QWidget" name="page_21">
                    <layout class="QGridLayout" name="gridLayout_19">
+                    <item row="0" column="1" colspan="2">
+                     <widget class="QSpinBox" name="sbMetrRetry">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>30</number>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_56">
                       <property name="text">
@@ -1490,24 +2671,14 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="1" colspan="2">
-                     <widget class="QSpinBox" name="sbMetrRetry">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>5</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
+                    <item row="2" column="0">
                      <widget class="QLabel" name="label_57">
                       <property name="text">
                        <string>Poll wait (sec)</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="1" colspan="2">
+                    <item row="2" column="1" colspan="2">
                      <widget class="QSpinBox" name="sbWati4Poll">
                       <property name="maximum">
                        <number>300</number>
@@ -1517,49 +2688,49 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="0">
+                    <item row="3" column="0">
                      <widget class="QLabel" name="label_61">
                       <property name="text">
                        <string>HardAddressing</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="1" colspan="2">
+                    <item row="3" column="1" colspan="2">
                      <widget class="QCheckBox" name="cbHardAddrsn">
                       <property name="text">
                        <string>Enable</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="0" colspan="3">
-                     <widget class="Line" name="line">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="0">
-                     <widget class="QLabel" name="label_58">
-                      <property name="text">
-                       <string>Wait4Embee</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="2">
+                    <item row="5" column="2">
                      <widget class="QCheckBox" name="cbW4E">
                       <property name="text">
                        <string>Enable</string>
                       </property>
                      </widget>
                     </item>
+                    <item row="4" column="0" colspan="3">
+                     <widget class="Line" name="line">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="5" column="0">
+                     <widget class="QLabel" name="label_58">
+                      <property name="text">
+                       <string>Wait4Embee</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="0">
                      <widget class="QLabel" name="label_59">
                       <property name="text">
                        <string>Retry before</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="2">
+                    <item row="6" column="2">
                      <widget class="QSpinBox" name="sbW4ERtrBf">
                       <property name="minimum">
                        <number>1</number>
@@ -1569,14 +2740,21 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="6" column="0">
+                    <item row="8" column="0" colspan="3">
+                     <widget class="Line" name="line_4">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="7" column="0">
                      <widget class="QLabel" name="label_60">
                       <property name="text">
                        <string>Retry after</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="6" column="2">
+                    <item row="7" column="2">
                      <widget class="QSpinBox" name="sbW4ErA">
                       <property name="minimum">
                        <number>1</number>
@@ -1586,14 +2764,21 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="7" column="0" colspan="3">
-                     <widget class="Line" name="line_4">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                    <item row="9" column="2">
+                     <widget class="QCheckBox" name="cbTimeCorrection">
+                      <property name="text">
+                       <string>Enable</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="7" column="3">
+                    <item row="9" column="0" colspan="2">
+                     <widget class="QLabel" name="label_62">
+                      <property name="text">
+                       <string>Time correction</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="8" column="3">
                      <spacer name="horizontalSpacer_22">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -1606,28 +2791,14 @@
                       </property>
                      </spacer>
                     </item>
-                    <item row="8" column="0" colspan="2">
-                     <widget class="QLabel" name="label_62">
-                      <property name="text">
-                       <string>Time correction</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="8" column="2">
-                     <widget class="QCheckBox" name="cbTimeCorrection">
-                      <property name="text">
-                       <string>Enable</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="9" column="0">
+                    <item row="10" column="0">
                      <widget class="QLabel" name="label_63">
                       <property name="text">
                        <string>Max Difference</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="9" column="2">
+                    <item row="10" column="2">
                      <widget class="QSpinBox" name="sbMaxSecDiff">
                       <property name="minimum">
                        <number>3</number>
@@ -1637,27 +2808,10 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="10" column="0" colspan="3">
+                    <item row="11" column="0" colspan="3">
                      <widget class="Line" name="line_5">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="11" column="0" colspan="2">
-                     <widget class="QLabel" name="label_64">
-                      <property name="text">
-                       <string>Plug And Play</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="11" column="2">
-                     <widget class="QCheckBox" name="cbPlgAndPl">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="text">
-                       <string>Enable</string>
                       </property>
                      </widget>
                     </item>
@@ -1673,6 +2827,23 @@
                        </size>
                       </property>
                      </spacer>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_6">
+                      <property name="text">
+                       <string>Meter Retry (FA)</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1" colspan="2">
+                     <widget class="QSpinBox" name="sbMetrRetryFA">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>30</number>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -3779,7 +4950,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1259</width>
+     <width>1237</width>
      <height>20</height>
     </rect>
    </property>

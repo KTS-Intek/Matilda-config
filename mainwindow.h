@@ -20,8 +20,10 @@ public:
     ~MainWindow();
 
 signals:
-    void conn2thisDev(int ,QString, QString , QString , quint16 , int , bool, bool);
-    void data2matilda(quint16 , QVariantHash );
+//  void conn2thisDev(int ,QString, QString , QString , quint16 , int , bool, bool);
+    void conn2thisDev(int, QString, QString, QString, QString, quint16, int, bool, bool, bool, QString, bool);
+
+    void data2matilda(quint16 , QJsonObject );
     void closeConnection();
 
 
@@ -37,6 +39,17 @@ signals:
     void hideWaitMess();
     void showWaitMess(int);
 
+    void kickThrd();
+
+
+
+    void stopDaServer();
+    void startDaServer(qint8,quint16); //mode , port
+
+    void data2coordiantor(QByteArray);
+    void dataFromCoordinator(QByteArray);
+
+    void onDaServerStateS(bool);
 
 
 private slots:
@@ -66,7 +79,8 @@ private slots:
 
     void on_pbWrite_clicked();
 
-    void mWrite2RemoteDev(quint16 command, QVariantHash hash = QVariantHash());
+    void mWrite2RemoteDev(quint16 command, QJsonObject jobj = QJsonObject());
+
     void on_pushButton_2_clicked();
 
     void on_pushButton_clicked();
@@ -126,13 +140,45 @@ private slots:
     void checkLineAddMeterNIandPasswd();
 
 
+    void on_pbDevCommands_clicked();
+
+    void on_pbOpenCloseDA_clicked(bool checked);
+
+    void on_tbAdd2SvahaService_2_clicked();
+
+    void on_tbAddDayProfile_2_clicked();
+
+    void on_tbAdd2SvahaService_clicked();
+
+    void on_tbAddDayProfile_clicked();
+
+    void on_toolButton_17_clicked();
+
+    void on_toolButton_18_clicked();
+
+    void on_toolButton_15_clicked();
+
+    void on_toolButton_16_clicked();
+
+    void on_tvSvahaService_2_clicked(const QModelIndex &index);
+
+    void on_tvDayProfiles4svaha_2_clicked(const QModelIndex &index);
+
+    void on_tvSvahaService_clicked(const QModelIndex &index);
+
+    void on_tvDayProfiles4svaha_clicked(const QModelIndex &index);
+
+    void on_toolButton_12_clicked();
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);
 
-    void data2gui(quint16 command, QVariantHash hash);
+    void data2gui(quint16 command, QJsonObject jobj);
     void onErrorWrite();
     void showMess(QString mess);
+    void showMessSmpl(QString mess);
+
     void authrizeAccess(int accessLevel); //0 - closed, 1 - root, 2 - operator, 3 - guest
 
     void noAnswerFromDev();
@@ -141,6 +187,8 @@ public slots:
 
     void onPhysValChanged(QStringList n,QStringList l);
 
+    void onDaServiceState(bool isListen);
+    void onYouCanSelectDevice(QStringList listDev);
 
 
 private:
@@ -186,6 +234,11 @@ private:
     QStandardItemModel *modelPollStat;
     QStandardItemModel *modelProfile4Hash;
 
+    QStandardItemModel *modelSvahaList;
+    QStandardItemModel *modelDayProfile4mac;
+
+    QStandardItemModel *modelPeredavatorHost;
+    QStandardItemModel *modelDayProfile4peredavator;
 
 
     MySortFilterProxyModel *proxy_modelDevOptions;

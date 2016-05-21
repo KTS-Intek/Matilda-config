@@ -13,6 +13,9 @@
 #include "energydialog.h"
 #include "wait4answerdialog.h"
 #include "insertmeterdialog.h"
+#include "directaccesmatildaservice.h"
+#include "selectdevbymacaddrdialog.h"
+#include "scanipdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,6 +39,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     modelPollStat = new QStandardItemModel(0,8, this);
 
+
+    modelSvahaList = new QStandardItemModel(0,3, this);
+    modelDayProfile4mac = new QStandardItemModel(0,2, this);
+    modelPeredavatorHost = new QStandardItemModel(0,3, this);
+    modelDayProfile4peredavator = new QStandardItemModel(0,2, this);
 
 
     proxy_modelDevOptions = new MySortFilterProxyModel(this);
@@ -116,7 +124,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lvMeterDataProfile_2->setModel(modelEvent4DB);
     ui->lvMeterDataProfile_3->setModel(modelProfile4Hash);
 
-
+    ui->tvSvahaService->setModel(modelSvahaList);
+    ui->tvSvahaService_2->setModel(modelPeredavatorHost);
+    ui->tvDayProfiles4svaha->setModel(modelDayProfile4mac);
+    ui->tvDayProfiles4svaha_2->setModel(modelDayProfile4peredavator);
 
 
     ui->stackedWidget->setCurrentIndex(0);
@@ -135,26 +146,32 @@ MainWindow::MainWindow(QWidget *parent) :
 //##########################################################################################
 MainWindow::~MainWindow()
 {
+    emit kickThrd();
     delete ui;
 }
 //##########################################################################################
 void MainWindow::initializeMatilda()
 {
-    QStringList l = tr("About Object,Date and time,State,Statistic of exchange,Network Interfaces,Meter Plugin (Activated),Application events,Zbyrator events,GPRS Settings,Administration,"
+    QStringList l = tr("About Object,Date and time,State,Statistic of exchange,System Info,Network Interfaces,Meter Plugin (Activated),Application events,Zbyrator events,GPRS Settings,"
+                       "Serial Log,Error events,Warning events,Direct Access,Direct Access Active Client,Matilda Active Client,Administration,"
                        "Poll Settings,Poll schedule,Meter list,Database,Meter logs,Hash summ").split(",");
 
-    QStringList m = QString("%1,0,0,0,0,0,0,0,%2,0,%3,%4,%5,0,0,0")
+    QStringList m = QString("%1,0,0,0,0,0,0,0,0,%2,0,0,0,%3,%4,%5,0,%6,%7,%8,0,0,0")
             .arg(COMMAND_WRITE_ABOUT_OBJECT)
             .arg(COMMAND_WRITE_GPRS_SETT)
+            .arg(COMMAND_WRITE_DA_SERVICE_SETT)
+            .arg(COMMAND_WRITE_PEREDAVATOR_AC_SETT)
+            .arg(COMMAND_WRITE_MATILDA_AC_SETT)
             .arg(COMMAND_WRITE_POLL_SETT)
             .arg(COMMAND_WRITE_POLL_SCHEDULE)
             .arg(COMMAND_WRITE_METER_LIST_FRAMED)
             .split(",") ;
 
     QList<int> listInt;
-    listInt << COMMAND_READ_ABOUT_OBJECT << COMMAND_READ_DATE_SETT << COMMAND_READ_STATE << COMMAND_READ_POLL_STATISTIC
+    listInt << COMMAND_READ_ABOUT_OBJECT << COMMAND_READ_DATE_SETT << COMMAND_READ_STATE << COMMAND_READ_POLL_STATISTIC << COMMAND_READ_SYSTEM_SETTINGS
             << COMMAND_READ_IFCONFIG << COMMAND_READ_ABOUT_PLG << COMMAND_READ_APP_LOG
-            << COMMAND_READ_ZBR_LOG << COMMAND_READ_GPRS_SETT << 0 << COMMAND_READ_POLL_SETT
+            << COMMAND_READ_ZBR_LOG << COMMAND_READ_GPRS_SETT << COMMAND_READ_SERIAL_LOG << COMMAND_READ_PLUGIN_LOG_ERROR << COMMAND_READ_PLUGIN_LOG_WARN << COMMAND_READ_DA_SERVICE_SETT << COMMAND_READ_PEREDAVATOR_AC_SETT
+            << COMMAND_READ_MATILDA_AC_SETT << 0 << COMMAND_READ_POLL_SETT
             << COMMAND_READ_POLL_SCHEDULE << COMMAND_READ_METER_LIST_FRAMED << COMMAND_READ_DATABASE << COMMAND_READ_METER_LOGS_GET_TABLES << COMMAND_READ_TABLE_HASH_SUMM;
 
 
@@ -181,8 +198,9 @@ void MainWindow::initializeMatilda()
 
 
     matildaclient *client = new matildaclient;
-    connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,quint16,int,bool,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,quint16,int,bool,bool)) );
-    connect(this, SIGNAL(data2matilda(quint16,QVariantHash)), client, SLOT(data2matilda(quint16,QVariantHash)) );
+//    connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,quint16,int,bool,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,quint16,int,bool,bool)) );
+    connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)) );
+    connect(this, SIGNAL(data2matilda(quint16,QJsonObject)), client, SLOT(data2matilda(quint16,QJsonObject)) );
     connect(this, SIGNAL(closeConnection()), client, SLOT(closeConnection()) );
 
     connect(client, SIGNAL(onErrorWrite()), dialog,SLOT(hideAnimation()), Qt::DirectConnection );
@@ -195,6 +213,11 @@ void MainWindow::initializeMatilda()
     connect(client, SIGNAL(uploadProgress(int,QString)), dialog, SLOT(uploadProgress(int,QString)), Qt::DirectConnection );
     connect(client, SIGNAL(startWait4AnswerTimer(int)), dialog, SLOT(resetCounter()), Qt::DirectConnection );
 
+    connect(client, SIGNAL(onYouCanSelectDevice(QStringList)), this, SLOT(onYouCanSelectDevice(QStringList)) );
+
+    connect(client, SIGNAL(dataFromCoordinator(QByteArray)), this, SIGNAL(dataFromCoordinator(QByteArray)) );
+    connect(this, SIGNAL(data2coordiantor(QByteArray)), client, SLOT(data2coordiantor(QByteArray)) );
+    connect(this, SIGNAL(onDaServerStateS(bool)), client, SLOT(onDaOpened(bool)) );
 
 
     connect(dialog, SIGNAL(noAnswerFromDev()), client, SLOT(stopAllNow()), Qt::DirectConnection );
@@ -205,7 +228,7 @@ void MainWindow::initializeMatilda()
 
 
     connect(client, SIGNAL(onConnectedStateChanged(bool)), SLOT(onConnectedStateChanged(bool)) );
-    connect(client, SIGNAL(data2gui(quint16,QVariantHash)), SLOT(data2gui(quint16,QVariantHash)) );
+    connect(client, SIGNAL(data2gui(quint16,QJsonObject)), SLOT(data2gui(quint16,QJsonObject)) );
     connect(client, SIGNAL(onErrorWrite()), SLOT(onErrorWrite()) );
     connect(client, SIGNAL(showMess(QString)) , SLOT(showMess(QString)) );
     connect(client, SIGNAL(authrizeAccess(int)), SLOT(authrizeAccess(int)) );
@@ -221,6 +244,7 @@ void MainWindow::initializeMatilda()
     byteReceivNotComprssd = 0;
 
     QThread *thread = new QThread(this);
+    connect(this, SIGNAL(kickThrd()), thread, SLOT(quit()) );
     client->moveToThread(thread);
     thread->start();
 
@@ -498,6 +522,25 @@ void MainWindow::initializeMatilda()
     connect(ui->cbAddMeterModel, SIGNAL(currentIndexChanged(int)), validTmr, SLOT(start()) );
     connect(validTmr, SIGNAL(timeout()), this, SLOT(checkLineAddMeterNIandPasswd()) );
 
+    DirectAccesMatildaService *daService = new DirectAccesMatildaService;
+    connect(this, SIGNAL(startDaServer(qint8,quint16)), daService, SLOT(startServerNow(qint8,quint16)) );
+    connect(this, SIGNAL(stopDaServer()), daService, SLOT(stopServerNow()) );
+    connect(daService, SIGNAL(showMess(QString)), this, SLOT(showMessSmpl(QString)) );
+    connect(daService, SIGNAL(onStateChanged(bool)), this, SLOT(onDaServiceState(bool)) );
+
+    connect(daService, SIGNAL(onStateChanged(QString)), ui->lblDaState, SLOT(setText(QString)) );
+
+    connect(this, SIGNAL(dataFromCoordinator(QByteArray)), daService, SIGNAL(dataFromCoordinator(QByteArray)) );
+    connect(daService, SIGNAL(data2coordiantor(QByteArray)), this, SIGNAL(data2coordiantor(QByteArray)) );
+    connect(daService, SIGNAL(onStateChanged(bool)), this, SIGNAL(onDaServerStateS(bool)) );
+
+    connect(daService, SIGNAL(onDasStarted(QString)), ui->pteDasIpList, SLOT(appendPlainText(QString)) );
+    connect(daService, SIGNAL(onDasStopped()), ui->pteDasIpList, SLOT(clear()) );
+
+    QThread *daThrd = new QThread(this);
+    daService->moveToThread(daThrd);
+    connect(this, SIGNAL(kickThrd()) , daThrd, SLOT(quit()) );
+    daThrd->start();
 
 }
 
@@ -508,6 +551,7 @@ void MainWindow::onConnectedStateChanged(bool isConnected)
         ui->actionDevice->setEnabled(ui->pbLogOut->isEnabled());
         if(!isConnected){
             emit closeConnectionDbg();
+            emit stopDaServer();
         }
 
         emit setSttsNewPixmap(isConnected ? QPixmap(":/katynko/deviceisready.png") : QPixmap(":/katynko/deviceisdisconnected.png"));
@@ -520,9 +564,10 @@ void MainWindow::onConnectedStateChangedDbg(bool isConnected)
 {
 //    ui->pbStartStream->setEnabled(!isConnected);
 //    ui->pbStopStream->setEnabled(isConnected);
+    Q_UNUSED(isConnected);
 }
 //##########################################################################################
-void MainWindow::data2gui(quint16 command, QVariantHash hash)
+void MainWindow::data2gui(quint16 command, QJsonObject jobj)
 {
 /*
     QList<int> listInt;
@@ -573,7 +618,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
 
         ui->cbAddMeterModel->clear();
-        QVariantList l = hash.value("b").toList();
+        QVariantList l =  jobj.value("b").toArray().toVariantList();
 
         QVariantHash h;
         for(int i = 0, iMax = l.size(); i < iMax; i++){
@@ -598,12 +643,12 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
     case COMMAND_READ_ABOUT_PLG:{
 
-        QList<QString> l = hash.keys();
+        QList<QString> l = jobj.keys();
         qSort(l);
         ui->pteMeterPlg->clear();
         ui->pteMeterPlg->appendPlainText(tr("#  Plugin\tCreate Date and Time\t\tInfo"));
         for(int i = 0, iMax = l.size(); i < iMax; i++){
-            QStringList sl = varList2strList(hash.value(l.at(i)).toList());
+            QStringList sl = varList2strList(jobj.value(l.at(i)).toArray().toVariantList());
             ui->pteMeterPlg->appendPlainText( QString("%1. %2\t%3")
                                               .arg(i + 1)
                                               .arg(l.at(i))
@@ -627,26 +672,26 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                                 .arg( tz.isDaylightTime(ui->dtLocal->dateTime()) ? tr("On") : tr("Off"))
                                 );
 
-        QDateTime devTime = dateTimeFromStr(hash.value("dt").toString());
+        QDateTime devTime = dateTimeFromStr(jobj.value("dt").toString());
 
         if(devTime.isValid()){
             ui->lblLocalTZ->setText(tr("%1, Time difference: %2 s")
                                     .arg(ui->lblLocalTZ->text())
                                     .arg(dateTime.secsTo(devTime)));
         }
-        dateTime.setTimeZone( QTimeZone(hash.value("tz").toByteArray()));
+        dateTime.setTimeZone( QTimeZone(jobj.value("tz").toString().toLocal8Bit()));
 
-        ui->pteMatildaTime->appendPlainText(hash.value("timedatectl", tr("No data")).toString());
-        if(hash.contains("tz") && hash.contains("uo") )
+        ui->pteMatildaTime->appendPlainText( jobj.value("timedatectl").toString().isEmpty() ? tr("No data") : jobj.value("timedatectl").toString());
+        if(jobj.contains("tz") && jobj.contains("uo") )
             ui->lblDeviceTz->setText(tr("Device time zone: %1 (%2, %3)")
-                                 .arg(hash.value("tz").toString())
+                                 .arg(jobj.value("tz").toString())
                                  .arg(dateTime.timeZoneAbbreviation())
-                                 .arg(emailUtcOffset(hash.value("uo").toInt()))
+                                 .arg(emailUtcOffset(jobj.value("uo").toInt()))
                                  );
         else
             ui->lblDeviceTz->setText(tr("Device time zone: n/a"));
 
-        QString tzStr = hash.value("tz").toString();
+        QString tzStr = jobj.value("tz").toString();
 
         for(int i = 0, iMax = modelTimeZone->rowCount(); i < iMax; i++){
 
@@ -659,32 +704,32 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         }
         ui->pbChTz->setEnabled(true);
 
-        ui->pbEnDisNtpSync->setEnabled(hash.contains("ntp-dead"));
-        ui->pbDisableNtp->setEnabled(hash.contains("ntp-dead"));
+        ui->pbEnDisNtpSync->setEnabled(jobj.contains("ntp-dead"));
+        ui->pbDisableNtp->setEnabled(jobj.contains("ntp-dead"));
 
-        ui->pbWriteLocalTime->setEnabled(hash.value("ntp-dead").toInt() != 0);
+        ui->pbWriteLocalTime->setEnabled(jobj.value("ntp-dead").toInt() != 0);
 
-        ui->pteNtpList->appendPlainText(hash.value("ntp-line").toString().split(" ", QString::SkipEmptyParts).join("\n"));
-        ui->pteNtpList->setReadOnly(!hash.value("ntp-dead").toInt() != 0);
+        ui->pteNtpList->appendPlainText(jobj.value("ntp-line").toString().split(" ", QString::SkipEmptyParts).join("\n"));
+        ui->pteNtpList->setReadOnly(!jobj.value("ntp-dead").toInt() != 0);
 
         break;}
 
     case COMMAND_READ_GPRS_SETT:{
-        ui->leGPRS_Apn->setText(hash.value("apn").toString());
-        ui->leGPRS_Apn_2->setText(hash.value("userName").toString());
-        ui->leGPRS_Apn_3->setText(hash.value("password").toString());
+        ui->leGPRS_Apn->setText(jobj.value("apn").toString());
+        ui->leGPRS_Apn_2->setText(jobj.value("userName").toString());
+        ui->leGPRS_Apn_3->setText(jobj.value("password").toString());
         break;}
 
     case COMMAND_READ_STATE:{
 
-        QList<QString> l = hash.keys();
+        QList<QString> l = jobj.keys();
         qSort(l);
         ui->pteState->clear();
         QStringList listVal;
         int maxKeyLen = 5;
 //        ui->pteMeterPlg->appendPlainText(tr("#  Plugin\tCreate Date and Time\tInfo"));
         for(int i = 0, iMax = l.size(); i < iMax; i++){
-            listVal.append(hash.value(l.at(i)).toString() );
+            listVal.append(jobj.value(l.at(i)).toString() );
             if(l.at(i).length() > maxKeyLen)
                 maxKeyLen = l.at(i).length();
         }
@@ -700,19 +745,135 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         break;}
 
+
+    case COMMAND_READ_SYSTEM_SETTINGS:{
+        ui->pteSysInfo->clear();
+        ui->pteSysInfo->appendPlainText(jobj.value("s").toString());
+        break;}
+
+//    case COMMAND_READ_TASK_INFO:{
+//        ui->pteRunningProc->clear();
+//        ui->pteRunningProc->appendPlainText(dataVar.toByteArray());
+//        break;}
+
+
     case COMMAND_READ_IFCONFIG:{
         ui->pteIfconfig->clear();
-        ui->pteIfconfig->appendPlainText(hash.value("s").toString());
+        ui->pteIfconfig->appendPlainText(jobj.value("s").toString());
         break;}
 
     case COMMAND_READ_APP_LOG:{
         ui->pteAppLog->clear();
-        ui->pteAppLog->appendPlainText(hash.value("s").toString());
+        ui->pteAppLog->appendPlainText(jobj.value("s").toString());
+        break;}
+
+    case COMMAND_READ_SERIAL_LOG:{
+        ui->pteSerialLog_2->clear();;
+        ui->pteSerialLog_2->appendPlainText(jobj.value("s").toString());
+        break;}
+
+
+    case COMMAND_READ_PLUGIN_LOG_ERROR:{
+        ui->pteErrorLog->clear();
+        ui->pteErrorLog->appendPlainText(jobj.value("s").toString());
+        break; }
+
+    case COMMAND_READ_PLUGIN_LOG_WARN:{
+        ui->pteWarningLog->clear();
+        ui->pteWarningLog->appendPlainText(jobj.value("s").toString());
+        break;  }
+
+    case COMMAND_READ_DA_SERVICE_SETT:{
+
+        switch(jobj.value("m").toInt(0)){
+        case 1: ui->rbDasAlwaysOn->setChecked(true);break;
+        case 2: ui->rbDasAlwaysOnMgc->setChecked(true);break;
+        case 3: ui->rbDasAlwaysOff->setChecked(true);break;
+        }
+        ui->cbDasAlwaysInHex->setChecked(jobj.value("msh").toBool(false));
+        QString str = QString(  QByteArray::fromBase64( jobj.value("ms").toString().toLocal8Bit())) ;//h.value("ms").toByteArray();
+        qDebug() << str << jobj.value("ms");
+        ui->leDasAlwaysOnMS->setText( str);
+        break;}
+
+    case COMMAND_READ_PEREDAVATOR_AC_SETT:{
+
+        ui->cbEnablePAC->setChecked(jobj.value("e").toBool());
+        modelPeredavatorHost->clear();
+        modelPeredavatorHost->setHorizontalHeaderLabels(tr("Remote host;Day Profile Name;Status").split(";"));
+
+
+        QVariantList list = jobj.value("sl").toArray().toVariantList();
+        for(int i = 0, iMax = list.size() ; i < iMax; i++){
+            QStringList lStr = list.at(i).toString().split("\t");
+            if(lStr.size() != 3)
+                continue;
+
+            QList<QStandardItem*> l;
+            for(int j = 0; j < 3; j++)
+                l.append(new QStandardItem(lStr.at(j)));
+            modelPeredavatorHost->appendRow(l);
+        }
+
+        modelDayProfile4peredavator->clear();
+        ui->cbAcProfile_2->clear();
+        modelDayProfile4peredavator->setHorizontalHeaderLabels(tr("Name;Schedule").split(";"));
+
+        list = jobj.value("sdp").toArray().toVariantList();
+        for(int i = 0, iMax = list.size() ; i < iMax; i++){
+            QStringList lStr = list.at(i).toString().split("\t");
+            if(lStr.size() != 2)
+                continue;
+
+            QList<QStandardItem*> l;
+            for(int j = 0; j < 2; j++)
+                l.append(new QStandardItem(lStr.at(j)));
+            modelDayProfile4peredavator->appendRow(l);
+            ui->cbAcProfile_2->addItem(lStr.at(0));
+        }
+
+        break;}
+
+    case COMMAND_READ_MATILDA_AC_SETT:{
+
+        ui->cbEnableMAC->setChecked(jobj.value("e").toBool());
+        modelSvahaList->clear();
+        modelSvahaList->setHorizontalHeaderLabels(tr("Remote host;Day Profile Name;Status").split(";"));
+
+
+        QVariantList list = jobj.value("sl").toArray().toVariantList();
+        for(int i = 0, iMax = list.size() ; i < iMax; i++){
+            QStringList lStr = list.at(i).toString().split("\t");
+            if(lStr.size() != 3)
+                continue;
+
+            QList<QStandardItem*> l;
+            for(int j = 0; j < 3; j++)
+                l.append(new QStandardItem(lStr.at(j)));
+            modelSvahaList->appendRow(l);
+        }
+
+        modelDayProfile4mac->clear();
+        ui->cbAcProfile->clear();
+        modelDayProfile4mac->setHorizontalHeaderLabels(tr("Name;Schedule").split(";"));
+
+        list = jobj.value("sdp").toArray().toVariantList();
+        for(int i = 0, iMax = list.size() ; i < iMax; i++){
+            QStringList lStr = list.at(i).toString().split("\t");
+            if(lStr.size() != 2)
+                continue;
+
+            QList<QStandardItem*> l;
+            for(int j = 0; j < 2; j++)
+                l.append(new QStandardItem(lStr.at(j)));
+            modelDayProfile4mac->appendRow(l);
+            ui->cbAcProfile->addItem(lStr.first());
+        }
         break;}
 
     case COMMAND_READ_POLL_SCHEDULE:{
 
-        QVariantList l = hash.value(QString::number(POLL_CODE_READ_CURRENT)).toList();
+        QVariantList l = jobj.value(QString::number(POLL_CODE_READ_CURRENT)).toArray().toVariantList();
         while(l.size() < 5)
             l.append(0);
 
@@ -721,7 +882,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->cbProfileNow->setCurrentIndex( comboIndxFromKftntAndIntrvl(l.at(4).toInt(), l.at(3).toInt()));
 
 
-        l = hash.value(QString::number(POLL_CODE_READ_END_DAY)).toList();
+        l = jobj.value(QString::number(POLL_CODE_READ_END_DAY)).toArray().toVariantList();
         while(l.size() < 5)
             l.append(0);
 
@@ -739,7 +900,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbGlbnDay->setValue(l.at(2).toInt());
 
 
-        l = hash.value(QString::number(POLL_CODE_READ_END_MONTH)).toList();
+        l = jobj.value(QString::number(POLL_CODE_READ_END_MONTH)).toArray().toVariantList();
         while(l.size() < 5)
             l.append(0);
 
@@ -756,7 +917,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         }
         ui->cbProfileEOM->setCurrentIndex(indx);
 
-        l = hash.value(QString::number(POLL_CODE_READ_POWER)).toList();
+        l = jobj.value(QString::number(POLL_CODE_READ_POWER)).toArray().toVariantList();
         while(l.size() < 5)
             l.append("0");
 
@@ -768,7 +929,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbProfilePower->setValue(l.at(1).toInt());
 
 
-        l = hash.value(QString::number(POLL_CODE_READ_VOLTAGE)).toList();
+        l = jobj.value(QString::number(POLL_CODE_READ_VOLTAGE)).toArray().toVariantList();
         while(l.size() < 5)
             l.append("0");
 
@@ -777,7 +938,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbProfileVoltage->setValue(l.at(1).toInt());
 //        ui->sbGlbnVoltage->setValue(l.at(2).toInt());
 
-        l = hash.value(QString::number(POLL_CODE_METER_STATUS)).toList();
+        l = jobj.value(QString::number(POLL_CODE_METER_STATUS)).toArray().toVariantList();
         while(l.size() < 5)
             l.append(0);
 
@@ -785,7 +946,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbProfileMeterLog->setValue( l.at(1).toInt());
         ui->sbGlbnMeterLog->setValue(l.at(2).toInt());
 
-        l = hash.value("dow").toList();//1 - mon, 2 - tue, 3 - wed
+        l = jobj.value("dow").toArray().toVariantList();//1 - mon, 2 - tue, 3 - wed
         unCheckEvrDay();
         bool checked = false;
         ui->cbMon->setChecked(checked);
@@ -819,8 +980,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         if(evrDay == 28 && l.size() == 7)
             ui->cbEvrDay->setChecked(true);
 
-        ui->teFrom->setTime(QTime::fromString(hash.value("tiFrom").toString(), "hh:mm"));
-        ui->teTo->setTime(QTime::fromString(hash.value("tiTo").toString(), "hh:mm"));
+        ui->teFrom->setTime(QTime::fromString(jobj.value("tiFrom").toString(), "hh:mm"));
+        ui->teTo->setTime(QTime::fromString(jobj.value("tiTo").toString(), "hh:mm"));
 
 
 
@@ -829,19 +990,19 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     case COMMAND_READ_DATABASE:{
 
 
-        QStringList strTimeList = varList2strList(hash.value("d").toList()), strTimeStartIndx = varList2strList(hash.value("di").toList());
+        QStringList strTimeList = varList2strList(jobj.value("d").toArray().toVariantList()), strTimeStartIndx = varList2strList(jobj.value("di").toArray().toVariantList());
 
 
         bool ok;
-        qint64 lastRowId = hash.value("lRwId").toLongLong(&ok);
-        qDebug() << "lastRowId "  << hash.contains("lRwId") << lastRowId;
+        qint64 lastRowId = jobj.value("lRwId").toString().toLongLong(&ok);
+        qDebug() << "lastRowId "  << jobj.contains("lRwId") << lastRowId;
 
-        qint64 tableCount = hash.value("t").toLongLong();
+        qint64 tableCount = jobj.value("t").toString().toLongLong();
 
-        bool itIsGeliks = hash.value("g", false).toBool();// versionName != "Geliks"; if(pollCode == 140 || pollCode == 100) //миттєві значення
+        bool itIsGeliks = (jobj.contains("g") && jobj.value("g").toBool());// versionName != "Geliks"; if(pollCode == 140 || pollCode == 100) //миттєві значення
 
-        if(hash.contains("c")){
-            QStringList columnList = varList2strList(hash.value("c").toList());
+        if(jobj.contains("c")){
+            QStringList columnList = varList2strList(jobj.value("c").toArray().toVariantList());
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -853,10 +1014,10 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             modelDbData->setHorizontalHeaderLabels(columnList);
         }
-        QVariantList listVarData = hash.value("a").toList();
+        QVariantList listVarData = jobj.value("a").toArray().toVariantList();
 
-        qint64 lastTableRowId = hash.value("lTbRwId").toLongLong(&ok);
-        qDebug() << "lastTableRowId "  << hash.contains("lTbRwId") << lastTableRowId;
+        qint64 lastTableRowId = jobj.value("lTbRwId").toString().toLongLong(&ok);
+        qDebug() << "lastTableRowId "  << jobj.contains("lTbRwId") << lastTableRowId;
 
         bool dateInUtc = itIsGeliks;
 
@@ -987,12 +1148,12 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                                  .arg(doneTables)
                                      .arg(lastTableRowId).arg(lastRowId) );
 
-            hash = hashMemoWrite.value(COMMAND_READ_DATABASE);
+            jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_DATABASE));
 
-            hash.insert("lTbRwId", lastTableRowId);
-            hash.insert("lRwId", lastRowId);
+            jobj.insert("lTbRwId", QString::number(lastTableRowId));
+            jobj.insert("lRwId", QString::number(lastRowId));
 
-            mWrite2RemoteDev(COMMAND_READ_DATABASE, hash);
+            emit data2matilda(COMMAND_READ_DATABASE, jobj);
 
         }
 
@@ -1001,11 +1162,11 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     case COMMAND_READ_DATABASE_GET_TABLES:{
 
 
-        QStringList list = varList2strList(hash.value("t").toList());
+        QStringList list = varList2strList(jobj.value("t").toArray().toVariantList());
         bool ok;
-        qint64 lastTableRowId = hash.value("lRwId").toLongLong(&ok);
+        qint64 lastTableRowId = jobj.value("lRwId").toString().toLongLong(&ok);
 
-        qDebug() << "lastRowId " << lastTableRowId << hash.contains("lRwId") << lastTableRowId;
+        qDebug() << "lastRowId " << lastTableRowId << jobj.contains("lRwId") << lastTableRowId;
 
         lastTableList.append(list);
 
@@ -1019,18 +1180,18 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                 doneTables = 0;
                 blockDone = 0;
                 emit uploadProgress( doneTables, tr("Total count: %1 tables, Downloaded: 0 tables").arg(totalTables) );
-                hash = hashMemoWrite.value(COMMAND_READ_DATABASE_GET_VAL);
+                jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_DATABASE_GET_VAL));
 
-                hash.insert("table", lastTableList.first());
-                hash.insert("gcl", true);
+                jobj.insert("table", lastTableList.first());
+                jobj.insert("gcl", true);
                 lastTableRowId = 0;
-                hash.insert("lRwId", lastTableRowId);
-                mWrite2RemoteDev(COMMAND_READ_DATABASE_GET_VAL, hash);
+                jobj.insert("lRwId", QString::number(lastTableRowId));
+                emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, jobj);
             }else{
                 emit uploadProgress( doneTables, tr("Selected: %1 tables").arg(totalTables) );
-                hash = hashMemoWrite.value(COMMAND_READ_DATABASE_GET_TABLES);
-                hash.insert("lRwId", lastTableRowId);
-                mWrite2RemoteDev(COMMAND_READ_DATABASE_GET_TABLES, hash);
+                jobj = QJsonObject::fromVariantHash( hashMemoWrite.value(COMMAND_READ_DATABASE_GET_TABLES));
+                jobj.insert("lRwId", QString::number(lastTableRowId));
+                emit data2matilda(COMMAND_READ_DATABASE_GET_TABLES, jobj);
             }
         }
         break;}
@@ -1038,16 +1199,16 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     case COMMAND_READ_DATABASE_GET_VAL:{
 
 
-        QString strTime = hash.value("d").toString();
+        QString strTime = jobj.value("d").toString();
 
         bool ok;
-        qint64 lastRowId = hash.value("lRwId").toLongLong(&ok);
-        qDebug() << "lastRowId "  << hash.contains("lRwId") << lastRowId;
+        qint64 lastRowId = jobj.value("lRwId").toString().toLongLong(&ok);
+        qDebug() << "lastRowId "  << jobj.contains("lRwId") << lastRowId;
 
-        bool itIsGeliks = hash.value("g", false).toBool();//  140 || 100) //миттєві значення
+        bool itIsGeliks = (jobj.contains("g") && jobj.value("g").toBool());//  140 || 100) //миттєві значення
 
-        if(hash.contains("c")){
-            QStringList columnList = varList2strList( hash.value("c").toList());
+        if(jobj.contains("c")){
+            QStringList columnList = varList2strList( jobj.value("c").toArray().toVariantList());
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -1087,7 +1248,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             columnListSize--;
 
 
-        QVariantList listVarData = hash.value("a").toList();
+        QVariantList listVarData = jobj.value("a").toArray().toVariantList();
 
         int meterSnIndx = itIsGeliks ? 1 : 0;
 
@@ -1150,13 +1311,13 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                                  .arg(totalTables).arg( listVarData.isEmpty() ? tr("Parsed") : tr("Downloaded"))
                                      .arg(doneTables).arg(blockDone).arg(lastRowId) );
 
-            hash = hashMemoWrite.value(COMMAND_READ_DATABASE_GET_VAL);
+            jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_DATABASE_GET_VAL));
 
-            hash.insert("table", lastTableList.first());
-            hash.insert("lRwId", lastRowId);
+            jobj.insert("table", lastTableList.first());
+            jobj.insert("lRwId", QString::number(lastRowId));
 
-//            mWrite2RemoteDev(COMMAND_READ_DATABASE_GET_VAL, h);
-            mWrite2RemoteDev(COMMAND_READ_DATABASE_GET_VAL, hash);
+//            emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, h);
+            emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, jobj);
 
         }
 
@@ -1168,16 +1329,16 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
 
         bool ok;
-        qint64 lastRowId = hash.value("lRwId").toLongLong(&ok);
+        qint64 lastRowId = jobj.value("lRwId").toString().toLongLong(&ok);
 
-        qDebug() << "lastRowId " << lastRowId << hash.contains("lRwId") << lastRowId;
+        qDebug() << "lastRowId " << lastRowId << jobj.contains("lRwId") << lastRowId;
 
-        qint64 lastTableRowId = hash.value("lTbRwId").toLongLong(&ok);
-        qDebug() << "lastRowId " << lastTableRowId << hash.contains("lTbRwId") << lastRowId;
+        qint64 lastTableRowId = jobj.value("lTbRwId").toString().toLongLong(&ok);
+        qDebug() << "lastRowId " << lastTableRowId << jobj.contains("lTbRwId") << lastRowId;
 
-        qint64 tableCount = hash.value("t").toLongLong();
-        if(hash.contains("c")){
-            QStringList columnList = varList2strList(hash.value("c").toList());
+        qint64 tableCount = jobj.value("t").toString().toLongLong();
+        if(jobj.contains("c")){
+            QStringList columnList = varList2strList(jobj.value("c").toArray().toVariantList());
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -1193,7 +1354,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         int columnListSize = modelDbDataEv->columnCount() ;
 
 
-        QVariantList listVarData = hash.value("a").toList();
+        QVariantList listVarData = jobj.value("a").toArray().toVariantList();
 
         int meterSnIndx = 1;
 
@@ -1257,12 +1418,12 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                                  .arg(doneTables)
                                      .arg(lastTableRowId).arg(lastRowId) );
 
-            hash = hashMemoWrite.value(COMMAND_READ_METER_LOGS);//code listNI
+            jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_METER_LOGS));//code listNI
 
-            hash.insert("lTbRwId", lastTableRowId);
-            hash.insert("lRwId", lastRowId);
+            jobj.insert("lTbRwId", QString::number(lastTableRowId));
+            jobj.insert("lRwId", QString::number(lastRowId));
 
-            mWrite2RemoteDev(COMMAND_READ_METER_LOGS, hash);
+            emit data2matilda(COMMAND_READ_METER_LOGS, jobj);
 
         }
 
@@ -1270,13 +1431,13 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
     case COMMAND_READ_METER_LOGS_GET_TABLES:{
 
-        QStringList list = varList2strList(hash.value("t").toList());
+        QStringList list = varList2strList(jobj.value("t").toArray().toVariantList());
         lastTableList.append(list);
 
         bool ok;
-        qint64 lastTableRowId = hash.value("lRwId").toLongLong(&ok);
+        qint64 lastTableRowId = jobj.value("lRwId").toString().toLongLong(&ok);
 
-        qDebug() << "lastRowId " << lastTableRowId << hash.contains("lRwId") << lastTableRowId;
+        qDebug() << "lastRowId " << lastTableRowId << jobj.contains("lRwId") << lastTableRowId;
 
         if(lastTableList.isEmpty()){
             showMess(tr("No table."));
@@ -1288,18 +1449,18 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                 doneTables = 0;
                 blockDone = 0;
                 emit uploadProgress( doneTables, tr("Total count: %1 tables, Downloaded: 0 tables").arg(totalTables) );
-                hash = hashMemoWrite.value(COMMAND_READ_METER_LOGS_GET_TABLES);
+                jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_METER_LOGS_GET_TABLES));
 
-                hash.insert("gcl", true);
+                jobj.insert("gcl", true);
 
-                hash.insert("table", lastTableList.first());
-                hash.insert("lRwId", (qint64)0);
-                mWrite2RemoteDev(COMMAND_READ_METER_LOGS_GET_VAL, hash);
+                jobj.insert("table", lastTableList.first());
+                jobj.insert("lRwId", (qint64)0);
+                emit data2matilda(COMMAND_READ_METER_LOGS_GET_VAL, jobj);
             }else{
                 emit uploadProgress( doneTables, tr("Selected: %1 tables").arg(totalTables) );
-                hash = hashMemoWrite.value(COMMAND_READ_METER_LOGS_GET_TABLES);
-                hash.insert("lRwId", lastTableRowId);
-                mWrite2RemoteDev(COMMAND_READ_METER_LOGS_GET_TABLES, hash);
+                jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_METER_LOGS_GET_TABLES));
+                jobj.insert("lRwId", lastTableRowId);
+                emit data2matilda(COMMAND_READ_METER_LOGS_GET_TABLES, jobj);
 
             }
 
@@ -1314,14 +1475,14 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
 
         bool ok;
-        qint64 lastTableRowId = hash.value("lRwId").toLongLong(&ok);
+        qint64 lastTableRowId = jobj.value("lRwId").toString().toLongLong(&ok);
 
-        qDebug() << "lastRowId " << lastTableRowId << hash.contains("lRwId") << lastTableRowId;
+        qDebug() << "lastRowId " << lastTableRowId << jobj.contains("lRwId") << lastTableRowId;
 
 
 
-        if(hash.contains("c")){
-            QStringList columnList = varList2strList(hash.value("c").toList());
+        if(jobj.contains("c")){
+            QStringList columnList = varList2strList(jobj.value("c").toArray().toVariantList());
 
             if(columnList.isEmpty()){
                 showMess(tr("Corrupted data."));
@@ -1337,7 +1498,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         int columnListSize = modelDbDataEv->columnCount() ;
 
 
-        QVariantList listVarData = hash.value("a").toList();
+        QVariantList listVarData = jobj.value("a").toArray().toVariantList();
 
         int meterSnIndx = 1;
 
@@ -1390,12 +1551,12 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                                  .arg(totalTables).arg( listVarData.isEmpty() ? tr("Parsed") : tr("Downloaded"))
                                      .arg(doneTables).arg(blockDone).arg(lastTableRowId) );
 
-            hash = hashMemoWrite.value(COMMAND_READ_METER_LOGS_GET_VAL);//code listNI
+            jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_METER_LOGS_GET_VAL));//code listNI
 
-            hash.insert("table", lastTableList.first());
-            hash.insert("lRwId", lastTableRowId);
+            jobj.insert("table", lastTableList.first());
+            jobj.insert("lRwId", lastTableRowId);
 
-            mWrite2RemoteDev(COMMAND_READ_METER_LOGS_GET_VAL, hash);
+            emit data2matilda(COMMAND_READ_METER_LOGS_GET_VAL, jobj);
 
         }
 
@@ -1403,17 +1564,17 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
     case COMMAND_READ_METER_LIST_FRAMED:{
 
-        bool ignoreEmptyList = hash.contains("t");
+        bool ignoreEmptyList = jobj.contains("t");
         if(ignoreEmptyList){
             modelAddMeter->setHorizontalHeaderLabels(tr("Model,Serial Number,NI,Memo,Password,On/Off,Physical values,Tariff Count,Meter Version").split(","));
-            totalTables = hash.value("t").toInt();
+            totalTables = jobj.value("t").toInt();
             doneTables = 0;
         }
 
-        QVariantList lVar = hash.value("m").toList();
-        int lastIndx = hash.value("i").toInt();
+        QVariantList lVar = jobj.value("m").toArray().toVariantList();
+        int lastIndx = jobj.value("i").toInt();
 
-        if((lVar.isEmpty() || !hash.contains("i")) && !ignoreEmptyList){
+        if((lVar.isEmpty() || !jobj.contains("i")) && !ignoreEmptyList){
            showMess(tr("Corrupted data."));
             break;
         }
@@ -1443,11 +1604,11 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             emit uploadProgress( ((doneTables * 100) / totalTables), tr("Total count: %1 meters, Downloaded: %2 meters")
                                  .arg(totalTables).arg(doneTables) );
 
-             hash.clear();
-             hash.insert("i", lastIndx);
-             hash.insert("max_len", ui->sbReadWriteMeterLen->value());
-             hash.insert("cmprss", ui->cbCmprssMeterList->isChecked());
-             mWrite2RemoteDev(COMMAND_READ_METER_LIST_FRAMED, hash);
+             jobj = QJsonObject();
+             jobj.insert("i", lastIndx);
+             jobj.insert("max_len", ui->sbReadWriteMeterLen->value());
+             jobj.insert("cmprss", ui->cbCmprssMeterList->isChecked());
+             emit data2matilda(COMMAND_READ_METER_LIST_FRAMED, jobj);
 
         }else{
             ui->tvAddMeterTable->resizeColumnsToContents();
@@ -1460,33 +1621,34 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     case COMMAND_READ_ZBR_LOG:{
 
         ui->pteZbyrLog->clear();
-        ui->pteZbyrLog->appendPlainText(hash.value("s").toString());
+        ui->pteZbyrLog->appendPlainText(jobj.value("s").toString());
         break;}
 
     case COMMAND_READ_ABOUT_OBJECT:{
         ui->pteAboutObjectMemo->clear();
-        ui->leCoordinates->setText(hash.value("c").toString());
-        ui->pteAboutObjectMemo->appendPlainText(hash.value("m").toString());
-        ui->leLineMemo->setText(hash.value("l").toString());
+        ui->leCoordinates->setText(jobj.value("c").toString());
+        ui->pteAboutObjectMemo->appendPlainText(jobj.value("m").toString());
+        ui->leLineMemo->setText(jobj.value("l").toString());
         break;}
 
     case COMMAND_READ_POLL_SETT:{
-        ui->sbMetrRetry->setValue(hash.value("mr").toInt());
-        ui->sbWati4Poll->setValue(hash.value("pw").toInt());
-        ui->cbHardAddrsn->setChecked(hash.value("ha").toBool());
+        ui->sbMetrRetry->setValue(jobj.value("mr").toInt());
+        ui->sbMetrRetryFA->setValue(jobj.value("mrfa").toInt());
+        ui->sbWati4Poll->setValue(jobj.value("pw").toInt());
+        ui->cbHardAddrsn->setChecked(jobj.value("ha").toBool());
 
-        ui->cbW4E->setChecked(hash.value("w4e").toBool());
-        ui->sbW4ERtrBf->setValue(hash.value("w4eRb").toInt());
-        ui->sbW4ErA->setValue(hash.value("w4eRa").toInt());
+        ui->cbW4E->setChecked(jobj.value("w4e").toBool());
+        ui->sbW4ERtrBf->setValue(jobj.value("w4eRb").toInt());
+        ui->sbW4ErA->setValue(jobj.value("w4eRa").toInt());
 
-        ui->cbTimeCorrection->setChecked(hash.value("tc").toBool());
-        ui->sbMaxSecDiff->setValue(hash.value("td").toInt());
+        ui->cbTimeCorrection->setChecked(jobj.value("tc").toBool());
+        ui->sbMaxSecDiff->setValue(jobj.value("td").toInt());
 
         break;}
 
     case COMMAND_READ_POLL_STATISTIC:{
         modelPollStat->clear();
-        QVariantList listVar = hash.value("l2").toList();
+        QVariantList listVar = jobj.value("l2").toArray().toVariantList();
         if(listVar.isEmpty())
             return;
 
@@ -1518,12 +1680,12 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         //????
 
         if(ui->pteHashSumm->toPlainText().isEmpty()){
-            ui->pteHashSumm->appendPlainText(tr("Hash algoritm: %1\n   Table name   \t  Hash summ(base64)  \tHash summ (hex)  ").arg(hash.value("hsh").toString()));
+            ui->pteHashSumm->appendPlainText(tr("Hash algoritm: %1\n   Table name   \t  Hash summ(base64)  \tHash summ (hex)  ").arg(jobj.value("hsh").toString()));
         }
-        qint64 lastTableRowId = hash.value("lRwId").toLongLong();
+        qint64 lastTableRowId = jobj.value("lRwId").toString().toLongLong();
 
-        QStringList listT = varList2strList(hash.value("lt").toList());
-        QStringList listH = varList2strList(hash.value("lth").toList());
+        QStringList listT = varList2strList(jobj.value("lt").toArray().toVariantList());
+        QStringList listH = varList2strList(jobj.value("lth").toArray().toVariantList());
 
         if(listH.size() != listT.size()){
             showMess(tr("Corrupted data. Ignoring..."));
@@ -1537,16 +1699,16 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                                               .arg(listH.at(i)).arg(QString(QByteArray::fromBase64( listH.at(i).toLocal8Bit() ).toHex()))  );
         }
 
-        if(hash.contains("lRwId")){
+        if(jobj.contains("lRwId")){
             ui->pteHashSumm_2->appendPlainText(listT.join("\n"));
         }
 
         if(lastTableRowId == 0)
             showMess(tr("Done"));
         else{
-            hash = hashMemoWrite.value(COMMAND_READ_TABLE_HASH_SUMM);
-            hash.insert("lRwId", lastTableRowId);
-            mWrite2RemoteDev(COMMAND_READ_TABLE_HASH_SUMM, hash);
+            jobj = QJsonObject::fromVariantHash(hashMemoWrite.value(COMMAND_READ_TABLE_HASH_SUMM));
+            jobj.insert("lRwId", lastTableRowId);
+            emit data2matilda(COMMAND_READ_TABLE_HASH_SUMM, jobj);
 
         }
         break;}
@@ -1559,7 +1721,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         QStringList k = QString("model,NI,SN,memo,passwd,on,politic,trff").split(',');//,vrsn
 
-        int row = hash.value("i").toInt();
+        int row = jobj.value("i").toInt();
         if(row >= rowCount){
             showMess(tr("Corrupted data."));
              break;
@@ -1590,15 +1752,15 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             listVarM.append(strList2Var(l));
         }
 
-        hash.insert("m", listVarM);
+        jobj.insert("m", QJsonArray::fromVariantList(listVarM));
 
         emit uploadProgress( ((row * 100) / rowCount), tr("Total count: %1 meters, Uploaded: %2 meters")
                              .arg(rowCount).arg(row) );
         row++;
 
-        hash.insert("i", (row >= rowCount) ? -1 : row);
+        jobj.insert("i", (row >= rowCount) ? -1 : row);
 
-        mWrite2RemoteDev(COMMAND_WRITE_METER_LIST_FRAMED, hash);
+        emit data2matilda(COMMAND_WRITE_METER_LIST_FRAMED, jobj);
 
 
 
@@ -1606,26 +1768,26 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
     case COMMAND_ERROR_CODE:{
         QString mess;
-        switch(hash.value("e").toInt()){
-        case ERR_DATABASE_CLOSED: mess = tr("Command %1. Database not opened.").arg(hash.value("lcmd").toInt()); break;
-        case ERR_INCORRECT_REQUEST: mess = tr("Command %1. Incorrect request.").arg(hash.value("lcmd").toInt()); break;
-        case ERR_INTERNAL_ERROR: mess = tr("Command %1. Internal error.").arg(hash.value("lcmd").toInt()); break;
-        case ERR_NO_DATA: mess = tr("Command %1. Data not found.").arg(hash.value("lcmd").toInt()); break;
+        switch(jobj.value("e").toInt()){
+        case ERR_DATABASE_CLOSED: mess = tr("Command %1. Database not opened.").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_INCORRECT_REQUEST: mess = tr("Command %1. Incorrect request.").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_INTERNAL_ERROR: mess = tr("Command %1. Internal error.").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_NO_DATA: mess = tr("Command %1. Data not found.").arg(jobj.value("lcmd").toInt()); break;
 
 
 
-        case ERR_MAX_TABLE_COUNT : mess = tr("Command %1. Table count limit").arg(hash.value("lcmd").toInt()); break;
-        case ERR_CORRUPTED_DATA : mess = tr("Command %1. Corrupted data").arg(hash.value("lcmd").toInt()); break;
-        case ERR_DUPLICATE_NI : mess = tr("Command %1. Duplicating NI").arg(hash.value("lcmd").toInt()); break;
-        case ERR_DUPLICATE_SN : mess = tr("Command %1. Duplicating SN").arg(hash.value("lcmd").toInt()); break;
-        case ERR_DATE_NOT_VALID : mess = tr("Command %1. Date not valid").arg(hash.value("lcmd").toInt()); break;
-        case ERR_COMMAND_NOT_ALLOWED : mess = tr("Command %1. Command not allowed").arg(hash.value("lcmd").toInt()); break;
-        case ERR_ACCESS_DENIED : mess = tr("Command %1. Command not allowed").arg(hash.value("lcmd").toInt()); break;
-        case ERR_RESOURCE_BUSY : mess = tr("Command %1. Command not allowed").arg(hash.value("lcmd").toInt()); break;
+        case ERR_MAX_TABLE_COUNT : mess = tr("Command %1. Table count limit").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_CORRUPTED_DATA : mess = tr("Command %1. Corrupted data").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_DUPLICATE_NI : mess = tr("Command %1. Duplicating NI").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_DUPLICATE_SN : mess = tr("Command %1. Duplicating SN").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_DATE_NOT_VALID : mess = tr("Command %1. Date not valid").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_COMMAND_NOT_ALLOWED : mess = tr("Command %1. Command not allowed").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_ACCESS_DENIED : mess = tr("Command %1. Command not allowed").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_RESOURCE_BUSY : mess = tr("Command %1. Command not allowed").arg(jobj.value("lcmd").toInt()); break;
 
 
-        case ERR_NO_ERROR : mess = tr("Command %1. Done!").arg(hash.value("lcmd").toInt()); break;
-        default: mess = tr("Command %1. Unknown error. Error code: %2").arg(hash.value("lcmd").toInt()).arg(hash.value("e").toInt()); break;
+        case ERR_NO_ERROR : mess = tr("Command %1. Done!").arg(jobj.value("lcmd").toInt()); break;
+        default: mess = tr("Command %1. Unknown error. Error code: %2").arg(jobj.value("lcmd").toInt()).arg(jobj.value("e").toInt()); break;
         }
         showMess(mess);
         break;}
@@ -1633,47 +1795,47 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
     case COMMAND_ERROR_CODE_EXT:{
 
         QString mess;
-        switch(hash.value("e").toInt()){
-        case ERR_DATABASE_CLOSED: mess = tr("Command %1. Database not opened.").arg(hash.value("lcmd").toInt()); break;
-        case ERR_INCORRECT_REQUEST: mess = tr("Command %1. Incorrect request.").arg(hash.value("lcmd").toInt()); break;
-        case ERR_INTERNAL_ERROR: mess = tr("Command %1. Internal error.").arg(hash.value("lcmd").toInt()); break;
-        case ERR_NO_DATA: mess = tr("Command %1. Data not found.").arg(hash.value("lcmd").toInt()); break;
+        switch(jobj.value("e").toInt()){
+        case ERR_DATABASE_CLOSED: mess = tr("Command %1. Database not opened.").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_INCORRECT_REQUEST: mess = tr("Command %1. Incorrect request.").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_INTERNAL_ERROR: mess = tr("Command %1. Internal error.").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_NO_DATA: mess = tr("Command %1. Data not found.").arg(jobj.value("lcmd").toInt()); break;
 
 
 
-        case ERR_MAX_TABLE_COUNT : mess = tr("Command %1. Table count limit").arg(hash.value("lcmd").toInt()); break;
-        case ERR_CORRUPTED_DATA : mess = tr("Command %1. Corrupted data").arg(hash.value("lcmd").toInt()); break;
-        case ERR_DUPLICATE_NI : mess = tr("Command %1. Duplicating NI").arg(hash.value("lcmd").toInt()); break;
-        case ERR_DUPLICATE_SN : mess = tr("Command %1. Duplicating SN").arg(hash.value("lcmd").toInt()); break;
-        case ERR_DATE_NOT_VALID : mess = tr("Command %1. Date not valid").arg(hash.value("lcmd").toInt()); break;
-        case ERR_COMMAND_NOT_ALLOWED : mess = tr("Command %1. Command not allowed").arg(hash.value("lcmd").toInt()); break;
-        case ERR_ACCESS_DENIED : mess = tr("Command %1. Command not allowed").arg(hash.value("lcmd").toInt()); break;
-        case ERR_RESOURCE_BUSY : mess = tr("Command %1. Command not allowed").arg(hash.value("lcmd").toInt()); break;
+        case ERR_MAX_TABLE_COUNT : mess = tr("Command %1. Table count limit").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_CORRUPTED_DATA : mess = tr("Command %1. Corrupted data").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_DUPLICATE_NI : mess = tr("Command %1. Duplicating NI").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_DUPLICATE_SN : mess = tr("Command %1. Duplicating SN").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_DATE_NOT_VALID : mess = tr("Command %1. Date not valid").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_COMMAND_NOT_ALLOWED : mess = tr("Command %1. Command not allowed").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_ACCESS_DENIED : mess = tr("Command %1. Command not allowed").arg(jobj.value("lcmd").toInt()); break;
+        case ERR_RESOURCE_BUSY : mess = tr("Command %1. Command not allowed").arg(jobj.value("lcmd").toInt()); break;
 
 
-        case ERR_NO_ERROR : mess = tr("Command %1. Done!").arg(hash.value("lcmd").toInt()); break;
-        default: mess = tr("Command %1. Unknown error. Error code: %2").arg(hash.value("lcmd").toInt()).arg(hash.value("e").toInt()); break;
+        case ERR_NO_ERROR : mess = tr("Command %1. Done!").arg(jobj.value("lcmd").toInt()); break;
+        default: mess = tr("Command %1. Unknown error. Error code: %2").arg(jobj.value("lcmd").toInt()).arg(jobj.value("e").toInt()); break;
         }
 
-        mess.append(tr("<br>Device: %1").arg(hash.value("em").toString()));
+        mess.append(tr("<br>Device: %1").arg(jobj.value("em").toString()));
         showMess(mess);
         break;}
 
     case COMMAND_READ_METER_LIST_HASH_SUMM:{
-        showMess(tr("The meter list hash summ is %1 (base64)<br>%2(hex)<br>Algorith: %3").arg(hash.value("mhsh").toString())
-                 .arg(QString(QByteArray::fromBase64(hash.value("mhsh").toByteArray()).toHex()))
-                 .arg(hash.value("hsh").toString()));
+        showMess(tr("The meter list hash summ is %1 (base64)<br>%2(hex)<br>Algorith: %3").arg(jobj.value("mhsh").toString())
+                 .arg(QString(QByteArray::fromBase64(jobj.value("mhsh").toString().toLocal8Bit()).toHex()))
+                 .arg(jobj.value("hsh").toString()));
         break;}
 
     case COMMAND_I_NEED_MORE_TIME:{
 
-        switch(hash.value("lcmd").toInt()){
+        switch(jobj.value("lcmd").toInt()){
         case COMMAND_WRITE_DROP_TABLE:{
 
-            qreal diff = hash.value("im").toInt() - doneTables;
-            doneTables = hash.value("im").toInt();
+            qreal diff = jobj.value("im").toInt() - doneTables;
+            doneTables = jobj.value("im").toInt();
 
-            qreal speed = (diff / hash.value("et").toReal()) * (qreal)1000;
+            qreal speed = (diff / (qreal)jobj.value("et").toInt()) * (qreal)1000;
 
             emit uploadProgress( ((doneTables * 100) / totalTables), tr("Total count: %1 tables, Deleted: %2 tables.<br>Speed: %3 tables per secound.")
                                  .arg(totalTables).arg(doneTables).arg( QString::number(speed, 'f', 2) ) );
@@ -1683,8 +1845,25 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         return;}
 
+    case COMMAND_READ_COMMANDS:{
+
+        QStringList listNames = jobj.value("cl").toString().split("|", QString::SkipEmptyParts);
+        ui->pteMan4commands->clear();
+        ui->pteMan4commands->appendPlainText(jobj.value("man").toString());
+        ui->cbDevCommand->clear();
+        ui->pbDevCommands->setText(tr("Read"));
+
+        for(int i = 0, iMax = listNames.size(); i < iMax; i++)
+            ui->cbDevCommand->addItem( listNames.at(i),  listNames.at(i));
+
+        if(ui->cbDevCommand->count() > 0)
+            ui->pbDevCommands->setText(tr("Write"));
+
+
+        break;}
+
     default:
-        qDebug() << "data2gui unknown command " << command << hash;
+        qDebug() << "data2gui unknown command " << command << jobj;
         break;
     }
 }
@@ -1699,6 +1878,12 @@ void MainWindow::showMess(QString mess)
     emit hideWaitMess();
     QMessageBox::information(this, windowTitle(), mess);
     emit hideWaitMess();
+
+}
+//##########################################################################################
+void MainWindow::showMessSmpl(QString mess)
+{
+    QMessageBox::information(this, windowTitle(), mess);
 
 }
 //##########################################################################################
@@ -1781,6 +1966,37 @@ void MainWindow::onPhysValChanged(QStringList n, QStringList l)
     }
     if(!n.isEmpty())
         ui->cbAddMeterPhysicalVal->setCurrentIndex(0);
+}
+//##########################################################################################
+void MainWindow::onDaServiceState(bool isListen)
+{
+    ui->pbOpenCloseDA->setEnabled(true);
+    bool trig = ui->pbOpenCloseDA->isChecked();
+    ui->pbOpenCloseDA->setChecked(isListen);
+    ui->pbOpenCloseDA->setText(isListen ? tr("Close") : tr("Open"));
+    if((isListen && trig) || (!isListen && !trig)){
+        if(!ui->pbLogOut->isEnabled())
+            return;
+        QJsonObject jobj;
+        jobj.insert( "i",  isListen ? 1 : 0);
+        mWrite2RemoteDev(COMMAND_DA_OPEN_CLOSE, jobj);
+    }
+}
+//##########################################################################################
+void MainWindow::onYouCanSelectDevice(QStringList listDev)
+{
+    emit hideWaitMess();
+    SelectDevByMacAddrDialog *d = new SelectDevByMacAddrDialog(ui->cbHashSumm->currentIndex(), ui->cbZlib->isChecked(), listDev, ui->leObjectName_2->text().simplified().trimmed(), ui->leLogin->text(), ui->lePasswd->text(),
+                                                               ui->leIp_2->text().simplified().trimmed(), ui->sbPort_2->value(), ui->sbTimeOut_2->value() * 1000  , false, this);
+    connect(d, SIGNAL(conn2thisDev(int, QString, QString, QString, QString, quint16, int, bool, bool, bool, QString, bool)), this, SIGNAL(conn2thisDev(int, QString, QString, QString, QString, quint16, int, bool, bool, bool, QString, bool)) );
+//           int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn)
+    if( d->exec() == QDialog::Accepted){
+        emit showWaitMess(ui->sbTimeOut->value());
+    }else{
+        ui->pbLogOut->animateClick();
+    }
+
+    d->deleteLater();
 }
 //##########################################################################################
 void MainWindow::onCheckDbNIfieldIsCorrect()
@@ -2039,6 +2255,10 @@ void MainWindow::on_pbLogIn_clicked()
     ui->pbWrite->setVisible( false );
     ui->pbRead->setVisible(false);
 
+    ui->pteMan4commands->clear();
+    ui->cbDevCommand->clear();
+    ui->pbDevCommands->setText(tr("Read"));
+
     lastConnDevInfo = tr("IP: %1, Port: %2, Login: %3")
             .arg(ui->leIp->text().simplified().trimmed())
             .arg(ui->sbPort->value())
@@ -2046,10 +2266,17 @@ void MainWindow::on_pbLogIn_clicked()
 
     emit setSttsNewPixmap( QPixmap(":/katynko/deviceisdisconnected.png"));
     emit setSttsNewTxt(lastConnDevInfo);
+//int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn)
 
-    emit conn2thisDev( ui->cbHashSumm->currentIndex(), ui->leLogin->text(), ui->lePasswd->text(), ui->leIp->text().simplified().trimmed(), ui->sbPort->value(),
-                      ui->sbTimeOut->value() * 1000  ,
-                      false, ui->cbZlib->isChecked());
+    if(ui->tabWidget_2->currentIndex() == 0){
+        emit conn2thisDev( ui->cbHashSumm->currentIndex(), ui->leObjectName->text().simplified().trimmed(), ui->leLogin->text(), ui->lePasswd->text(),
+                           ui->leIp->text().simplified().trimmed(), ui->sbPort->value(), ui->sbTimeOut->value() * 1000  , false, ui->cbZlib->isChecked(),
+                           false, "", true);
+    }else{
+        emit conn2thisDev( ui->cbHashSumm->currentIndex(), ui->leObjectName_2->text().simplified().trimmed(), ui->leLogin->text(), ui->lePasswd->text(),
+                           ui->leIp_2->text().simplified().trimmed(), ui->sbPort_2->value(),   ui->sbTimeOut_2->value() * 1000 , false, ui->cbZlib->isChecked(),
+                           true, ui->leObjectMac->text(), ui->rbUseMac->isChecked());
+    }
 
     lastIpStr = ui->leIp->text().simplified().trimmed();
     lastTimeOutMS = ui->sbPort->value() * 1000;
@@ -2139,7 +2366,7 @@ void MainWindow::on_pbRead_clicked()
         ui->pbRead->setVisible(false);
         return;
     }
-    QVariantHash hash;
+    QJsonObject jobj;
     switch (readCommand) {
     case COMMAND_READ_ABOUT_OBJECT:  ui->pteAboutObjectMemo->clear(); ui->leCoordinates->clear(); ui->leLineMemo->clear(); break;
 
@@ -2157,9 +2384,9 @@ void MainWindow::on_pbRead_clicked()
         break;}
     case COMMAND_READ_GPRS_SETT: ui->leGPRS_Apn->clear(); ui->leGPRS_Apn_2->clear(); ui->leGPRS_Apn_3->clear(); break;
     case COMMAND_READ_STATE: ui->pteState->clear(); break;
-//    case COMMAND_TASK_INFO: ui->pteRunningProc->clear(); break;
+//    case COMMAND_READ_TASK_INFO: ui->pteRunningProc->clear(); break;
     case COMMAND_READ_IFCONFIG: ui->pteIfconfig->clear(); break;
-//    case COMMAND_SYSTEM_SETTINGS: ui->pteSysInfo->clear(); break;
+//    case COMMAND_READ_SYSTEM_SETTINGS: ui->pteSysInfo->clear(); break;
     case COMMAND_READ_APP_LOG:{ ui->pteAppLog->clear();  break;}
     case COMMAND_READ_ZBR_LOG: {ui->pteZbyrLog->clear(); break;}
     case COMMAND_READ_POLL_SCHEDULE:{
@@ -2180,9 +2407,9 @@ void MainWindow::on_pbRead_clicked()
     case COMMAND_READ_METER_LIST_FRAMED:{
         modelAddMeter->clear();
         ui->leAddMeterFilter->clear();
-        hash.insert("i", -1);
-        hash.insert("max_len", ui->sbReadWriteMeterLen->value());
-        hash.insert("cmprss", ui->cbCmprssMeterList->isChecked());
+        jobj.insert("i", -1);
+        jobj.insert("max_len", ui->sbReadWriteMeterLen->value());
+        jobj.insert("cmprss", ui->cbCmprssMeterList->isChecked());
         break;}
 
     case COMMAND_READ_POLL_STATISTIC:{
@@ -2190,11 +2417,11 @@ void MainWindow::on_pbRead_clicked()
         proxy_modelPollStat->sort(-1, Qt::AscendingOrder);
 
         if(ui->cbSttstOfExchngCode->currentIndex() > 0)
-            hash.insert("c", ui->cbSttstOfExchngCode->currentText());
+            jobj.insert("c", ui->cbSttstOfExchngCode->currentText());
 
         if(!ui->leSttsctOfExchngFilter->text().simplified().trimmed().isEmpty()){
-            hash.insert("n", ui->leSttsctOfExchngFilter->text().simplified().trimmed());
-            hash.insert("m", ui->cbSttstcOfExchngMode->currentIndex());
+            jobj.insert("n", ui->leSttsctOfExchngFilter->text().simplified().trimmed());
+            jobj.insert("m", ui->cbSttstcOfExchngMode->currentIndex());
         }
         break;}
 
@@ -2215,16 +2442,16 @@ void MainWindow::on_pbRead_clicked()
         QString mess;
         quint8 code = modelProfile4DB->itemData(ui->lvMeterDataProfile->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
-        hash.insert("code", code);
-        hash.insert("cmprss", ui->cbCmprssDb->isChecked());
-        hash.insert("max_len", ui->sbReadData->value());
+        jobj.insert("code", code);
+        jobj.insert("cmprss", ui->cbCmprssDb->isChecked());
+        jobj.insert("max_len", ui->sbReadData->value());
 
         allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
         if(ui->gbMeterDataFromTo->isChecked()){
 
-            hash.insert("FromDT", ui->dteMeterDataFrom->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
-            hash.insert("ToDT", ui->dteMeterDataTo->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+            jobj.insert("FromDT", ui->dteMeterDataFrom->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+            jobj.insert("ToDT", ui->dteMeterDataTo->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
             if(ui->dteMeterDataFrom->dateTime().secsTo(ui->dteMeterDataTo->dateTime()) < 1)
                 mess.append(tr("The time interval is incorrect.<br>"));
@@ -2244,16 +2471,16 @@ void MainWindow::on_pbRead_clicked()
             case 2:{  coefficient = 60 * 60 * 24; break;}
             case 3:{
                 dtFrom = dtTo.addMonths( (-1) * period);
-                hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
                 break; }
 
             default:{
                 mess.append(tr("The time interval is incorrect.<br>"));
                 break; }
             }
-            if(coefficient > 0 && period >= 0 && !hash.contains("FromDT")){
+            if(coefficient > 0 && period >= 0 && !jobj.contains("FromDT")){
                 dtFrom = dtTo.addSecs(period * coefficient * (-1));
-                hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
             }
             if(period < 0)
@@ -2270,7 +2497,7 @@ void MainWindow::on_pbRead_clicked()
             if(listTariff.isEmpty() )
                 mess.append(tr("The tariff list is empty.<br>"));
             else
-                hash.insert(QString("tarif"), QVariant(listTariff));
+                jobj.insert(QString("tarif"), QJsonArray::fromVariantList(listTariff));
         }
 
         QStringList listEnrg;
@@ -2282,16 +2509,16 @@ void MainWindow::on_pbRead_clicked()
         if(listEnrg.isEmpty())
             mess.append(tr("The energy list is empty.<br>"));
         else
-            hash.insert("enrg", strList2Var(listEnrg));
+            jobj.insert("enrg", QJsonArray::fromStringList(listEnrg));
 
 
-        hash.insert("msec", (ui->sbTimeOut->value() < 5000) ? ui->sbTimeOut->value() * 500 : 2500);
-        hash.insert("lRwId", (qint64)0);
-        hash.insert("lTbRwId", (qint64)0);
+        jobj.insert("msec", (ui->sbTimeOut->value() < 5000) ? ui->sbTimeOut->value() * 500 : 2500);
+        jobj.insert("lRwId", (qint64)0);
+        jobj.insert("lTbRwId", (qint64)0);
 
 
         if(listNiFromLine(ui->leMeterDataOnlyThisNI->text()).size() <= MAX_REQUEST_NI_IN_LINE) // ui->leMeterDataOnlyThisNI->styleSheet().isEmpty())
-            hash.insert("ni", ui->leMeterDataOnlyThisNI->text().simplified().trimmed());
+            jobj.insert("ni", ui->leMeterDataOnlyThisNI->text().simplified().trimmed());
         else
             mess.append(tr("The NI filter: incorrect data.<br>"));
 
@@ -2299,8 +2526,8 @@ void MainWindow::on_pbRead_clicked()
             lastTableList.clear();
             doneTables = 0;
             totalTables = 5000;
-            this->hashMemoWrite.insert(COMMAND_READ_DATABASE, hash);
-            hash.insert("gcl", true);
+            this->hashMemoWrite.insert(COMMAND_READ_DATABASE, jobj.toVariantHash());
+            jobj.insert("gcl", true);
         }else{
             showMess(mess);
             return;
@@ -2324,15 +2551,15 @@ void MainWindow::on_pbRead_clicked()
         QString mess;
         quint8 code = modelProfile4DB->itemData(ui->lvMeterDataProfile->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
-        hash.insert("code", code);
-        hash.insert("len", ui->sbReadData->value());
+        jobj.insert("code", code);
+        jobj.insert("len", ui->sbReadData->value());
 
         allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
         if(ui->gbMeterDataFromTo->isChecked()){
 
-            hash.insert("FromDT", ui->dteMeterDataFrom->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
-            hash.insert("ToDT", ui->dteMeterDataTo->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+            jobj.insert("FromDT", ui->dteMeterDataFrom->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+            jobj.insert("ToDT", ui->dteMeterDataTo->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
             if(ui->dteMeterDataFrom->dateTime().secsTo(ui->dteMeterDataTo->dateTime()) < 1)
                 mess.append(tr("The time interval is incorrect.<br>"));
@@ -2352,16 +2579,16 @@ void MainWindow::on_pbRead_clicked()
             case 2:{  coefficient = 60 * 60 * 24; break;}
             case 3:{
                 dtFrom = dtTo.addMonths( (-1) * period);
-                hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
                 break; }
 
             default:{
                 mess.append(tr("The time interval is incorrect.<br>"));
                 break; }
             }
-            if(coefficient > 0 && period >= 0 && !hash.contains("FromDT")){
+            if(coefficient > 0 && period >= 0 && !jobj.contains("FromDT")){
                 dtFrom = dtTo.addSecs(period * coefficient * (-1));
-                hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
             }
             if(period < 0)
@@ -2378,7 +2605,7 @@ void MainWindow::on_pbRead_clicked()
             if(listTariff.isEmpty() )
                 mess.append(tr("The tariff list is empty.<br>"));
             else
-                hash.insert(QString("tarif"), QVariant(listTariff));
+                jobj.insert(QString("tarif"), QJsonArray::fromVariantList(listTariff));
         }
 
         QStringList listEnrg;
@@ -2390,24 +2617,24 @@ void MainWindow::on_pbRead_clicked()
         if(listEnrg.isEmpty())
             mess.append(tr("The energy list is empty.<br>"));
         else
-            hash.insert("enrg", strList2Var(listEnrg));
+            jobj.insert("enrg", QJsonArray::fromStringList(listEnrg));
 
 
-        hash.insert("msec", ui->sbTimeOut->value() * 500);
-        hash.insert("lRwId", (qint64)0);
+        jobj.insert("msec", ui->sbTimeOut->value() * 500);
+        jobj.insert("lRwId", (qint64)0);
 
         if(listNiFromLine(ui->leMeterDataOnlyThisNI->text()).size() <= MAX_REQUEST_NI_IN_LINE) // ui->leMeterDataOnlyThisNI->styleSheet().isEmpty())
-            hash.insert("ni", ui->leMeterDataOnlyThisNI->text().simplified().trimmed());
+            jobj.insert("ni", ui->leMeterDataOnlyThisNI->text().simplified().trimmed());
         else
             mess.append(tr("The NI filter: incorrect data.<br>"));
 
         if(mess.isEmpty()){
             lastTableList.clear();
-            QVariantHash hashMemoWrite = hash;
+            QVariantHash hashMemoWrite = jobj.toVariantHash();
             hashMemoWrite.remove("enrg");
             hashMemoWrite.remove("tarif");
 
-            QVariantHash  hashMemoWrite2 = hash;
+            QVariantHash  hashMemoWrite2 = jobj.toVariantHash();
             this->hashMemoWrite.insert(COMMAND_READ_DATABASE_GET_TABLES, hashMemoWrite);
 
             hashMemoWrite2.insert("max_len", ui->sbReadData->value());
@@ -2433,19 +2660,19 @@ void MainWindow::on_pbRead_clicked()
         QString mess;
         quint8 code = modelEvent4DB->itemData(ui->lvMeterDataProfile_2->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
-        hash.insert("code", code);
-        hash.insert("max_len", ui->sbReadLenML->value());
-        hash.insert("cmprss", ui->cbCmprssMeterLog->isChecked());
+        jobj.insert("code", code);
+        jobj.insert("max_len", ui->sbReadLenML->value());
+        jobj.insert("cmprss", ui->cbCmprssMeterLog->isChecked());
         if(ui->gbMeterDataFromTo_2->isChecked()){
 
-            hash.insert("FromDT", ui->dteMeterDataFrom_2->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
-            hash.insert("ToDT", ui->dteMeterDataTo_2->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+            jobj.insert("FromDT", ui->dteMeterDataFrom_2->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+            jobj.insert("ToDT", ui->dteMeterDataTo_2->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
             if(ui->dteMeterDataFrom_2->dateTime().secsTo(ui->dteMeterDataTo_2->dateTime()) < 1)
                 mess.append(tr("The time interval is incorrect.<br>"));
         }else{
             QDateTime dtTo = QDateTime::currentDateTime();
-//            hash.insert("ToDT", dtTo);
+//            jobj.insert("ToDT", dtTo);
             QDateTime dtFrom = dtTo;
             dtTo.setTime(QTime::fromString(QString("%1:%2:00.000")
                                            .arg(dtTo.toString("hh"))
@@ -2460,16 +2687,16 @@ void MainWindow::on_pbRead_clicked()
             case 2:{  coefficient = 60 * 60 * 24; break;}
             case 3:{
                 dtFrom = dtTo.addMonths( (-1) * period);
-                hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
                 break; }
 
             default:{
                 mess.append(tr("The time interval is incorrect.<br>"));
                 break; }
             }
-            if(coefficient > 0 && period >= 0 && !hash.contains("FromDT")){
+            if(coefficient > 0 && period >= 0 && !jobj.contains("FromDT")){
                 dtFrom = dtTo.addSecs(period * coefficient * (-1));
-                hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
             }
             if(period < 0)
@@ -2479,27 +2706,27 @@ void MainWindow::on_pbRead_clicked()
 
 
         if(listNiFromLine(ui->leMeterDataOnlyThisNI_2->text()).size() <= MAX_REQUEST_NI_IN_LINE) // ui->leMeterDataOnlyThisNI->styleSheet().isEmpty())
-            hash.insert("ni", ui->leMeterDataOnlyThisNI_2->text().simplified().trimmed());
+            jobj.insert("ni", ui->leMeterDataOnlyThisNI_2->text().simplified().trimmed());
         else
             mess.append(tr("The NI filter: incorrect data.<br>"));
 
-         hash.insert("lRwId", (qint64)0);
+         jobj.insert("lRwId", (qint64)0);
 
         ui->tvMeterDataPollData_2->resizeColumnsToContents();
         if(mess.isEmpty()){
             lastTableList.clear();
             if(!ui->cbEnblTableBuffML->isChecked()){
                 readCommand = COMMAND_READ_METER_LOGS;
-                hash.insert("lTbRwId", (qint64)0);
-                hash.insert("msec", ui->sbTimeOut->value() * 500);
+                jobj.insert("lTbRwId", (qint64)0);
+                jobj.insert("msec", ui->sbTimeOut->value() * 500);
                 doneTables = 0;
                 totalTables = 5000;
-                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS, hash);
-                hash.insert("gcl", true);
+                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS, jobj.toVariantHash());
+                jobj.insert("gcl", true);
             }else{
                 readCommand = COMMAND_READ_METER_LOGS_GET_TABLES;
-                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS_GET_TABLES, hash);
-                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS_GET_VAL, hash);
+                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS_GET_TABLES, jobj.toVariantHash());
+                this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS_GET_VAL, jobj.toVariantHash());
             }
         }else{
             showMess(mess);
@@ -2509,25 +2736,24 @@ void MainWindow::on_pbRead_clicked()
 
     case COMMAND_READ_TABLE_HASH_SUMM:{
         //????
-        ui->pteHashSumm->clear();
         QString mess;
 
-        hash.insert("cmprss", ui->cbCmprssHsh->isChecked());
-        hash.insert("hsh", ui->cbHashSumm_2->currentText());
+        jobj.insert("cmprss", ui->cbCmprssHsh->isChecked());
+        jobj.insert("hsh", ui->cbHashSumm_2->currentText());
 
         if(ui->tbwHashSumm->currentIndex() == 0){
             quint8 code = modelProfile4Hash->itemData(ui->lvMeterDataProfile_3->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
-            hash.insert("code", code);
+            jobj.insert("code", code);
 
-            hash.insert("lRwId", 0);
+            jobj.insert("lRwId", 0);
 
             allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
             if(ui->gbMeterDataFromTo->isChecked()){
 
-                hash.insert("FromDT", ui->dteMeterDataFrom_3->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
-                hash.insert("ToDT", ui->dteMeterDataTo_3->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("FromDT", ui->dteMeterDataFrom_3->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                jobj.insert("ToDT", ui->dteMeterDataTo_3->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
                 if(ui->dteMeterDataFrom->dateTime().secsTo(ui->dteMeterDataTo->dateTime()) < 1)
                     mess.append(tr("The time interval is incorrect.<br>"));
@@ -2547,16 +2773,16 @@ void MainWindow::on_pbRead_clicked()
                 case 2:{  coefficient = 60 * 60 * 24; break;}
                 case 3:{
                     dtFrom = dtTo.addMonths( (-1) * period);
-                    hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                    jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
                     break; }
 
                 default:{
                     mess.append(tr("The time interval is incorrect.<br>"));
                     break; }
                 }
-                if(coefficient > 0 && period >= 0 && !hash.contains("FromDT")){
+                if(coefficient > 0 && period >= 0 && !jobj.contains("FromDT")){
                     dtFrom = dtTo.addSecs(period * coefficient * (-1));
-                    hash.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
+                    jobj.insert("FromDT", dtFrom.toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
                 }
                 if(period < 0)
@@ -2565,20 +2791,25 @@ void MainWindow::on_pbRead_clicked()
         }else{
             QString str = ui->pteHashSumm_2->toPlainText().replace("\r","\n");
             QStringList list = str.split("\n", QString::SkipEmptyParts);
+            list.removeDuplicates();
+
             if(list.isEmpty()){
                 mess = tr("Table list is empty");
             }else{
-                hash.insert("lt", list);
+                jobj.insert("lt", QJsonArray::fromStringList(list));
             }
         }
-        hash.insert("msec", (ui->sbTimeOut->value() < 5500) ? ui->sbTimeOut->value() * 500 : 5500);
+        jobj.insert("msec", (ui->sbTimeOut->value() < 5500) ? ui->sbTimeOut->value() * 500 : 5500);
 
         if(!mess.isEmpty()){
             showMess(mess);
             return;
         }
 
-        this->hashMemoWrite.insert(COMMAND_READ_TABLE_HASH_SUMM, hash);
+        ui->pteHashSumm->clear();
+        ui->pteHashSumm_2->clear();
+
+        this->hashMemoWrite.insert(COMMAND_READ_TABLE_HASH_SUMM, jobj.toVariantHash());
 
         break;}
 
@@ -2586,18 +2817,17 @@ void MainWindow::on_pbRead_clicked()
         break;
     }
 
-    mWrite2RemoteDev(readCommand, hash);
-    emit showWaitMess(ui->sbTimeOut->value());
+    mWrite2RemoteDev(readCommand, jobj);
 }
 //################################################################################################
 void MainWindow::on_pbWrite_clicked()
 {
-    QVariantHash hash;
+    QJsonObject jobj;
     switch(writeCommand){
     case COMMAND_WRITE_ABOUT_OBJECT:{
-        hash.insert("c", ui->leCoordinates->text().simplified().trimmed());
-        hash.insert("m", ui->pteAboutObjectMemo->toPlainText().trimmed());
-        hash.insert("l", ui->leLineMemo->text().trimmed().left(1000));
+        jobj.insert("c", ui->leCoordinates->text().simplified().trimmed());
+        jobj.insert("m", ui->pteAboutObjectMemo->toPlainText().trimmed());
+        jobj.insert("l", ui->leLineMemo->text().trimmed().left(1000));
         break;}
     case COMMAND_WRITE_GPRS_SETT: {
 
@@ -2612,9 +2842,9 @@ void MainWindow::on_pbWrite_clicked()
 
         }
 
-        hash.insert("apn", ui->leGPRS_Apn->text().simplified().trimmed());
-        hash.insert("userName", ui->leGPRS_Apn_2->text().simplified().trimmed());
-        hash.insert("password", ui->leGPRS_Apn_3->text().simplified().trimmed());
+        jobj.insert("apn", ui->leGPRS_Apn->text().simplified().trimmed());
+        jobj.insert("userName", ui->leGPRS_Apn_2->text().simplified().trimmed());
+        jobj.insert("password", ui->leGPRS_Apn_3->text().simplified().trimmed());
 
         break;}
 
@@ -2638,7 +2868,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(ui->sbGlbnNow->value());
         l.append(intrvalValFromComboIndx(ui->cbProfileNow->currentIndex()));
         l.append( (ui->cbProfileNow->currentIndex() == 0) ? 1 : 2);
-        hash.insert(QString::number(POLL_CODE_READ_CURRENT), l);
+        jobj.insert(QString::number(POLL_CODE_READ_CURRENT), QJsonArray::fromVariantList(l));
 
 
         //POLL_CODE_READ_END_DAY
@@ -2649,7 +2879,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append( ui->cbProfileEOD->currentIndex() + 1);//indx = 0, intrvl = indx + 1;
         l.append(3);//days
 
-        hash.insert(QString::number(POLL_CODE_READ_END_DAY), l);
+        jobj.insert(QString::number(POLL_CODE_READ_END_DAY), QJsonArray::fromVariantList(l));
 
         //POLL_CODE_READ_END_MONTH
         l.clear();
@@ -2659,7 +2889,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(ui->cbProfileEOM->currentIndex() + 1);//indx = 0, intrvl = indx + 1;
         l.append(4);//month
 
-        hash.insert(QString::number(POLL_CODE_READ_END_MONTH), l);
+        jobj.insert(QString::number(POLL_CODE_READ_END_MONTH), QJsonArray::fromVariantList(l));
 
 
         //POLL_CODE_READ_POWER
@@ -2670,7 +2900,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(intrvalValFromComboIndx(ui->cbProfilePower->currentIndex()));
         l.append( (ui->cbProfilePower->currentIndex() == 0) ? 1 : 2);
 
-        hash.insert(QString::number(POLL_CODE_READ_POWER), l);
+        jobj.insert(QString::number(POLL_CODE_READ_POWER), QJsonArray::fromVariantList(l));
 
 
         //POLL_CODE_READ_VOLTAGE
@@ -2681,7 +2911,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(intrvalValFromComboIndx(ui->cbProfileVoltage->currentIndex()));
         l.append((ui->cbProfileVoltage->currentIndex() == 0) ? 1 : 2);
 
-        hash.insert(QString::number(POLL_CODE_READ_VOLTAGE), l);
+        jobj.insert(QString::number(POLL_CODE_READ_VOLTAGE), QJsonArray::fromVariantList(l));
 
         //POLL_CODE_METER_STATUS enable,prtt,glbn,intrvl,kftnt
         l.clear();
@@ -2691,7 +2921,7 @@ void MainWindow::on_pbWrite_clicked()
         l.append(ui->cbProfileML->currentIndex() + 1);
         l.append(3);
 
-        hash.insert(QString::number(POLL_CODE_METER_STATUS), l);
+        jobj.insert(QString::number(POLL_CODE_METER_STATUS), QJsonArray::fromVariantList(l));
 
         l.clear();//1 - mon, 2 - tue
 
@@ -2710,20 +2940,16 @@ void MainWindow::on_pbWrite_clicked()
         if(ui->cbSun->isChecked())
             l.append(7);
 
-        hash.insert("dow", l);
+        jobj.insert("dow", QJsonArray::fromVariantList(l));
 
         if(l.isEmpty()){
             showMess(tr("Days of week is empty!"));
             return;
         }
 
-        if(ui->teFrom->time() > ui->teTo->time()){
-            showMess(tr("Time interval is not valid!"));
-            return;
-        }
 
-        hash.insert("tiFrom", ui->teFrom->time().toString("hh:mm"));
-        hash.insert("tiTo", ui->teTo->time().toString("hh:mm") );
+        jobj.insert("tiFrom", ui->teFrom->time().toString("hh:mm"));
+        jobj.insert("tiTo", ui->teTo->time().toString("hh:mm") );
         break;}
 
     case COMMAND_WRITE_METER_LIST_FRAMED:{
@@ -2734,7 +2960,7 @@ void MainWindow::on_pbWrite_clicked()
                 return;
         }
 
-        hash.insert("t", rowCount);
+        jobj.insert("t", rowCount);
 
         QVariantList lVar;
         QStringList k = QString("model,NI,SN,memo,passwd,on,politic,trff").split(',');//,vrsn
@@ -2758,35 +2984,91 @@ void MainWindow::on_pbWrite_clicked()
         }
 
         row++;
-        hash.insert("m", lVar);
-        hash.insert("i", (row >= rowCount) ? -1 : row);
+        jobj.insert("m", QJsonArray::fromVariantList(lVar));
+        jobj.insert("i", (row >= rowCount) ? -1 : row);
         break;}
 
     case COMMAND_WRITE_POLL_SETT:{
-        hash.insert("mr", ui->sbMetrRetry->value());
-        hash.insert("pw", ui->sbWati4Poll->value());
-        hash.insert("ha", ui->cbHardAddrsn->isChecked());
+        jobj.insert("mr", ui->sbMetrRetry->value());
+        jobj.insert("mrfa", ui->sbMetrRetryFA->value());
 
-        hash.insert("w4e", ui->cbW4E->isChecked());
-        hash.insert("w4eRb", ui->sbW4ERtrBf->value());
-        hash.insert("w4eRa", ui->sbW4ErA->value());
+        jobj.insert("pw", ui->sbWati4Poll->value());
+        jobj.insert("ha", ui->cbHardAddrsn->isChecked());
 
-        hash.insert("tc", ui->cbTimeCorrection->isChecked());
-        hash.insert("td", ui->sbMaxSecDiff->value());
+        jobj.insert("w4e", ui->cbW4E->isChecked());
+        jobj.insert("w4eRb", ui->sbW4ERtrBf->value());
+        jobj.insert("w4eRa", ui->sbW4ErA->value());
 
-        hash.insert("pp", ui->cbPlgAndPl->isChecked());
+        jobj.insert("tc", ui->cbTimeCorrection->isChecked());
+        jobj.insert("td", ui->sbMaxSecDiff->value());
 
+
+        break;}
+
+    case COMMAND_WRITE_DA_SERVICE_SETT:{
+        int mode = 1;
+        if(ui->rbDasAlwaysOff->isChecked())
+            mode = 3;
+        else{
+            if(ui->rbDasAlwaysOnMgc->isChecked())
+                mode = 2;
+        }
+        jobj.insert("m", mode);
+        jobj.insert("ms", QString(ui->leDasAlwaysOnMS->text().simplified().trimmed().toLocal8Bit().toBase64(QByteArray::OmitTrailingEquals) ));
+        jobj.insert("msh", ui->cbDasAlwaysInHex->isChecked());
+        break;}
+
+    case COMMAND_WRITE_PEREDAVATOR_AC_SETT:{
+
+        jobj.insert("e", ui->cbEnablePAC->isChecked());
+        QStringList list;
+        for(int i = 0, iMax = modelPeredavatorHost->rowCount(); i < iMax; i++)
+            list.append(QString("%1\t%2")
+                        .arg(modelPeredavatorHost->item(i,0)->text().simplified().trimmed())
+                        .arg(modelPeredavatorHost->item(i,1)->text().simplified().trimmed()));
+
+        jobj.insert("sl", QJsonArray::fromStringList(list));
+        list.clear();
+
+        for(int i = 0, iMax = modelDayProfile4peredavator->rowCount(); i < iMax; i++)
+            list.append(QString("%1\t%2")
+                        .arg(modelDayProfile4peredavator->item(i,0)->text().simplified().trimmed())
+                        .arg(modelDayProfile4peredavator->item(i,1)->text().simplified().trimmed()));
+
+        jobj.insert("sdp", QJsonArray::fromStringList(list));
+
+
+        break;}
+
+    case COMMAND_WRITE_MATILDA_AC_SETT:{
+
+        jobj.insert("e", ui->cbEnableMAC->isChecked());
+        QStringList list;
+        for(int i = 0, iMax = modelSvahaList->rowCount(); i < iMax; i++)
+            list.append(QString("%1\t%2")
+                        .arg(modelSvahaList->item(i,0)->text().simplified().trimmed())
+                        .arg(modelSvahaList->item(i,1)->text().simplified().trimmed()));
+
+        jobj.insert("sl", QJsonArray::fromStringList(list));
+        list.clear();
+
+        for(int i = 0, iMax = modelDayProfile4mac->rowCount(); i < iMax; i++)
+            list.append(QString("%1\t%2")
+                        .arg(modelDayProfile4mac->item(i,0)->text().simplified().trimmed())
+                        .arg(modelDayProfile4mac->item(i,1)->text().simplified().trimmed()));
+
+        jobj.insert("sdp", QJsonArray::fromStringList(list));
         break;}
 
     }
 
-   mWrite2RemoteDev(writeCommand, hash);
+   mWrite2RemoteDev(writeCommand, jobj);
 
 }
 //################################################################################################
-void MainWindow::mWrite2RemoteDev(quint16 command, QVariantHash hash)
+void MainWindow::mWrite2RemoteDev(quint16 command, QJsonObject jobj)
 {
-    if(connectionDown())
+    if(connectionDown() || (ui->pbOpenCloseDA->isChecked() && command != COMMAND_DA_OPEN_CLOSE))
         return;
 
     if(command < 1){
@@ -2794,7 +3076,7 @@ void MainWindow::mWrite2RemoteDev(quint16 command, QVariantHash hash)
         return;
     }
 
-    emit data2matilda(command, hash);
+    emit data2matilda(command, jobj);
 
     emit showWaitMess(ui->sbTimeOut->value());
 }
@@ -2858,7 +3140,7 @@ void MainWindow::on_pbReboot_clicked()
 //##########################################################################################
 void MainWindow::on_pbResetGsm_clicked()
 {
-    QVariantHash h;
+    QJsonObject h;
     h.insert("i", 2);
     mWrite2RemoteDev(COMMAND_WRITE_RESET_MODEM, h);
 
@@ -2866,7 +3148,7 @@ void MainWindow::on_pbResetGsm_clicked()
 //##########################################################################################
 void MainWindow::on_pbResetEmbee_clicked()
 {
-    QVariantHash h;
+    QJsonObject h;
     h.insert("i", 1);
     mWrite2RemoteDev(COMMAND_WRITE_RESET_MODEM, h);
 }
@@ -3012,9 +3294,9 @@ void MainWindow::on_gbMeterDataYangerThan_3_clicked(bool checked)
 
 void MainWindow::on_pbReadHashSumm_clicked()
 {
-    QVariantHash hash;
-    hash.insert("hsh", ui->cbHashSumm->currentText());
-    mWrite2RemoteDev(COMMAND_READ_METER_LIST_HASH_SUMM, hash);
+    QJsonObject jobj;
+    jobj.insert("hsh", ui->cbHashSumm->currentText());
+    mWrite2RemoteDev(COMMAND_READ_METER_LIST_HASH_SUMM, jobj);
 }
 //##########################################################################################
 
@@ -3118,7 +3400,7 @@ void MainWindow::onActWriteSeleted()
         }
 
         InsertMeterDialog *dialog = new InsertMeterDialog(l, this);
-        connect(dialog, SIGNAL(data2matilda(quint16,QVariantHash)), this, SLOT(mWrite2RemoteDev(quint16,QVariantHash))) ;
+        connect(dialog, SIGNAL(data2matilda(quint16,QJsonObject)), this, SLOT(mWrite2RemoteDev(quint16,QJsonObject))) ;
         dialog->exec();
         dialog->deleteLater();
     }
@@ -3147,8 +3429,8 @@ void MainWindow::onActWriteSeletedOn()
         if(l.isEmpty())
             return;
 
-        QVariantHash h;
-        h.insert("s", l);
+        QJsonObject h;
+        h.insert("s", QJsonArray::fromStringList(l));
         h.insert("m",2);//NI
         mWrite2RemoteDev(COMMAND_WRITE_METER_LIST_POLL_ON, h);
     }
@@ -3176,8 +3458,8 @@ void MainWindow::onActWriteSeletedOff()
         if(l.isEmpty())
             return;
 
-        QVariantHash h;
-        h.insert("s", l);
+        QJsonObject h;
+        h.insert("s", QJsonArray::fromStringList(l));
         h.insert("m", 2);//NI
         mWrite2RemoteDev(COMMAND_WRITE_METER_LIST_POLL_OFF, h);
     }
@@ -3207,8 +3489,8 @@ void MainWindow::onActWriteSeletedDeletePart()
         if(l.isEmpty())
             return;
 
-        QVariantHash h;
-        h.insert("s", l);
+        QJsonObject h;
+        h.insert("s", QJsonArray::fromStringList(l));
         h.insert("m",2);
        mWrite2RemoteDev(COMMAND_WRITE_METER_LIST_DEL_NI, h);
     }
@@ -3293,9 +3575,9 @@ void MainWindow::checkLineAddMeterNIandPasswd()
 
     if(indx >= 0){
         QString regStr = ui->cbAddMeterModel->itemData(indx).toString();
-        if(regStr.split("^").length() == regStr.split("$").length() && regStr.split("$").length() == 3){
-            niReg = regStr.split("$").first() + "$";
-            passwdReg = "^" + regStr.split("^").last();
+        if(regStr.split("$^").length() == 2 && regStr.left(1) == "^" && regStr.right(1) == "$"){
+            niReg = regStr.split("$^").first() + "$";
+            passwdReg = "^" + regStr.split("$^").last();
         }else{
             niReg = passwdReg = regStr;
         }
@@ -3338,3 +3620,480 @@ void MainWindow::checkLineAddMeterNIandPasswd()
     ui->leAddMeterPasswd->setText(str);
 }
 //##########################################################################################
+
+void MainWindow::on_pbDevCommands_clicked()
+{
+    qDebug() << "click " << ui->cbDevCommand->count();
+    if(ui->cbDevCommand->count() > 0){
+        QJsonObject h;
+        h.insert("c", ui->cbDevCommand->currentData(Qt::UserRole).toString());
+        h.insert("d", ui->leDevCommand->text().simplified().trimmed());
+        mWrite2RemoteDev(COMMAND_WRITE_COMMANDS, h);
+
+    }else
+        mWrite2RemoteDev(COMMAND_READ_COMMANDS, QJsonObject());
+}
+//##########################################################################################
+
+void MainWindow::on_pbOpenCloseDA_clicked(bool checked)
+{
+    ui->pbOpenCloseDA->setEnabled(false);
+    ui->pteDasIpList->clear();
+    if(checked){
+        int mode = 0;
+        if(ui->rbOnlyIPv4->isChecked())
+            mode = 1;
+        else{
+            if(ui->rbOnlyIPv6->isChecked())
+                mode = 2;
+        }
+
+        emit startDaServer(mode, ui->sbListenPort->value());
+    }else{
+        emit stopDaServer();
+    }
+}
+//##########################################################################################
+
+void MainWindow::on_tbAdd2SvahaService_2_clicked()
+{
+    QString mess;
+    if(ui->cbAcProfile_2->currentIndex() < 0)
+        mess.append(tr("No day profile<br>"));
+    QString oneLine = ui->leAdd2SvahaService_2->text().simplified().trimmed();
+    QString interfaceName;
+    int portTcp = 0;
+    if(oneLine.isEmpty())
+        mess.append(tr("remote address not found<br>"));
+
+    if(oneLine.mid( oneLine.indexOf("@[") ).contains("]")){ //IPv6
+        if(oneLine.contains("]:")){
+            interfaceName = oneLine.mid( oneLine.lastIndexOf("@[") + 2, oneLine.lastIndexOf("]:") - oneLine.lastIndexOf("@[") - 2 );
+            portTcp = oneLine.mid( oneLine.lastIndexOf("]:") + 2).toInt();
+        }else{
+            QString str = oneLine.mid( oneLine.lastIndexOf("@[") + 2 );
+            str.chop(1);
+            interfaceName = str;
+        }
+
+        interfaceName = QString("[%1]:%2").arg(interfaceName).arg(portTcp);
+
+    }else{
+
+        if(oneLine.contains(":")){
+            interfaceName = oneLine.mid( oneLine.lastIndexOf("@") + 1, oneLine.lastIndexOf(":") - oneLine.lastIndexOf("@") - 1 ) ;
+            portTcp = oneLine.mid( oneLine.lastIndexOf(":") + 1).toInt();
+        }else{
+            interfaceName = oneLine.mid( oneLine.lastIndexOf("@") + 1 );
+        }
+        interfaceName = QString("%1:%2").arg(interfaceName).arg(portTcp);
+
+    }
+
+    if(interfaceName.isEmpty() )
+        mess.append(tr("remote address not found<br>"));
+
+    if( portTcp < 1000 || portTcp > 65534)
+        mess.append(tr("remote port not found<br>"));
+
+    if(modelPeredavatorHost->rowCount() >= SVAHA_MAX_MAC)
+        mess.append(tr("Max. client count is %1").arg(SVAHA_MAX_MAC));
+
+
+    if(!mess.isEmpty()){
+        showMessSmpl(mess);
+        return;
+    }
+    bool alrdExists = false;
+    int overWrite = -1;
+    for(int row = 0, rowMax = modelPeredavatorHost->rowCount(); row < rowMax; row++){
+        if(modelPeredavatorHost->item(row, 0)->text() == interfaceName){
+            alrdExists = true;
+            if(QMessageBox::question(this, tr("Add remote host"), tr("This address already exists.<br>Overwrite?")) == QMessageBox::Yes){
+                overWrite = row;
+                break;
+            }
+
+            return;
+
+        }
+    }
+
+    if(alrdExists){
+        if(overWrite >= 0){
+            modelPeredavatorHost->setItem(overWrite,0, new QStandardItem(interfaceName));
+            modelPeredavatorHost->setItem(overWrite,1, new QStandardItem(ui->cbAcProfile_2->currentText()));
+            modelPeredavatorHost->setItem(overWrite,2, new QStandardItem("-"));
+        }
+    }else{
+        QList<QStandardItem*> l;
+        l.append(new QStandardItem(interfaceName));
+        l.append(new QStandardItem(ui->cbAcProfile_2->currentText()));
+        l.append(new QStandardItem("-"));
+        modelPeredavatorHost->appendRow(l);
+    }
+
+
+    if(modelPeredavatorHost->rowCount() >= SVAHA_MAX_MAC){
+        showMessSmpl(tr("Max. client count is %1").arg(SVAHA_MAX_MAC));
+    }
+}
+//##########################################################################################
+
+void MainWindow::on_tbAddDayProfile_2_clicked()
+{
+    QString mess;
+    if(ui->leName4dayProfileSvaha_2->text().simplified().trimmed().isEmpty())
+        mess.append(tr("Name is empty<br>"));
+
+    if(!ui->cbMon_2->isChecked() && !ui->cbTue_2->isChecked() && !ui->cbWed_2->isChecked() && !ui->cbThu_2->isChecked() && !ui->cbFri_2->isChecked() && !ui->cbSat_2->isChecked() && !ui->cbSun_2->isChecked())
+        mess.append(tr("All days disabled<br>"));
+
+    if(modelDayProfile4peredavator->rowCount() >= SVAHA_MAX_MAC){
+        mess.append( tr("Max. profile count is %1<br>").arg(SVAHA_MAX_MAC));
+    }
+
+    if(!mess.isEmpty()){
+        showMessSmpl(mess);
+        return;
+    }
+
+    QString interfaceName = ui->leName4dayProfileSvaha_2->text().simplified().trimmed();
+    bool alrdExists = false;
+    int overWrite = -1;
+    for(int row = 0, rowMax = modelDayProfile4peredavator->rowCount(); row < rowMax; row++){
+        if(modelDayProfile4peredavator->item(row, 0)->text() == interfaceName){
+            alrdExists = true;
+            if(QMessageBox::question(this, tr("Add day profile"), tr("This name already exists.<br>Overwrite?")) == QMessageBox::Yes){
+                overWrite = row;
+                break;
+            }
+
+            return;
+
+        }
+    }
+
+    QString timeDay = QString("[%1]:[%2]").arg(ui->teFrom_2->time().toString("hh:mm"), ui->teTo_2->time().toString("hh:mm"));
+    if(!(ui->cbMon_2->isChecked() && ui->cbTue_2->isChecked() && ui->cbWed_2->isChecked() && ui->cbThu_2->isChecked() && ui->cbFri_2->isChecked() && ui->cbSat_2->isChecked() && ui->cbSun_2->isChecked())){
+        timeDay.append(";");
+        if(ui->cbMon_2->isChecked())
+            timeDay.append("1,");
+        if(ui->cbTue_2->isChecked())
+            timeDay.append("2,");
+        if(ui->cbWed_2->isChecked())
+            timeDay.append("3,");
+        if(ui->cbThu_2->isChecked())
+            timeDay.append("4,");
+        if(ui->cbFri_2->isChecked())
+            timeDay.append("5,");
+        if(ui->cbSat_2->isChecked())
+            timeDay.append("6,");
+        if(ui->cbSun_2->isChecked())
+            timeDay.append("7,");
+        timeDay.chop(1);
+    }
+
+    if(alrdExists){
+        if(overWrite >= 0){
+            modelDayProfile4peredavator->setItem(overWrite,0, new QStandardItem(interfaceName));
+            modelDayProfile4peredavator->setItem(overWrite,1, new QStandardItem(timeDay));
+        }
+    }else{
+        QList<QStandardItem*> l;
+        l.append(new QStandardItem(interfaceName));
+        l.append(new QStandardItem(timeDay));
+        modelDayProfile4peredavator->appendRow(l);
+    }
+
+    ui->cbAcProfile_2->clear();
+    for(int row = 0, rowMax = modelDayProfile4peredavator->rowCount(); row < rowMax; row++){
+        ui->cbAcProfile_2->addItem(modelDayProfile4peredavator->item(row, 0)->text());
+    }
+
+
+    if(modelDayProfile4peredavator->rowCount() >= SVAHA_MAX_MAC){
+        mess.append( tr("Max. profile count is %1<br>").arg(SVAHA_MAX_MAC));
+    }
+}
+//##########################################################################################
+
+void MainWindow::on_tbAdd2SvahaService_clicked()
+{
+    QString mess;
+    if(ui->cbAcProfile->currentIndex() < 0)
+        mess.append(tr("No day profile<br>"));
+
+    QString oneLine = ui->leAdd2SvahaService->text().simplified().trimmed();
+    QString interfaceName;
+    int portTcp = 0;
+
+    if(oneLine.isEmpty())
+        mess.append(tr("remote address not found<br>"));
+
+    if(oneLine.mid( oneLine.indexOf("@[") ).contains("]")){ //IPv6
+        if(oneLine.contains("]:")){
+            interfaceName = oneLine.mid( oneLine.lastIndexOf("@[") + 2, oneLine.lastIndexOf("]:") - oneLine.lastIndexOf("@[") - 2 );
+            portTcp = oneLine.mid( oneLine.lastIndexOf("]:") + 2).toInt();
+        }else{
+            QString str = oneLine.mid( oneLine.lastIndexOf("@[") + 2 );
+            str.chop(1);
+            interfaceName = str;
+        }
+
+        interfaceName = QString("[%1]:%2").arg(interfaceName).arg(portTcp);
+
+    }else{
+
+        if(oneLine.contains(":")){
+            interfaceName = oneLine.mid( oneLine.lastIndexOf("@") + 1, oneLine.lastIndexOf(":") - oneLine.lastIndexOf("@") - 1 ) ;
+            portTcp = oneLine.mid( oneLine.lastIndexOf(":") + 1).toInt();
+        }else{
+            interfaceName = oneLine.mid( oneLine.lastIndexOf("@") + 1 );
+        }
+        interfaceName = QString("%1:%2").arg(interfaceName).arg(portTcp);
+
+    }
+
+    if(interfaceName.isEmpty())
+        mess.append(tr("remote address not found<br>"));
+
+    if( portTcp < 1000 || portTcp > 65534)
+        mess.append(tr("remote port not found<br>"));
+
+    if(modelSvahaList->rowCount() >= SVAHA_MAX_MAC){
+        mess.append( tr("Max. client count is %1<br>").arg(SVAHA_MAX_MAC));
+    }
+
+    if(!mess.isEmpty()){
+        showMessSmpl(mess);
+        return;
+    }
+    bool alrdExists = false;
+    int overWrite = -1;
+    for(int row = 0, rowMax = modelSvahaList->rowCount(); row < rowMax; row++){
+        if(modelSvahaList->item(row, 0)->text() == interfaceName){
+            alrdExists = true;
+            if(QMessageBox::question(this, tr("Add remote host"), tr("This address already exists.<br>Overwrite?")) == QMessageBox::Yes){
+                overWrite = row;
+                break;
+            }
+
+            return;
+
+        }
+    }
+
+    if(alrdExists){
+        if(overWrite >= 0){
+            modelSvahaList->setItem(overWrite,0, new QStandardItem(interfaceName));
+            modelSvahaList->setItem(overWrite,1, new QStandardItem(ui->cbAcProfile->currentText()));
+            modelSvahaList->setItem(overWrite,2, new QStandardItem("-"));
+        }
+    }else{
+        QList<QStandardItem*> l;
+        l.append(new QStandardItem(interfaceName));
+        l.append(new QStandardItem(ui->cbAcProfile->currentText()));
+        l.append(new QStandardItem("-"));
+        modelSvahaList->appendRow(l);
+    }
+
+    if(modelSvahaList->rowCount() >= SVAHA_MAX_MAC){
+        showMessSmpl(tr("Max. client count is %1").arg(SVAHA_MAX_MAC));
+    }
+}
+//##########################################################################################
+
+
+void MainWindow::on_tbAddDayProfile_clicked()
+{
+    QString mess;
+    if(ui->leName4dayProfileSvaha->text().simplified().trimmed().isEmpty())
+        mess.append(tr("Name is empty<br>"));
+
+    if(!ui->cbMon_3->isChecked() && !ui->cbTue_3->isChecked() && !ui->cbWed_3->isChecked() && !ui->cbThu_3->isChecked() && !ui->cbFri_3->isChecked() && !ui->cbSat_3->isChecked() && !ui->cbSun_3->isChecked())
+        mess.append(tr("All days disabled<br>"));
+
+    if(modelDayProfile4mac->rowCount() >= SVAHA_MAX_MAC){
+        mess.append( tr("Max. profile count is %1<br>").arg(SVAHA_MAX_MAC));
+    }
+
+    if(!mess.isEmpty()){
+        showMessSmpl(mess);
+        return;
+    }
+
+    QString interfaceName = ui->leName4dayProfileSvaha->text().simplified().trimmed();
+    bool alrdExists = false;
+    int overWrite = -1;
+    for(int row = 0, rowMax = modelDayProfile4mac->rowCount(); row < rowMax; row++){
+        if(modelDayProfile4mac->item(row, 0)->text() == interfaceName){
+            alrdExists = true;
+            if(QMessageBox::question(this, tr("Add day profile"), tr("This name already exists.<br>Overwrite?")) == QMessageBox::Yes){
+                overWrite = row;
+                break;
+            }
+
+            return;
+
+        }
+    }
+
+    QString timeDay = QString("[%1]:[%2]").arg(ui->teFrom->time().toString("hh:mm"), ui->teTo->time().toString("hh:mm"));
+    if(!(ui->cbMon_3->isChecked() && ui->cbTue_3->isChecked() && ui->cbWed_3->isChecked() && ui->cbThu_3->isChecked() && ui->cbFri_3->isChecked() && ui->cbSat_3->isChecked() && ui->cbSun_3->isChecked())){
+        timeDay.append(";");
+        if(ui->cbMon_3->isChecked())
+            timeDay.append("1,");
+        if(ui->cbTue_3->isChecked())
+            timeDay.append("2,");
+        if(ui->cbWed_3->isChecked())
+            timeDay.append("3,");
+        if(ui->cbThu_3->isChecked())
+            timeDay.append("4,");
+        if(ui->cbFri_3->isChecked())
+            timeDay.append("5,");
+        if(ui->cbSat_3->isChecked())
+            timeDay.append("6,");
+        if(ui->cbSun_3->isChecked())
+            timeDay.append("7,");
+        timeDay.chop(1);
+    }
+
+    if(alrdExists){
+        if(overWrite >= 0){
+            modelDayProfile4mac->setItem(overWrite,0, new QStandardItem(interfaceName));
+            modelDayProfile4mac->setItem(overWrite,1, new QStandardItem(timeDay));
+        }
+    }else{
+        QList<QStandardItem*> l;
+        l.append(new QStandardItem(interfaceName));
+        l.append(new QStandardItem(timeDay));
+        modelDayProfile4mac->appendRow(l);
+    }
+
+    ui->cbAcProfile->clear();
+    for(int row = 0, rowMax = modelDayProfile4mac->rowCount(); row < rowMax; row++){
+        ui->cbAcProfile->addItem(modelDayProfile4mac->item(row, 0)->text());
+    }
+
+    if(modelSvahaList->rowCount() >= SVAHA_MAX_MAC){
+        showMessSmpl(tr("Max. profile count is %1").arg(SVAHA_MAX_MAC));
+    }
+}
+//##########################################################################################
+
+void MainWindow::on_toolButton_17_clicked()
+{
+    ui->toolButton_17->setEnabled(false);
+    if(!ui->tvSvahaService->currentIndex().isValid())
+        return;
+    if(ui->tvSvahaService->currentIndex().row() >= 0)
+        modelSvahaList->removeRow(ui->tvSvahaService->currentIndex().row());
+}
+//##########################################################################################
+void MainWindow::on_toolButton_18_clicked()
+{
+    ui->toolButton_18->setEnabled(false);
+    if(!ui->tvDayProfiles4svaha->currentIndex().isValid())
+        return;
+    if(ui->tvDayProfiles4svaha->currentIndex().row() >= 0)
+        modelDayProfile4mac->removeRow(ui->tvDayProfiles4svaha->currentIndex().row());
+}
+//##########################################################################################
+
+void MainWindow::on_toolButton_15_clicked()
+{
+    ui->toolButton_15->setEnabled(false);
+    if(!ui->tvSvahaService_2->currentIndex().isValid())
+        return;
+    if(ui->tvSvahaService_2->currentIndex().row() >= 0)
+        modelPeredavatorHost->removeRow(ui->tvSvahaService_2->currentIndex().row());
+}
+//##########################################################################################
+void MainWindow::on_toolButton_16_clicked()
+{
+    ui->toolButton_16->setEnabled(false);
+    if(!ui->tvDayProfiles4svaha_2->currentIndex().isValid())
+        return;
+    if(ui->tvDayProfiles4svaha_2->currentIndex().row() >= 0)
+        modelDayProfile4peredavator->removeRow(ui->tvDayProfiles4svaha_2->currentIndex().row());
+}
+//##########################################################################################
+
+void MainWindow::on_tvSvahaService_2_clicked(const QModelIndex &index)
+{
+    ui->toolButton_15->setEnabled(true);
+    ui->cbAcProfile_2->setCurrentIndex( ui->cbAcProfile_2->findText(modelPeredavatorHost->item(index.row(), 1)->text()) );
+    ui->leAdd2SvahaService_2->setText(modelPeredavatorHost->item(index.row(), 0)->text());
+}
+//##########################################################################################
+void MainWindow::on_tvDayProfiles4svaha_2_clicked(const QModelIndex &index)
+{
+    ui->toolButton_16->setEnabled(true);
+    ui->leName4dayProfileSvaha_2->setText(modelDayProfile4peredavator->item(index.row(),0)->text());
+    QString strDecode = modelDayProfile4peredavator->item(index.row(), 1)->text(); //[hh:mm]:[hh:mm]; day of week (,)
+    ui->teFrom_2->setTime(QTime::fromString(strDecode.mid(1,5), "hh:mm"));
+    ui->teTo_2->setTime(QTime::fromString(strDecode.mid(9,5), "hh:mm"));
+
+    QStringList list;
+    if(strDecode.contains(";"))
+        list = strDecode.mid( strDecode.indexOf(";") + 1 ).split(",");
+    else{
+        for(int i = 1; i < 8; i++ )
+            list.append(QString::number(i));
+
+    }
+
+    ui->cbMon_2->setChecked( list.contains("1"));
+    ui->cbTue_2->setChecked( list.contains("2"));
+    ui->cbWed_2->setChecked( list.contains("3"));
+    ui->cbThu_2->setChecked( list.contains("4"));
+    ui->cbFri_2->setChecked( list.contains("5"));
+    ui->cbSat_2->setChecked( list.contains("6"));
+    ui->cbSun_2->setChecked( list.contains("7"));
+
+}
+//##########################################################################################
+void MainWindow::on_tvSvahaService_clicked(const QModelIndex &index)
+{
+    ui->toolButton_17->setEnabled(true);
+    ui->cbAcProfile->setCurrentIndex( ui->cbAcProfile->findText(modelSvahaList->item(index.row(), 1)->text()) );
+    ui->leAdd2SvahaService->setText(modelSvahaList->item(index.row(), 0)->text());
+}
+//##########################################################################################
+void MainWindow::on_tvDayProfiles4svaha_clicked(const QModelIndex &index)
+{
+    ui->toolButton_18->setEnabled(true);
+    ui->leName4dayProfileSvaha->setText(modelDayProfile4mac->item(index.row(),0)->text());
+    QString strDecode = modelDayProfile4mac->item(index.row(), 1)->text(); //[hh:mm]:[hh:mm]; day of week (,)
+    ui->teFrom_3->setTime(QTime::fromString(strDecode.mid(1,5), "hh:mm"));
+    ui->teTo_3->setTime(QTime::fromString(strDecode.mid(9,5), "hh:mm"));
+
+    QStringList list;
+    if(strDecode.contains(";"))
+        list = strDecode.mid( strDecode.indexOf(";") + 1 ).split(",");
+    else{
+        for(int i = 1; i < 8; i++ )
+            list.append(QString::number(i));
+
+    }
+
+    ui->cbMon_3->setChecked( list.contains("1"));
+    ui->cbTue_3->setChecked( list.contains("2"));
+    ui->cbWed_3->setChecked( list.contains("3"));
+    ui->cbThu_3->setChecked( list.contains("4"));
+    ui->cbFri_3->setChecked( list.contains("5"));
+    ui->cbSat_3->setChecked( list.contains("6"));
+    ui->cbSun_3->setChecked( list.contains("7"));
+}
+//##########################################################################################
+
+void MainWindow::on_toolButton_12_clicked()
+{
+    ScanIpDialog *d = new ScanIpDialog(this);
+    connect(d, SIGNAL(setThisIp(QString)), ui->leIp, SLOT(setText(QString)) );
+    connect(d, SIGNAL(setThisObjName(QString)), ui->leObjectName, SLOT(setText(QString)) );
+    connect(d, SIGNAL(setThisPort(int)), ui->sbPort, SLOT(setValue(int)) );
+    d->exec();
+    d->deleteLater();
+}

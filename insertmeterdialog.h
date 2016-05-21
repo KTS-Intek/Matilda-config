@@ -18,7 +18,7 @@ public:
 
 
 signals:
-    void data2matilda(quint16 , QVariantHash );
+    void data2matilda(quint16 , QJsonObject );
 
 
 private slots:

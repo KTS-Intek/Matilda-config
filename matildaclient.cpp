@@ -21,16 +21,20 @@ matildaclient::matildaclient(QObject *parent) : QTcpSocket(parent)
     connect(timerWait4Answer, SIGNAL(timeout()), this, SLOT(onWaitTimerTimeOut()) );
 }
 //################################################################################################
-void matildaclient::conn2thisDev(int hashIndx, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss)
+void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn)
 {
+    daOpened = false;
+    block4activeClient = true;
+
     Q_UNUSED(add2list);
     loginPasswd.clear();
     disconnect(this, SIGNAL(disconnected()), this, SLOT(onDisconn()) );
     iAmDone = false;
     accessLevel = 0;
+
     if(isConnOpen())
         close();
-//    waitForDisconnected();
+    //    waitForDisconnected();
     this->timeOut = 500;
     this->timeOutG = timeOut;
 
@@ -39,13 +43,16 @@ void matildaclient::conn2thisDev(int hashIndx, QString login, QString passwd, QS
     if(timeOut < 3000)
         timeOut = 3000;
 
-
-//    dataStreamVersion = QDataStream::Qt_DefaultCompiledVersion;
+    isSvahaService = useMac;
+    //    dataStreamVersion = QDataStream::Qt_DefaultCompiledVersion;
     connectToHost(add,port);
     lastHashSumm = hashIndx;
 
+    block4activeClient = false;
 
-    if(waitForConnected((timeOut > 9000) ? 9000 : timeOut)){
+    if(waitForConnected((timeOut > 9000) ? 9000 : timeOut)){        
+
+
         connect(this, SIGNAL(disconnected()), this, SLOT(onDisconn()) );
 
 
@@ -55,32 +62,68 @@ void matildaclient::conn2thisDev(int hashIndx, QString login, QString passwd, QS
         loginPasswd.append("");
         allowCompress = allwCmprss;
         stopAll = false;
+
+        if(useMac){
+
+//            lastAdd2list = add2list;
+            QJsonObject jObj;
+            jObj.insert("version", MATILDA_PROTOCOL_VERSION);
+            jObj.insert("useId", !useMacAddr2conn);
+//
+            //mode JSON and QDataStream
+//            jObj.insert("QDS", QString::number(dataStreamVersion));//активація режиму QDataStream
+            if(allwCmprss)
+                jObj.insert("cmmprssn", "zlib");
+            jObj.insert("remote", (useMacAddr2conn) ? macAddr : objN);
+            stopAll = false;
+
+             mWrite2SocketJSON(jObj, COMMAND_CONNECT_ME_2_THIS_ID_OR_MAC);
+
+
+            return;
+        }
     }else{
 
         emit showMess(tr("Can't connect to device. Error: %1").arg(errorString()));
-         close();
+        close();
         return;
     }
 }
 //################################################################################################
-void matildaclient::data2matilda(quint16 command, QVariantHash hash)
+void matildaclient::data2matilda(quint16 command, QJsonObject jobj)
 {    
 
-    mWrite2SocketJSON(QJsonObject::fromVariantHash(hash), command);
+    waitForReadyRead(100);
+    readAll();
+    mWrite2SocketJSON(jobj, command);
 }
 //################################################################################################
 void matildaclient::closeConnection()
 {
+    block4activeClient = false;
+
     onDisconn();
     emit showMess(tr("Done."));
 }
 //################################################################################################
 void matildaclient::stopAllNow()
 {
-    stopAll = true;
+    if(stopAll)
+        return;
 
     if(accessLevel < 1)
         QTimer::singleShot(1, this, SLOT( onDisconn()));
+
+    stopAll = true;
+}
+//################################################################################################
+void matildaclient::data2coordiantor(QByteArray writeArr)
+{
+    if(state() == QAbstractSocket::ConnectedState && daOpened){
+        QJsonObject jobj;
+        jobj.insert("d", QString(writeArr.toBase64(QByteArray::OmitTrailingEquals)));
+        mWrite2SocketJSON(jobj, COMMAND_WRITE_DA_DATA_2_COORDINATOR);
+    }
 }
 
 //################################################################################################
@@ -89,20 +132,20 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     QJsonParseError jErr;
     QJsonDocument jDoc = QJsonDocument::fromJson( dataArr, &jErr);
 
-    QVariantHash hash = jDoc.object().toVariantHash();
+    QJsonObject jobj = jDoc.object();
 
     qint64 len = dataArr.length();
     qint64 lenUn = -1;
-    quint16 command = hash.take("cmd").toUInt();
+    quint16 command = (quint16)jobj.take("cmd").toInt();
 
     if(command == COMMAND_COMPRESSED_PACKET){
 
-        if(messHshIsValid(jDoc.object())){
+        if(messHshIsValid(jDoc.object(), dataArr)){
 
-            jDoc = QJsonDocument::fromJson( qUncompress( QByteArray::fromBase64( hash.value("zlib").toByteArray() )  ), &jErr);//qUncompress( <quint32 not compressed data len><comprssed data> )
-            hash = jDoc.object().toVariantHash();
+            jDoc = QJsonDocument::fromJson( qUncompress( QByteArray::fromBase64( jobj.value("zlib").toString().toLocal8Bit() )  ), &jErr);//qUncompress( <quint32 not compressed data len><comprssed data> )
+            jobj = jDoc.object();
             lenUn = jDoc.toJson(QJsonDocument::Compact).length();
-            command = hash.take("cmd").toUInt();
+            command = (quint16)jobj.take("cmd").toInt();
 
         }else{
             emit showMess(tr("Received uncorrect request"));
@@ -119,57 +162,59 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 
     }
 
-    if(!messHshIsValid(jDoc.object())){
+    if(!messHshIsValid(jobj, dataArr)){
         emit showMess(tr("Received uncorrect request"));
         return;
     }
 
 
-    if(stopAll && command != COMMAND_AUTHORIZE && command != COMMAND_I_AM_ZOMBIE && command != COMMAND_I_NEED_MORE_TIME){
+    if(stopAll && command != COMMAND_AUTHORIZE && command != COMMAND_I_AM_ZOMBIE && command != COMMAND_I_NEED_MORE_TIME && command != COMMAND_READ_DA_DATA_FROM_COORDINATOR ){
+
         return;
     }
 
     if(command != COMMAND_READ_DATABASE_GET_VAL && command != COMMAND_READ_DATABASE && command != COMMAND_READ_DATABASE_GET_TABLES && command != COMMAND_READ_METER_LIST_FRAMED
             && command != COMMAND_WRITE_METER_LIST_FRAMED && command != COMMAND_WRITE_DROP_TABLE  && command != COMMAND_WRITE_DROP_TABLE_GET_COUNT
             && command != COMMAND_READ_METER_LOGS_GET_TABLES && command != COMMAND_READ_METER_LOGS_GET_VAL && command != COMMAND_I_NEED_MORE_TIME
-            && command != COMMAND_READ_METER_LOGS && command != COMMAND_READ_TABLE_HASH_SUMM){
-        emit hideAnimation();
+            && command != COMMAND_READ_METER_LOGS && command != COMMAND_READ_TABLE_HASH_SUMM && (accessLevel != 0 && command != COMMAND_ZULU ) && command != COMMAND_READ_DA_DATA_FROM_COORDINATOR){
+        if(!(daOpened && command == COMMAND_DA_OPEN_CLOSE))
+            emit hideAnimation();
     }
 
     switch(command){
     case COMMAND_ZULU:{
-        if(hash.value("name").toString() == "Matilda" && hash.value("version").toString() == "1" && QDateTime::fromString(hash.value("UTC").toString(), "yyyy-MM-dd hh:mm:ss").isValid()){
-            if(!hash.value("err").toString().isEmpty()){
+        if(jobj.value("name").toString() == "Matilda" && jobj.value("version").toInt() == MATILDA_PROTOCOL_VERSION && QDateTime::fromString(jobj.value("UTC").toString(), "yyyy-MM-dd hh:mm:ss").isValid()){
+            if(!jobj.value("err").toString().isEmpty()){
 
                 emit infoAboutObj(tr("DateTime: %1 UTC%2 <br> Version: %3 <br> message: %4")
-                                  .arg(hash.value("UTC").toDateTime().addSecs(hash.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
-                                  .arg( (hash.value("UOFT").toInt() < 0) ? QString::number(hash.value("UOFT").toInt()) : QString("+%1").arg(hash.value("UOFT").toInt()) )
+                                  .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
+                                  .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
 
-                                  .arg( QString::number(hash.value("version").toInt() ))
-                                  .arg(hash.value("message").toString())
+                                  .arg( QString::number(jobj.value("version").toInt() ))
+                                  .arg(jobj.value("message").toString())
                                   );
 
-                qDebug() << hash.value("err").toString();
+                qDebug() << jobj.value("err").toString();
 
-                emit showMess(hash.value("message").toString());
-                  onDisconn();
+                emit showMess(jobj.value("message").toString());
+                onDisconn();
                 return;
             }else{
 
                 emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>SSL: %3 <br>Version: %4 <br> Black List: %5 <br> Counter: %6<br>Memo: %7")
-                                  .arg(hash.value("UTC").toDateTime().addSecs(hash.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
-                                  .arg( (hash.value("UOFT").toInt() < 0) ? QString::number(hash.value("UOFT").toInt()) : QString("+%1").arg(hash.value("UOFT").toInt()) )
-                                  .arg( (hash.value("SSL").toInt() == 0) ? tr("Disabled") : tr("Enabled") )
-                                  .arg( QString::number(hash.value("version").toInt() ))
-                                  .arg(hash.value("BLC").toInt() )
-                                  .arg( hash.value("CNTR").toInt() )
-                                  .arg(hash.value("memo").toString())
+                                  .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
+                                  .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
+                                  .arg( (jobj.value("SSL").toInt() == 0) ? tr("Disabled") : tr("Enabled") )
+                                  .arg( QString::number(jobj.value("version").toInt() ))
+                                  .arg(jobj.value("BLC").toInt() )
+                                  .arg( jobj.value("CNTR").toInt() )
+                                  .arg(jobj.value("memo").toString())
                                   );
 
-                if(hash.value("version").toInt() == MATILDA_PROTOCOL_VERSION){
+                if(jobj.value("version").toInt() == MATILDA_PROTOCOL_VERSION){
                     QJsonObject jObj;
 
-                    jObj.insert("version", hash.value("version").toInt());
+                    jObj.insert("version", jobj.value("version").toInt());
                     jObj.insert("hsh", QString(QCryptographicHash::hash(loginPasswd.at(0) + "\n" + dataArr + "\n" + loginPasswd.at(1), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals)));
 
                     jObj.insert("plg", true); //Передати інфо по плагінам (не обов’язкове значення, але потрібне для додавання лічильників)
@@ -185,38 +230,76 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
             }
         }
 
+        qDebug() << jobj.value("version").toInt() << jobj.value("version").toString() << QString::number(MATILDA_PROTOCOL_VERSION);
 
         emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>SSL: %3 <br>Version: %4 <br> Black List: %5 <br> Counter: %6")
-                          .arg(hash.value("UTC").toDateTime().addSecs(hash.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
-                          .arg( (hash.value("UOFT").toInt() < 0) ? QString::number(hash.value("UOFT").toInt()) : QString("+%1").arg(hash.value("UOFT").toInt()) )
-                          .arg( (hash.value("SSL").toInt() == 0) ? tr("Disabled") : tr("Enabled") )
-                          .arg( QString::number(hash.value("version").toInt() ))
-                          .arg(hash.value("BLC").toInt() )
-                          .arg( hash.value("CNTR").toInt() )
+                          .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
+                          .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
+                          .arg( (jobj.value("SSL").toInt() == 0) ? tr("Disabled") : tr("Enabled") )
+                          .arg( QString::number(jobj.value("version").toInt() ))
+                          .arg(jobj.value("BLC").toInt() )
+                          .arg( jobj.value("CNTR").toInt() )
                           );
 
         emit showMess(tr("Unknown device."));
         onDisconn();
         break;}
 
-    case COMMAND_AUTHORIZE:{
-        qDebug() << "access = " << hash;
+    case COMMAND_CONNECT_ME_2_THIS_ID_OR_MAC:{
 
-        switch(hash.value("a").toUInt()){
+        if(jobj.contains("sIp") && jobj.contains("sP")){
+            block4activeClient = true;
+
+            emit startWait4AnswerTimer(timeOutG);
+
+            qDebug() << "close old connection " ;
+
+            close();
+
+            isSvahaService = false;
+            connectToHost(jobj.value("sIp").toString(), jobj.value("sP").toInt());
+            qDebug() << "openning new connection " << jobj.value("sIp").toString() << jobj.value("sP").toInt() << timeOut;
+
+
+            if(waitForConnected(timeOut)){
+                qDebug() << "bool isConnected " << block4activeClient;
+                block4activeClient = false;
+                stopAfter = false;
+                return;
+
+            }else{
+                emit showMess(tr("Can't connect to device. Error: %1").arg(errorString()));
+                 close();
+                return;
+            }
+        }else{
+            QVariantList l = jobj.value("l").toArray().toVariantList();
+            QStringList list;
+            for(int i = 0, iMax = l.size(); i < iMax; i++)
+                list.append(l.at(i).toString());
+            emit onYouCanSelectDevice(list);
+        }
+        break;}
+
+    case COMMAND_AUTHORIZE:{
+        qDebug() << "access = " << jobj;
+
+        accessLevel = jobj.value("a").toInt();
+        switch(jobj.value("a").toInt()){
         case MTD_USER_ADMIN:{
-            emit authrizeAccess(hash.value("a").toUInt());
-            emit data2gui(command, hash);
+            emit authrizeAccess(jobj.value("a").toInt());
+            emit data2gui(command, jobj);
             emit showMess(tr("Hello, you admin!"));
             break;}
         case MTD_USER_OPER:{
-            emit authrizeAccess(hash.value("a").toUInt());
-            emit data2gui(command, hash);
+            emit authrizeAccess(jobj.value("a").toInt());
+            emit data2gui(command, jobj);
             emit showMess(tr("Hello, you only operator!"));
             break;}
 
         case MTD_USER_GUEST:{
-            emit authrizeAccess(hash.value("a").toUInt());
-            emit data2gui(command, hash);
+            emit authrizeAccess(jobj.value("a").toInt());
+            emit data2gui(command, jobj);
             emit showMess(tr("Hello, you only guest!"));
             break;}
 
@@ -228,15 +311,25 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         }
         return;}
 
+    case COMMAND_DA_OPEN_CLOSE:{
+        //прямий доступ закрито
+        daOpened = false;
+        emit data2gui(command, jobj);
+        return;}
+
+    case COMMAND_READ_DA_DATA_FROM_COORDINATOR:{
+        emit dataFromCoordinator( QByteArray::fromBase64(jobj.value("d").toString().toLocal8Bit()));
+        return;}
+
     case COMMAND_I_NEED_MORE_TIME:{
         emit startWait4AnswerTimer(timeOutG);
-        emit data2gui(command, hash);
+        emit data2gui(command, jobj);
         stopAfter = false;
         return;}
 
     case COMMAND_I_AM_ZOMBIE:{ qDebug() << "zombie killer" << peerAddress();   mWrite2SocketJSON(QJsonObject(), COMMAND_I_AM_ZOMBIE); return;}
 
-    default:{ emit data2gui(command, hash); return;}
+    default:{ jobj.remove(getHshNames().at(lastHashSumm)); emit data2gui(command, jobj); return;}
 
     }
 
@@ -247,11 +340,12 @@ void matildaclient::mReadyRead()
 {
 
     emit startWait4AnswerTimer(timeOutG);
-qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz");
+    qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz");
     QByteArray readarr = readAll();
+
     QTime time;
     time.start();
-    int razivDuzkaL = readarr.count('{'), razivDuzkaR = readarr.count('}');
+    int razivDuzkaL = readarr.count("{\""), razivDuzkaR = readarr.count("\"}");
 
     while( razivDuzkaR < razivDuzkaL && readarr.size() < MAX_PACKET_LEN && time.elapsed() < timeOutG){
         if(waitForReadyRead(timeOut)){
@@ -260,9 +354,9 @@ qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz");
             emit startWait4AnswerTimer(timeOutG);
             waitForReadyRead(100);
             readarr.append(readAll());
-            razivDuzkaL = readarr.count('{');
-            razivDuzkaR = readarr.count('}');
-//            qDebug() << "razivDuzkaL razivDuzkaR " << razivDuzkaL << razivDuzkaR;
+            razivDuzkaL = readarr.count("{\"");
+            razivDuzkaR = readarr.count("\"}");
+            qDebug() << "razivDuzkaL razivDuzkaR " << razivDuzkaL << razivDuzkaR;
         }
     }
 
@@ -282,16 +376,10 @@ qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz");
         qDebug()<< "readServer:"<< readarr;
         return ;
     }else{
-        int duzkaIndx = readarr.indexOf("}");
-        int lastIndx = 0;
 
-        int len = readarr.length();
-        while(duzkaIndx > 1 && lastIndx < len){
-            decodeReadDataJSON(readarr.mid(lastIndx, duzkaIndx + 1));
-            duzkaIndx = readarr.indexOf("}", lastIndx);
-            lastIndx = duzkaIndx + 1;
 
-        }
+        decodeReadDataJSON(readarr);
+
     }
     stopAll = stopAfter;
     qDebug() << stopAll << stopAfter;
@@ -306,77 +394,63 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
     stopAll = false;
 
 
-    qint64 blSize = 0;
-    QByteArray writeArr;
-    //хеш повідомлення або хеш стисненого повідомлення
-    switch(lastHashSumm){
-    case 0:{
-        jObj.insert("Md4", QString("0"));
-        QJsonDocument jDoc2DST(jObj);
-        jObj.insert("Md4", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md4).toBase64(QByteArray::OmitTrailingEquals) ));
-        break;}
-    case 2:{ jObj.insert("Sha1", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha1", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha1).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 3:{ jObj.insert("Sha224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha224).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 4:{ jObj.insert("Sha256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha256).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 5:{ jObj.insert("Sha384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha384).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 6:{ jObj.insert("Sha512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha512).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 7:{ jObj.insert("Sha3_224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 8:{ jObj.insert("Sha3_256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 9:{ jObj.insert("Sha3_384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals))); break;}
-    case 10:{ jObj.insert("Sha3_512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals))); break;}
-
-    default:{
-        jObj.insert("Md5", QString("0"));
-        QJsonDocument jDoc2DST(jObj);
-        jObj.insert("Md5", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md5).toBase64(QByteArray::OmitTrailingEquals)));
-        break;}
-
-    }
-
-    if(blSize < 10){
+    QByteArray writeArr ;
+    if(true){
         QJsonDocument jDoc2DST(jObj);
         writeArr = jDoc2DST.toJson(QJsonDocument::Compact);
-        blSize = writeArr.length() ;
+        writeArr.chop(1);// remove }
     }
+
+    qDebug() << "writeArr0 " << writeArr;
+    switch(lastHashSumm){
+    case 0: { writeArr.append(", \"Md4\":\""      + QCryptographicHash::hash( writeArr + ", \"Md4\":\"0\"}"     , QCryptographicHash::Md4     ).toBase64() + "\"}" ); break;}
+    case 2: { writeArr.append(", \"Sha1\":\""     + QCryptographicHash::hash( writeArr + ", \"Sha1\":\"0\"}"    , QCryptographicHash::Sha1    ).toBase64() + "\"}" ); break;}
+    case 3: { writeArr.append(", \"Sha224\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha224\":\"0\"}"  , QCryptographicHash::Sha224  ).toBase64() + "\"}" ); break;}
+    case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64() + "\"}" ); break;}
+    case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64() + "\"}" ); break;}
+    case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64() + "\"}" ); break;}
+    case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64() + "\"}" ); break;}
+    case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64() + "\"}" ); break;}
+    case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64() + "\"}" ); break;}
+    case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64() + "\"}" ); break;}
+    default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64() + "\"}" ); break;}
+    }
+
+    qint64 blSize = writeArr.length();
 
     if(blSize >= SETT_MAX_UNCOMPRSS_PACkET_SIZE && allowCompress){
 
-        QJsonObject jObjCmprss;
-        jObjCmprss.insert("cmd", QString::number(COMMAND_COMPRESSED_PACKET));
-        jObjCmprss.insert("zlib", QString(qCompress(writeArr, 9).toBase64(QByteArray::OmitTrailingEquals))); // <quint32 data len><zlib compressed data> = qCompress()
+        if(true){
 
-        jObj = jObjCmprss;
+            QJsonObject jObjCpmrr;
+
+            jObjCpmrr.insert("cmd", QString::number(COMMAND_COMPRESSED_PACKET));
+            jObjCpmrr.insert("zlib", QString(qCompress(writeArr, 9).toBase64()));
+
+            QJsonDocument jDoc2DST(jObjCpmrr);
+            writeArr = jDoc2DST.toJson(QJsonDocument::Compact);
+            writeArr.chop(1);// remove }
+        }
+
+        qDebug() << "writeArr1 comprs " << writeArr;
         switch(lastHashSumm){
-        case 0:{
-            jObj.insert("Md4", QString("0"));
-            QJsonDocument jDoc2DST(jObj);
-            jObj.insert("Md4", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md4).toBase64(QByteArray::OmitTrailingEquals) ));
-            break;}
-        case 2:{ jObj.insert("Sha1", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha1", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha1).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 3:{ jObj.insert("Sha224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha224).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 4:{ jObj.insert("Sha256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha256).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 5:{ jObj.insert("Sha384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha384).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 6:{ jObj.insert("Sha512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha512).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 7:{ jObj.insert("Sha3_224", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_224", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 8:{ jObj.insert("Sha3_256", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_256", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 9:{ jObj.insert("Sha3_384", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_384", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals))); break;}
-        case 10:{ jObj.insert("Sha3_512", QString("0")); QJsonDocument jDoc2DST(jObj); jObj.insert("Sha3_512", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals))); break;}
-
-        default:{
-            jObj.insert("Md5", QString("0"));
-            QJsonDocument jDoc2DST(jObj);
-            jObj.insert("Md5", QString(QCryptographicHash::hash(jDoc2DST.toJson(QJsonDocument::Compact), QCryptographicHash::Md5).toBase64(QByteArray::OmitTrailingEquals)));
-            break;}
-
+        case 0: { writeArr.append(", \"Md4\":\""      + QCryptographicHash::hash( writeArr + ", \"Md4\":\"0\"}"     , QCryptographicHash::Md4     ).toBase64() + "\"}" ); break;}
+        case 2: { writeArr.append(", \"Sha1\":\""     + QCryptographicHash::hash( writeArr + ", \"Sha1\":\"0\"}"    , QCryptographicHash::Sha1    ).toBase64() + "\"}" ); break;}
+        case 3: { writeArr.append(", \"Sha224\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha224\":\"0\"}"  , QCryptographicHash::Sha224  ).toBase64() + "\"}" ); break;}
+        case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64() + "\"}" ); break;}
+        case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64() + "\"}" ); break;}
+        case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64() + "\"}" ); break;}
+        case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64() + "\"}" ); break;}
+        case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64() + "\"}" ); break;}
+        case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64() + "\"}" ); break;}
+        case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64() + "\"}" ); break;}
+        default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64() + "\"}" ); break;}
         }
     }else{
-       blSize = -1;
+        blSize = -1;
     }
 
-    QJsonDocument jDoc(jObj);
-    qint64 len = write(jDoc.toJson(QJsonDocument::Compact));
-
-    qDebug() << len << jDoc.toJson(QJsonDocument::Compact);
+    qint64 len = write(writeArr);
     qDebug() << "write " << QTime::currentTime().toString("hh:mm:ss.zzz");
 
 
@@ -390,7 +464,14 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
 //################################################################################################
 void matildaclient::onDisconn()
 {
-    qDebug() << "onDisconn";
+
+    qDebug() << "onDisconn" << block4activeClient;
+
+    if(block4activeClient){
+        block4activeClient = false;
+        return;
+    }
+
     emit stopWait4AnswerTimer();
     if(!iAmDone){
         emit onConnectedStateChanged(false);
@@ -401,6 +482,12 @@ void matildaclient::onDisconn()
 //################################################################################################
 void matildaclient::onWaitTimerTimeOut()
 {
+
+}
+//################################################################################################
+void matildaclient::onDaOpened(bool isDaOpen)
+{
+    daOpened = isDaOpen;
 
 }
 //################################################################################################
@@ -430,38 +517,54 @@ QString matildaclient::hshSummName(const int &indx) const
     return hashList.at(indx);
 }
 //################################################################################################
-QStringList matildaclient::getHshNames() const
+QStringList matildaclient::getHshNames()
 {
     return QString("Md4,Md5,Sha1,Sha224,Sha256,Sha384,Sha512,Sha3_224,Sha3_256,Sha3_384,Sha3_512").split(",");
 }
 //################################################################################################
-bool matildaclient::messHshIsValid(QJsonObject jObj)
+bool matildaclient::messHshIsValid(const QJsonObject &jObj, QByteArray readArr)
 {
-    QByteArray myHash;
-    QByteArray hshBase64;
+
     QString hshName;
     if(jObj.contains("Md5")){ //default hash sum
         hshName = "Md5";
-        hshBase64 = QByteArray::fromBase64(jObj.take(hshName).toString().toLocal8Bit());
-        jObj.insert(hshName, QString("0"));
-        QJsonDocument jDoc2h(jObj);
-        myHash = QCryptographicHash::hash(jDoc2h.toJson(QJsonDocument::Compact), QCryptographicHash::Md5);
-
     }else{
-        hshName = getHshNames().at(lastHashSumm);
-        hshBase64 = QByteArray::fromBase64(jObj.take(hshName).toString().toLocal8Bit());
-        jObj.insert(hshName, QString("0"));
-        QJsonDocument jDoc2h(jObj);
-        myHash = QCryptographicHash::hash(jDoc2h.toJson(QJsonDocument::Compact), static_cast<QCryptographicHash::Algorithm>(lastHashSumm));
+        if(lastHashSumm >=0 && lastHashSumm < getHshNames().size())
+            hshName = getHshNames().at(lastHashSumm);
     }
 
-    if(myHash == hshBase64){
-        return true;
-    }else{
-        qDebug() << "if(myHash != hshBase64 " << myHash.toBase64(QByteArray::OmitTrailingEquals) << hshBase64.toBase64(QByteArray::OmitTrailingEquals);
-//            onDisconn();
-        return false;
+    if(!hshName.isEmpty() && jObj.contains(hshName)){
+
+        int startIndx = readArr.indexOf(QString("\"%1\":").arg(hshName));
+        QByteArray hshBase64;
+        if(startIndx > 0){
+            startIndx += hshName.length() + 4;
+            qDebug() << "hshName " << hshName << startIndx << readArr.mid(startIndx);
+
+            int endIndx = readArr.indexOf("\"", startIndx + 1);
+            qDebug() << "endIndx " << endIndx << readArr.mid(endIndx);
+
+            hshBase64 = readArr.mid(startIndx , endIndx - startIndx);
+            qDebug() << hshBase64;
+            readArr = readArr.left(startIndx ) + "0" + readArr.mid(endIndx);
+            qDebug() << readArr;
+
+        }
+        if(hshBase64.isEmpty())
+            return false;
+
+        hshBase64 = QByteArray::fromBase64(hshBase64);
+
+        QByteArray myHash = QCryptographicHash::hash(readArr, static_cast<QCryptographicHash::Algorithm>(lastHashSumm));
+        if(myHash == hshBase64){
+            return true;
+        }else{
+            qDebug() << "if(myHash != hshBase64 " << myHash.toBase64() << hshBase64.toBase64();
+            return false;
+        }
     }
+
+    return false;
 
 }
 //################################################################################################

@@ -18,7 +18,11 @@ SOURCES += main.cpp\
     matildaclient.cpp \
     mysortfilterproxymodel.cpp \
     wait4answerdialog.cpp \
-    insertmeterdialog.cpp
+    insertmeterdialog.cpp \
+    directaccesmatildaservice.cpp \
+    selectdevbymacaddrdialog.cpp \
+    scanipdialog.cpp \
+    udpscanner.cpp
 
 HEADERS  += mainwindow.h \
     ../../matilda-bbb/moji_defy.h \
@@ -26,12 +30,18 @@ HEADERS  += mainwindow.h \
     matildaclient.h \
     mysortfilterproxymodel.h \
     wait4answerdialog.h \
-    insertmeterdialog.h
+    insertmeterdialog.h \
+    directaccesmatildaservice.h \
+    selectdevbymacaddrdialog.h \
+    scanipdialog.h \
+    udpscanner.h
 
 FORMS    += mainwindow.ui \
     energydialog.ui \
     wait4answerdialog.ui \
-    insertmeterdialog.ui
+    insertmeterdialog.ui \
+    selectdevbymacaddrdialog.ui \
+    scanipdialog.ui
 
 RESOURCES += \
     res.qrc
