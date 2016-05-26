@@ -168,7 +168,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     }
 
 
-    if(stopAll && command != COMMAND_AUTHORIZE && command != COMMAND_I_AM_ZOMBIE && command != COMMAND_I_NEED_MORE_TIME && command != COMMAND_READ_DA_DATA_FROM_COORDINATOR ){
+    if(stopAll && command != COMMAND_AUTHORIZE && command != COMMAND_I_AM_A_ZOMBIE && command != COMMAND_I_NEED_MORE_TIME && command != COMMAND_READ_DA_DATA_FROM_COORDINATOR ){
 
         return;
     }
@@ -177,7 +177,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
             && command != COMMAND_WRITE_METER_LIST_FRAMED && command != COMMAND_WRITE_DROP_TABLE  && command != COMMAND_WRITE_DROP_TABLE_GET_COUNT
             && command != COMMAND_READ_METER_LOGS_GET_TABLES && command != COMMAND_READ_METER_LOGS_GET_VAL && command != COMMAND_I_NEED_MORE_TIME
             && command != COMMAND_READ_METER_LOGS && command != COMMAND_READ_TABLE_HASH_SUMM && (accessLevel != 0 && command != COMMAND_ZULU ) && command != COMMAND_READ_DA_DATA_FROM_COORDINATOR){
-        if(!(daOpened && command == COMMAND_DA_OPEN_CLOSE))
+        if(!(daOpened && command == COMMAND_WRITE_DA_OPEN_CLOSE))
             emit hideAnimation();
     }
 
@@ -311,7 +311,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         }
         return;}
 
-    case COMMAND_DA_OPEN_CLOSE:{
+    case COMMAND_WRITE_DA_OPEN_CLOSE:{
         //прямий доступ закрито
         daOpened = false;
         emit data2gui(command, jobj);
@@ -327,7 +327,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         stopAfter = false;
         return;}
 
-    case COMMAND_I_AM_ZOMBIE:{ qDebug() << "zombie killer" << peerAddress();   mWrite2SocketJSON(QJsonObject(), COMMAND_I_AM_ZOMBIE); return;}
+    case COMMAND_I_AM_A_ZOMBIE:{ qDebug() << "zombie killer" << peerAddress();   mWrite2SocketJSON(QJsonObject(), COMMAND_I_AM_A_ZOMBIE); return;}
 
     default:{ jobj.remove(getHshNames().at(lastHashSumm)); emit data2gui(command, jobj); return;}
 
@@ -457,7 +457,7 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
     emit changeCounters(len, blSize , false);
 
     waitForBytesWritten(50);
-    if(s_command != COMMAND_I_AM_ZOMBIE )
+    if(s_command != COMMAND_I_AM_A_ZOMBIE )
         emit startWait4AnswerTimer(timeOutG);
 }
 

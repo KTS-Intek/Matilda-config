@@ -170,6 +170,10 @@ private slots:
 
     void on_toolButton_12_clicked();
 
+    void on_pbReadUdp_clicked();
+
+    void on_pbWriteUdp_clicked();
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);

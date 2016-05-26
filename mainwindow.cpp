@@ -119,7 +119,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->lvMeterDataProfile->setModel(modelProfile4DB);
-    ui->lvDeleteTable->setModel(modelProfile4DB);
+//    ui->lvDeleteTable->setModel(modelProfile4DB);
     ui->lvMeterDataTariff->setModel(modelTarif4DB);
     ui->lvMeterDataProfile_2->setModel(modelEvent4DB);
     ui->lvMeterDataProfile_3->setModel(modelProfile4Hash);
@@ -646,7 +646,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         QList<QString> l = jobj.keys();
         qSort(l);
         ui->pteMeterPlg->clear();
-        ui->pteMeterPlg->appendPlainText(tr("#  Plugin\tCreate Date and Time\t\tInfo"));
+        ui->pteMeterPlg->appendPlainText(tr("#  Plugin\tCreate Date and Time\t\tInfo\t\tMeter models\t\tRegExp"));
         for(int i = 0, iMax = l.size(); i < iMax; i++){
             QStringList sl = varList2strList(jobj.value(l.at(i)).toArray().toVariantList());
             ui->pteMeterPlg->appendPlainText( QString("%1. %2\t%3")
@@ -1713,7 +1713,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         }
         break;}
 
-
+    case COMMAND_READ_UDP_BEACON:{ ui->cbUdpState->setChecked(jobj.value("b").toBool(false));   break;}
 
     case COMMAND_WRITE_METER_LIST_FRAMED:{
 
@@ -1979,7 +1979,7 @@ void MainWindow::onDaServiceState(bool isListen)
             return;
         QJsonObject jobj;
         jobj.insert( "i",  isListen ? 1 : 0);
-        mWrite2RemoteDev(COMMAND_DA_OPEN_CLOSE, jobj);
+        mWrite2RemoteDev(COMMAND_WRITE_DA_OPEN_CLOSE, jobj);
     }
 }
 //##########################################################################################
@@ -3068,7 +3068,7 @@ void MainWindow::on_pbWrite_clicked()
 //################################################################################################
 void MainWindow::mWrite2RemoteDev(quint16 command, QJsonObject jobj)
 {
-    if(connectionDown() || (ui->pbOpenCloseDA->isChecked() && command != COMMAND_DA_OPEN_CLOSE))
+    if(connectionDown() /*|| (ui->pbOpenCloseDA->isChecked() && command != COMMAND_WRITE_DA_OPEN_CLOSE)*/)
         return;
 
     if(command < 1){
@@ -4090,10 +4090,32 @@ void MainWindow::on_tvDayProfiles4svaha_clicked(const QModelIndex &index)
 
 void MainWindow::on_toolButton_12_clicked()
 {
-    ScanIpDialog *d = new ScanIpDialog(this);
+    ScanIpDialog *d = new ScanIpDialog(ui->tabWidget_2->currentIndex(), this);
     connect(d, SIGNAL(setThisIp(QString)), ui->leIp, SLOT(setText(QString)) );
     connect(d, SIGNAL(setThisObjName(QString)), ui->leObjectName, SLOT(setText(QString)) );
     connect(d, SIGNAL(setThisPort(int)), ui->sbPort, SLOT(setValue(int)) );
+
+    connect(d, SIGNAL(setThisMac(QString)), ui->leObjectMac, SLOT(setText(QString)) );
+    connect(d, SIGNAL(setThisObjName_2(QString)), ui->leObjectName_2, SLOT(setText(QString)) );
+
+    connect(d, SIGNAL(setThisMode(int)), ui->tabWidget_2, SLOT(setCurrentIndex(int)) );
+
     d->exec();
     d->deleteLater();
 }
+//##########################################################################################
+void MainWindow::on_pbReadUdp_clicked()
+{
+    ui->cbUdpState->setChecked(false);
+    mWrite2RemoteDev(COMMAND_READ_UDP_BEACON);
+}
+//##########################################################################################
+
+void MainWindow::on_pbWriteUdp_clicked()
+{
+    QJsonObject jobj;
+    jobj.insert("b", ui->cbUdpState->isChecked());
+    mWrite2RemoteDev(COMMAND_WRITE_UDP_BEACON, jobj);
+
+}
+//##########################################################################################
