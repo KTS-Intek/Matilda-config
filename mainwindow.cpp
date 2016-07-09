@@ -153,12 +153,15 @@ MainWindow::~MainWindow()
 void MainWindow::initializeMatilda()
 {
     QStringList l = tr("About Object,Date and time,State,Statistic of exchange,System Info,Network Interfaces,Meter Plugin (Activated),Application events,Zbyrator events,GPRS Settings,"
+                       "TCP interface,ZigBee Settings,"
                        "Serial Log,Error events,Warning events,Direct Access,Direct Access Active Client,Matilda Active Client,Administration,"
                        "Poll Settings,Poll schedule,Meter list,Database,Meter logs,Hash summ").split(",");
 
-    QStringList m = QString("%1,0,0,0,0,0,0,0,0,%2,0,0,0,%3,%4,%5,0,%6,%7,%8,0,0,0")
+    QStringList m = QString("%1,0,0,0,0,0,0,0,0,%2,%3,%4,0,0,0,%5,%6,%7,0,%8,%9,%10,0,0,0")
             .arg(COMMAND_WRITE_ABOUT_OBJECT)
             .arg(COMMAND_WRITE_GPRS_SETT)
+            .arg(COMMAND_WRITE_TCP_SETT)
+            .arg(COMMAND_WRITE_ZIGBEE_SETT)
             .arg(COMMAND_WRITE_DA_SERVICE_SETT)
             .arg(COMMAND_WRITE_PEREDAVATOR_AC_SETT)
             .arg(COMMAND_WRITE_MATILDA_AC_SETT)
@@ -170,7 +173,8 @@ void MainWindow::initializeMatilda()
     QList<int> listInt;
     listInt << COMMAND_READ_ABOUT_OBJECT << COMMAND_READ_DATE_SETT << COMMAND_READ_STATE << COMMAND_READ_POLL_STATISTIC << COMMAND_READ_SYSTEM_SETTINGS
             << COMMAND_READ_IFCONFIG << COMMAND_READ_ABOUT_PLG << COMMAND_READ_APP_LOG
-            << COMMAND_READ_ZBR_LOG << COMMAND_READ_GPRS_SETT << COMMAND_READ_SERIAL_LOG << COMMAND_READ_PLUGIN_LOG_ERROR << COMMAND_READ_PLUGIN_LOG_WARN << COMMAND_READ_DA_SERVICE_SETT << COMMAND_READ_PEREDAVATOR_AC_SETT
+            << COMMAND_READ_ZBR_LOG << COMMAND_READ_GPRS_SETT << COMMAND_READ_TCP_SETT << COMMAND_READ_ZIGBEE_SETT << COMMAND_READ_SERIAL_LOG
+            << COMMAND_READ_PLUGIN_LOG_ERROR << COMMAND_READ_PLUGIN_LOG_WARN << COMMAND_READ_DA_SERVICE_SETT << COMMAND_READ_PEREDAVATOR_AC_SETT
             << COMMAND_READ_MATILDA_AC_SETT << 0 << COMMAND_READ_POLL_SETT
             << COMMAND_READ_POLL_SCHEDULE << COMMAND_READ_METER_LIST_FRAMED << COMMAND_READ_DATABASE << COMMAND_READ_METER_LOGS_GET_TABLES << COMMAND_READ_TABLE_HASH_SUMM;
 
@@ -542,6 +546,21 @@ void MainWindow::initializeMatilda()
     connect(this, SIGNAL(kickThrd()) , daThrd, SLOT(quit()) );
     daThrd->start();
 
+
+    ui->cbGsmPortSpeed->clear();
+    ui->cbZigBeePortSpeed->clear();
+    list = QString("1200,2400,4800,9600,19200,38400,57600,115200").split(",");//for ZigBee
+    for(int i = 0, iMax = list.size(); i < iMax; i++){
+        ui->cbZigBeePortSpeed->addItem(list.at(i), QString(list.at(i)).remove(" "));
+    }
+
+    list = QString("1200,2400,4800,9600,19 200,38 400,57 600,115 200,230 400,460 800,500 000,750 000,921 600,1 843 200,3 000 000,3 250 000,6 000 000").split(",");//for GSM Sierra Wrllss
+    for(int i = 0, iMax = list.size(); i < iMax; i++){
+        ui->cbGsmPortSpeed->addItem(list.at(i), QString(list.at(i)).remove(" "));
+    }
+    ui->cbGsmPortSpeed->setCurrentIndex(-1);
+    ui->cbZigBeePortSpeed->setCurrentIndex(-1);
+
 }
 
 //##########################################################################################
@@ -718,6 +737,33 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->leGPRS_Apn->setText(jobj.value("apn").toString());
         ui->leGPRS_Apn_2->setText(jobj.value("userName").toString());
         ui->leGPRS_Apn_3->setText(jobj.value("password").toString());
+
+
+        QString portName = jobj.value("portName").toString();
+        QStringList listPorts = varList2strList(jobj.value("portNameL").toArray().toVariantList());
+
+        ui->cbGsmPortName->clear();
+
+        if(!portName.isEmpty()){
+            if(listPorts.contains(portName)){
+                listPorts.removeOne(portName);
+                ui->cbGsmPortName->addItem(tr("<b>%1<b>").arg(portName), portName);
+
+            }else{
+                ui->cbGsmPortName->addItem(tr("<b>%1<b> (Not found!)").arg(portName), portName);
+
+            }
+
+        }
+        for(int i = 0, iMax = listPorts.size(); i < iMax; i++){
+            ui->cbGsmPortName->addItem(listPorts.at(i), listPorts.at(i));
+        }
+
+        if(!portName.isEmpty() || !listPorts.isEmpty())
+            ui->cbGsmPortName->setCurrentIndex(0);
+
+        ui->cbGsmPortSpeed->setCurrentIndex( ui->cbGsmPortSpeed->findData(jobj.value("baudRate").toVariant()));
+
         break;}
 
     case COMMAND_READ_STATE:{
@@ -1862,6 +1908,47 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         break;}
 
+    case COMMAND_READ_ZIGBEE_SETT:{
+
+
+        QString portName = jobj.value("portName").toString();
+        QStringList listPorts = varList2strList(jobj.value("portNameL").toArray().toVariantList());
+
+        ui->cbZigBeePortName->clear();
+
+        if(!portName.isEmpty()){
+            if(listPorts.contains(portName)){
+                listPorts.removeOne(portName);
+                ui->cbZigBeePortName->addItem(tr("<b>%1<b>").arg(portName), portName);
+
+            }else{
+                ui->cbZigBeePortName->addItem(tr("<b>%1<b> (Not found!)").arg(portName), portName);
+
+            }
+
+        }
+        for(int i = 0, iMax = listPorts.size(); i < iMax; i++){
+            ui->cbZigBeePortName->addItem(listPorts.at(i), listPorts.at(i));
+        }
+
+        if(!portName.isEmpty() || !listPorts.isEmpty())
+            ui->cbZigBeePortName->setCurrentIndex(0);
+
+        ui->cbZigBeePortSpeed->setCurrentIndex( ui->cbZigBeePortSpeed->findData(jobj.value("baudRate").toVariant()));
+
+        ui->sbZigBeeReadTO->setValue(jobj.value("rTo").toInt(1));
+        ui->sbZigBeeReadTOblock->setValue(jobj.value("rToB").toInt(1));
+        ui->cbUnknownProtocolAsData->setChecked(jobj.value("asData").toBool(true));
+
+        break;}
+
+    case COMMAND_READ_TCP_SETT:{
+
+        ui->cbGsmPrimary->setChecked(jobj.value("pppdFirst").toBool(false));
+        ui->sbTcpInrfsRT->setValue(jobj.value("tcpRT").toInt());
+        ui->sbTcpInrfsRTB->setValue(jobj.value("tcpRTB").toInt());
+        break;}
+
     default:
         qDebug() << "data2gui unknown command " << command << jobj;
         break;
@@ -2846,6 +2933,13 @@ void MainWindow::on_pbWrite_clicked()
         jobj.insert("userName", ui->leGPRS_Apn_2->text().simplified().trimmed());
         jobj.insert("password", ui->leGPRS_Apn_3->text().simplified().trimmed());
 
+        if(ui->cbGsmPortName->currentIndex() >= 0 )
+            jobj.insert("portName", ui->cbGsmPortName->currentData().toString());
+
+        if(ui->cbGsmPortSpeed->currentIndex() >= 0)
+           jobj.insert("baudRate", ui->cbGsmPortSpeed->currentData().toInt());
+
+
         break;}
 
     case COMMAND_WRITE_POLL_SCHEDULE:{
@@ -3060,6 +3154,27 @@ void MainWindow::on_pbWrite_clicked()
         jobj.insert("sdp", QJsonArray::fromStringList(list));
         break;}
 
+
+    case COMMAND_WRITE_ZIGBEE_SETT: {
+
+        if(ui->cbZigBeePortName->currentIndex() >= 0 )
+            jobj.insert("portName", ui->cbZigBeePortName->currentData().toString());
+
+        if(ui->cbZigBeePortSpeed->currentIndex() >= 0)
+            jobj.insert("baudRate", ui->cbZigBeePortSpeed->currentData().toInt());
+
+        jobj.insert("rTo",  ui->sbZigBeeReadTO->value());
+        jobj.insert("rToB",  ui->sbZigBeeReadTOblock->value());
+        jobj.insert("asData",  ui->cbUnknownProtocolAsData->isChecked());
+
+        break;}
+
+    case COMMAND_WRITE_TCP_SETT: {
+
+        jobj.insert("pppdFirst", ui->cbGsmPrimary->isChecked());
+       jobj.insert("tcpRT", ui->sbTcpInrfsRT->value());
+        jobj.insert("tcpRTB", ui->sbTcpInrfsRTB->value());
+        break;}
     }
 
    mWrite2RemoteDev(writeCommand, jobj);

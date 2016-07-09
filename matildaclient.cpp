@@ -340,23 +340,38 @@ void matildaclient::mReadyRead()
 {
 
     emit startWait4AnswerTimer(timeOutG);
-    qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz");
+    qDebug() << "read " << QTime::currentTime().toString("hh:mm:ss.zzz") ;
     QByteArray readarr = readAll();
 
     QTime time;
     time.start();
-    int razivDuzkaL = readarr.count("{\""), razivDuzkaR = readarr.count("\"}");
 
-    while( razivDuzkaR < razivDuzkaL && readarr.size() < MAX_PACKET_LEN && time.elapsed() < timeOutG){
+    int razivDuzkaL = 0;
+    int razivDuzkaR = 0;
+    bool wait4lapky = false;
+    getRightLeftDuzka(razivDuzkaR, razivDuzkaL, wait4lapky, readarr);
+
+    while(  readarr.size() < MAX_PACKET_LEN && time.elapsed() < timeOutG){
+
+        if(razivDuzkaL > 0 && razivDuzkaR > 0){
+            if(razivDuzkaR == razivDuzkaL)
+                break;
+        }
+
         if(waitForReadyRead(timeOut)){
-            readarr.append(readAll());
+            
+            QByteArray arr = readAll();
+            getRightLeftDuzka(razivDuzkaR, razivDuzkaL, wait4lapky, arr);
+            readarr.append(arr);
+
             waitForReadyRead(100);
             emit startWait4AnswerTimer(timeOutG);
             waitForReadyRead(100);
-            readarr.append(readAll());
-            razivDuzkaL = readarr.count("{\"");
-            razivDuzkaR = readarr.count("\"}");
-            qDebug() << "razivDuzkaL razivDuzkaR " << razivDuzkaL << razivDuzkaR;
+
+            arr = readAll();
+            getRightLeftDuzka(razivDuzkaR, razivDuzkaL, wait4lapky, arr);
+            readarr.append(arr);
+
         }
     }
 
@@ -370,16 +385,29 @@ void matildaclient::mReadyRead()
 
 
 
-    if(razivDuzkaL != razivDuzkaR){
+    if(razivDuzkaR < 1){
         emit changeCounters(readarr.length(), -1 , true);
         emit showMess("corrupted data.");
         qDebug()<< "readServer:"<< readarr;
         return ;
     }else{
 
+        int rIndx = 0, lIndx = 0;
+        rIndx = indxOfRightDuzka(rIndx, readarr);
+        rIndx++;
+        for(int i = 0, iMax = 100; i < iMax; i++){
 
-        decodeReadDataJSON(readarr);
+            decodeReadDataJSON(readarr.mid(lIndx, rIndx - lIndx ));
+            lIndx = rIndx;
+            rIndx = indxOfRightDuzka(rIndx, readarr);
 
+            if(rIndx < 1){
+
+                qDebug() << "rindx = " << rIndx  << readarr.length() << lIndx;
+                break;
+            }
+            rIndx++;
+        }
     }
     stopAll = stopAfter;
     qDebug() << stopAll << stopAfter;
@@ -489,6 +517,47 @@ void matildaclient::onDaOpened(bool isDaOpen)
 {
     daOpened = isDaOpen;
 
+}
+//################################################################################################
+void matildaclient::getRightLeftDuzka(int &rightDuzka, int &leftDuzka, bool &wait4lapky, const QByteArray &arr)
+{
+    for(int i = 0, iMax = arr.length(); i < iMax; i++){
+        if(wait4lapky){
+            if(arr.mid(i,1) == "\"")
+                wait4lapky = false;
+        }else{
+            if(arr.mid(i,1) == "\""){
+                wait4lapky = true;
+                continue;
+            }
+
+            if(arr.mid(i,1) == "}")
+                rightDuzka++;
+            else if(arr.mid(i,1) == "{")
+                leftDuzka++;
+        }
+    }
+}
+//################################################################################################
+int matildaclient::indxOfRightDuzka(const int &lastRightDuzka, const QByteArray &arr)
+{
+    bool wait4lapky = false;
+
+    for(int i = lastRightDuzka, iMax = arr.length(); i < iMax; i++){
+        if(wait4lapky){
+            if(arr.mid(i,1) == "\"")
+                wait4lapky = false;
+        }else{
+            if(arr.mid(i,1) == "\""){
+                wait4lapky = true;
+                continue;
+            }
+
+            if(arr.mid(i,1) == "}")
+                return i;
+        }
+    }
+    return -1;
 }
 //################################################################################################
 QString matildaclient::humanByteView(QString str)

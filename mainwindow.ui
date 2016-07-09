@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -126,7 +126,7 @@
                <item row="1" column="1">
                 <widget class="QLineEdit" name="lePasswd">
                  <property name="text">
-                  <string>1</string>
+                  <string>power</string>
                  </property>
                  <property name="echoMode">
                   <enum>QLineEdit::Normal</enum>
@@ -142,7 +142,7 @@
                <item row="0" column="1">
                 <widget class="QLineEdit" name="leLogin">
                  <property name="text">
-                  <string>oper</string>
+                  <string>root</string>
                  </property>
                  <property name="placeholderText">
                   <string>Login</string>
@@ -319,6 +319,9 @@
                   <layout class="QGridLayout" name="gridLayout_31">
                    <item row="2" column="1" rowspan="2">
                     <widget class="QLineEdit" name="leIp_2">
+                     <property name="text">
+                      <string>svaha2.ddns.net</string>
+                     </property>
                      <property name="placeholderText">
                       <string>svaha service IP or URL</string>
                      </property>
@@ -336,6 +339,9 @@
                    </item>
                    <item row="0" column="1">
                     <widget class="QLineEdit" name="leObjectName_2">
+                     <property name="text">
+                      <string>LabZulu8</string>
+                     </property>
                      <property name="placeholderText">
                       <string>Object name</string>
                      </property>
@@ -432,6 +438,9 @@
                      <property name="text">
                       <string>Connect using Object ID</string>
                      </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                    <item row="1" column="2">
@@ -440,7 +449,7 @@
                       <string>Connect using MAC</string>
                      </property>
                      <property name="checked">
-                      <bool>true</bool>
+                      <bool>false</bool>
                      </property>
                     </widget>
                    </item>
@@ -673,8 +682,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>781</width>
-                 <height>541</height>
+                 <width>760</width>
+                 <height>543</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -702,7 +711,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>17</number>
+                   <number>12</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
@@ -1414,7 +1423,7 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="1">
+                    <item row="0" column="2">
                      <widget class="QLineEdit" name="leGPRS_Apn">
                       <property name="clearButtonEnabled">
                        <bool>true</bool>
@@ -1428,14 +1437,14 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="1">
+                    <item row="1" column="2">
                      <widget class="QLineEdit" name="leGPRS_Apn_2">
                       <property name="clearButtonEnabled">
                        <bool>true</bool>
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="2">
+                    <item row="1" column="3">
                      <spacer name="horizontalSpacer_6">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -1455,14 +1464,34 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="1">
+                    <item row="2" column="2">
                      <widget class="QLineEdit" name="leGPRS_Apn_3">
                       <property name="clearButtonEnabled">
                        <bool>true</bool>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="1">
+                    <item row="3" column="0" colspan="2">
+                     <widget class="QLabel" name="label_73">
+                      <property name="text">
+                       <string>Port</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="2">
+                     <widget class="QComboBox" name="cbGsmPortName"/>
+                    </item>
+                    <item row="4" column="0" colspan="2">
+                     <widget class="QLabel" name="label_74">
+                      <property name="text">
+                       <string>Speed [baud]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="2">
+                     <widget class="QComboBox" name="cbGsmPortSpeed"/>
+                    </item>
+                    <item row="5" column="1" colspan="2">
                      <spacer name="verticalSpacer_3">
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -1471,6 +1500,214 @@
                        <size>
                         <width>20</width>
                         <height>509</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_27">
+                   <layout class="QGridLayout" name="gridLayout_8">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_104">
+                      <property name="text">
+                       <string>Read Time Out [ms]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QSpinBox" name="sbTcpInrfsRT">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>999999</number>
+                      </property>
+                      <property name="singleStep">
+                       <number>100</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_105">
+                      <property name="text">
+                       <string>Read Block Time Out [ms]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QSpinBox" name="sbTcpInrfsRTB">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>999999</number>
+                      </property>
+                      <property name="singleStep">
+                       <number>100</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="2">
+                     <spacer name="horizontalSpacer_59">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>323</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="label_97">
+                      <property name="text">
+                       <string>Metric</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QCheckBox" name="cbGsmPrimary">
+                      <property name="text">
+                       <string>Make primary GSM modem interface</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <spacer name="verticalSpacer_22">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>438</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_28">
+                   <layout class="QGridLayout" name="gridLayout_22">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_93">
+                      <property name="text">
+                       <string>Port</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QComboBox" name="cbZigBeePortName">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <spacer name="horizontalSpacer_35">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>283</width>
+                        <height>19</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_94">
+                      <property name="text">
+                       <string>Speed [baud]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QComboBox" name="cbZigBeePortSpeed">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="label_64">
+                      <property name="text">
+                       <string>Read Time Out [ms]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QSpinBox" name="sbZigBeeReadTO">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>59999</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="label_95">
+                      <property name="text">
+                       <string>Read Block Time Out [ms]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QSpinBox" name="sbZigBeeReadTOblock">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>59999</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="label_96">
+                      <property name="text">
+                       <string>Protocol detector</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="1">
+                     <widget class="QCheckBox" name="cbUnknownProtocolAsData">
+                      <property name="text">
+                       <string>process unknown protocol as data</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="5" column="0">
+                     <spacer name="verticalSpacer_12">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>382</height>
                        </size>
                       </property>
                      </spacer>
@@ -4997,7 +5234,7 @@
      <x>0</x>
      <y>0</y>
      <width>1237</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>

@@ -62,6 +62,9 @@ private slots:
 
 
 private:
+    void getRightLeftDuzka(int &rightDuzka, int &leftDuzka, bool &wait4lapky, const QByteArray &arr);
+    int indxOfRightDuzka(const int &lastRightDuzka, const QByteArray &arr);
+
     QString humanByteView(QString str);
 
     QString humanByteView(const int &val);
@@ -91,6 +94,7 @@ private:
 
     bool stopAll, stopAfter, daOpened;
     bool allowCompress;
+
 
 };
 
