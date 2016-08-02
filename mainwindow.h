@@ -174,6 +174,29 @@ private slots:
 
     void on_pbWriteUdp_clicked();
 
+    void on_pbAddForward_clicked();
+
+    void on_tvForward_clicked(const QModelIndex &index);
+
+    void on_tbDelFromForwardTable_clicked();
+
+    void on_pbWriteLocalTime_clicked();
+
+
+
+
+    void on_toolButton_2_clicked();
+
+    void on_toolButton_clicked();
+
+    void on_toolButton_3_clicked();
+
+    void on_actionLog_triggered();
+
+    void on_toolButton_4_clicked();
+
+    void on_toolButton_11_clicked();
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);
@@ -243,8 +266,10 @@ private:
 
     QStandardItemModel *modelPeredavatorHost;
     QStandardItemModel *modelDayProfile4peredavator;
+    QStandardItemModel *modelForward;
 
 
+    MySortFilterProxyModel *proxy_modelForward ;
     MySortFilterProxyModel *proxy_modelDevOptions;
     MySortFilterProxyModel *proxy_modelAddMeter;
     MySortFilterProxyModel *proxy_modelPhVal4DB;

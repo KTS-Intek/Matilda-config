@@ -35,7 +35,7 @@ void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QStr
     if(isConnOpen())
         close();
     //    waitForDisconnected();
-    this->timeOut = 500;
+    this->timeOut = 500;//read one block
     this->timeOutG = timeOut;
 
     timeOut -= 555;
@@ -93,8 +93,6 @@ void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QStr
 void matildaclient::data2matilda(quint16 command, QJsonObject jobj)
 {    
 
-    waitForReadyRead(100);
-    readAll();
     mWrite2SocketJSON(jobj, command);
 }
 //################################################################################################
@@ -141,6 +139,8 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     if(command == COMMAND_COMPRESSED_PACKET){
 
         if(messHshIsValid(jDoc.object(), dataArr)){
+
+            add2pteLogP( "\nUncompress: " + qUncompress( QByteArray::fromBase64( jobj.value("zlib").toString().toLocal8Bit() )  ), true);
 
             jDoc = QJsonDocument::fromJson( qUncompress( QByteArray::fromBase64( jobj.value("zlib").toString().toLocal8Bit() )  ), &jErr);//qUncompress( <quint32 not compressed data len><comprssed data> )
             jobj = jDoc.object();
@@ -190,7 +190,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                                   .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
                                   .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
 
-                                  .arg( QString::number(jobj.value("version").toInt() ))
+                                  .arg( jobj.value("version").toInt())
                                   .arg(jobj.value("message").toString())
                                   );
 
@@ -201,11 +201,10 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                 return;
             }else{
 
-                emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>SSL: %3 <br>Version: %4 <br> Black List: %5 <br> Counter: %6<br>Memo: %7")
+                emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>Version: %3 <br> Black List: %4 <br> Counter: %5<br>Memo: %6")
                                   .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
                                   .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
-                                  .arg( (jobj.value("SSL").toInt() == 0) ? tr("Disabled") : tr("Enabled") )
-                                  .arg( QString::number(jobj.value("version").toInt() ))
+                                  .arg( jobj.value("version").toInt() )
                                   .arg(jobj.value("BLC").toInt() )
                                   .arg( jobj.value("CNTR").toInt() )
                                   .arg(jobj.value("memo").toString())
@@ -232,11 +231,10 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 
         qDebug() << jobj.value("version").toInt() << jobj.value("version").toString() << QString::number(MATILDA_PROTOCOL_VERSION);
 
-        emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>SSL: %3 <br>Version: %4 <br> Black List: %5 <br> Counter: %6")
+        emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>Version: %3 <br> Black List: %4 <br> Counter: %5")
                           .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
                           .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
-                          .arg( (jobj.value("SSL").toInt() == 0) ? tr("Disabled") : tr("Enabled") )
-                          .arg( QString::number(jobj.value("version").toInt() ))
+                          .arg( jobj.value("version").toInt() )
                           .arg(jobj.value("BLC").toInt() )
                           .arg( jobj.value("CNTR").toInt() )
                           );
@@ -383,7 +381,7 @@ void matildaclient::mReadyRead()
     emit stopWait4AnswerTimer();
     stopAfter = true;
 
-
+    add2pteLogP(readarr, true);
 
     if(razivDuzkaR < 1){
         emit changeCounters(readarr.length(), -1 , true);
@@ -431,18 +429,20 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
 
     qDebug() << "writeArr0 " << writeArr;
     switch(lastHashSumm){
-    case 0: { writeArr.append(", \"Md4\":\""      + QCryptographicHash::hash( writeArr + ", \"Md4\":\"0\"}"     , QCryptographicHash::Md4     ).toBase64() + "\"}" ); break;}
-    case 2: { writeArr.append(", \"Sha1\":\""     + QCryptographicHash::hash( writeArr + ", \"Sha1\":\"0\"}"    , QCryptographicHash::Sha1    ).toBase64() + "\"}" ); break;}
-    case 3: { writeArr.append(", \"Sha224\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha224\":\"0\"}"  , QCryptographicHash::Sha224  ).toBase64() + "\"}" ); break;}
-    case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64() + "\"}" ); break;}
-    case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64() + "\"}" ); break;}
-    case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64() + "\"}" ); break;}
-    case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64() + "\"}" ); break;}
-    case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64() + "\"}" ); break;}
-    case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64() + "\"}" ); break;}
-    case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64() + "\"}" ); break;}
-    default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64() + "\"}" ); break;}
+    case 0: { writeArr.append(", \"Md4\":\""      + QCryptographicHash::hash( writeArr + ", \"Md4\":\"0\"}"     , QCryptographicHash::Md4     ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 2: { writeArr.append(", \"Sha1\":\""     + QCryptographicHash::hash( writeArr + ", \"Sha1\":\"0\"}"    , QCryptographicHash::Sha1    ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 3: { writeArr.append(", \"Sha224\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha224\":\"0\"}"  , QCryptographicHash::Sha224  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
     }
+
+    add2pteLogP(writeArr, false);
 
     qint64 blSize = writeArr.length();
 
@@ -453,7 +453,7 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
             QJsonObject jObjCpmrr;
 
             jObjCpmrr.insert("cmd", QString::number(COMMAND_COMPRESSED_PACKET));
-            jObjCpmrr.insert("zlib", QString(qCompress(writeArr, 9).toBase64()));
+            jObjCpmrr.insert("zlib", QString(qCompress(writeArr, 9).toBase64(QByteArray::OmitTrailingEquals)));
 
             QJsonDocument jDoc2DST(jObjCpmrr);
             writeArr = jDoc2DST.toJson(QJsonDocument::Compact);
@@ -462,24 +462,28 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
 
         qDebug() << "writeArr1 comprs " << writeArr;
         switch(lastHashSumm){
-        case 0: { writeArr.append(", \"Md4\":\""      + QCryptographicHash::hash( writeArr + ", \"Md4\":\"0\"}"     , QCryptographicHash::Md4     ).toBase64() + "\"}" ); break;}
-        case 2: { writeArr.append(", \"Sha1\":\""     + QCryptographicHash::hash( writeArr + ", \"Sha1\":\"0\"}"    , QCryptographicHash::Sha1    ).toBase64() + "\"}" ); break;}
-        case 3: { writeArr.append(", \"Sha224\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha224\":\"0\"}"  , QCryptographicHash::Sha224  ).toBase64() + "\"}" ); break;}
-        case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64() + "\"}" ); break;}
-        case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64() + "\"}" ); break;}
-        case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64() + "\"}" ); break;}
-        case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64() + "\"}" ); break;}
-        case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64() + "\"}" ); break;}
-        case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64() + "\"}" ); break;}
-        case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64() + "\"}" ); break;}
-        default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64() + "\"}" ); break;}
+        case 0: { writeArr.append(", \"Md4\":\""      + QCryptographicHash::hash( writeArr + ", \"Md4\":\"0\"}"     , QCryptographicHash::Md4     ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 2: { writeArr.append(", \"Sha1\":\""     + QCryptographicHash::hash( writeArr + ", \"Sha1\":\"0\"}"    , QCryptographicHash::Sha1    ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 3: { writeArr.append(", \"Sha224\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha224\":\"0\"}"  , QCryptographicHash::Sha224  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
         }
+
+        add2pteLogP( "\nCompress: " + writeArr, false);
+
     }else{
         blSize = -1;
     }
 
     qint64 len = write(writeArr);
     qDebug() << "write " << QTime::currentTime().toString("hh:mm:ss.zzz");
+
 
 
     emit changeCounters(len, blSize , false);
@@ -517,6 +521,14 @@ void matildaclient::onDaOpened(bool isDaOpen)
 {
     daOpened = isDaOpen;
 
+}
+
+void matildaclient::add2pteLogP(QString s, bool isRead)
+{
+    emit add2pteLog(QString("%1 %2 %3\n")
+                    .arg(QTime::currentTime().toString("hh:mm:ss.zzz"))
+                    .arg( isRead ? ">" : "<" )
+                    .arg(s));
 }
 //################################################################################################
 void matildaclient::getRightLeftDuzka(int &rightDuzka, int &leftDuzka, bool &wait4lapky, const QByteArray &arr)
@@ -628,7 +640,7 @@ bool matildaclient::messHshIsValid(const QJsonObject &jObj, QByteArray readArr)
         if(myHash == hshBase64){
             return true;
         }else{
-            qDebug() << "if(myHash != hshBase64 " << myHash.toBase64() << hshBase64.toBase64();
+            qDebug() << "if(myHash != hshBase64 " << myHash.toBase64(QByteArray::OmitTrailingEquals) << hshBase64.toBase64(QByteArray::OmitTrailingEquals);
             return false;
         }
     }

@@ -35,6 +35,8 @@ signals:
 
     void onYouCanSelectDevice(QStringList);
 
+    void add2pteLog(QString);
+
 public slots:
     void conn2thisDev(int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn);
 
@@ -58,6 +60,7 @@ private slots:
     void onWaitTimerTimeOut();
     void onDaOpened(bool isDaOpen);
 
+    void add2pteLogP(QString s, bool isRead);
 
 
 

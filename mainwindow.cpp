@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     modelDayProfile4mac = new QStandardItemModel(0,2, this);
     modelPeredavatorHost = new QStandardItemModel(0,3, this);
     modelDayProfile4peredavator = new QStandardItemModel(0,2, this);
+    modelForward = new QStandardItemModel(0,2,this);
 
 
     proxy_modelDevOptions = new MySortFilterProxyModel(this);
@@ -55,6 +56,16 @@ MainWindow::MainWindow(QWidget *parent) :
     proxy_modelPollStat = new MySortFilterProxyModel(this);
 
 
+
+    proxy_modelForward = new MySortFilterProxyModel(this);
+    proxy_modelForward->setSourceModel(modelForward);
+    proxy_modelForward->setDynamicSortFilter(true);
+    connect(ui->leRouteFilter, SIGNAL(textChanged(QString)), proxy_modelForward, SLOT(setNewFileterStr(QString)) );
+
+
+    proxy_modelForward->setFilterMode(getFilterList(0,2));
+    ui->tvForward->setModel(proxy_modelForward);
+    ui->tvForward->setContextMenuPolicy(Qt::CustomContextMenu);
 
 
     proxy_modelDevOptions->setSourceModel(modelDevOptions);
@@ -135,7 +146,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->label_4->hide();
 
-    qDebug() << "\e[0;37m" << "utc start " ;
 
     allowDate2utc = false;
     dateInUtc = false;
@@ -152,20 +162,25 @@ MainWindow::~MainWindow()
 //##########################################################################################
 void MainWindow::initializeMatilda()
 {
+
     QStringList l = tr("About Object,Date and time,State,Statistic of exchange,System Info,Network Interfaces,Meter Plugin (Activated),Application events,Zbyrator events,GPRS Settings,"
                        "TCP interface,ZigBee Settings,"
                        "Serial Log,Error events,Warning events,Direct Access,Direct Access Active Client,Matilda Active Client,Administration,"
-                       "Poll Settings,Poll schedule,Meter list,Database,Meter logs,Hash summ").split(",");
+                       "Poll Settings,Forward Settings,Poll schedule,Meter list,Database,Meter logs,Hash summ").split(",");
 
-    QStringList m = QString("%1,0,0,0,0,0,0,0,0,%2,%3,%4,0,0,0,%5,%6,%7,0,%8,%9,%10,0,0,0")
+    QStringList m = QString("%1,0,0,0,0,0,0,0,0,%2,%3,%4,0,0,0,%5,%6,%7,0,%8,%9,%10,%11,0,0,0")
             .arg(COMMAND_WRITE_ABOUT_OBJECT)
+
             .arg(COMMAND_WRITE_GPRS_SETT)
             .arg(COMMAND_WRITE_TCP_SETT)
             .arg(COMMAND_WRITE_ZIGBEE_SETT)
+
             .arg(COMMAND_WRITE_DA_SERVICE_SETT)
             .arg(COMMAND_WRITE_PEREDAVATOR_AC_SETT)
             .arg(COMMAND_WRITE_MATILDA_AC_SETT)
+
             .arg(COMMAND_WRITE_POLL_SETT)
+            .arg(COMMAND_WRITE_FRWRD_SETT)
             .arg(COMMAND_WRITE_POLL_SCHEDULE)
             .arg(COMMAND_WRITE_METER_LIST_FRAMED)
             .split(",") ;
@@ -175,7 +190,7 @@ void MainWindow::initializeMatilda()
             << COMMAND_READ_IFCONFIG << COMMAND_READ_ABOUT_PLG << COMMAND_READ_APP_LOG
             << COMMAND_READ_ZBR_LOG << COMMAND_READ_GPRS_SETT << COMMAND_READ_TCP_SETT << COMMAND_READ_ZIGBEE_SETT << COMMAND_READ_SERIAL_LOG
             << COMMAND_READ_PLUGIN_LOG_ERROR << COMMAND_READ_PLUGIN_LOG_WARN << COMMAND_READ_DA_SERVICE_SETT << COMMAND_READ_PEREDAVATOR_AC_SETT
-            << COMMAND_READ_MATILDA_AC_SETT << 0 << COMMAND_READ_POLL_SETT
+            << COMMAND_READ_MATILDA_AC_SETT << 0 << COMMAND_READ_POLL_SETT << COMMAND_READ_FRWRD_SETT
             << COMMAND_READ_POLL_SCHEDULE << COMMAND_READ_METER_LIST_FRAMED << COMMAND_READ_DATABASE << COMMAND_READ_METER_LOGS_GET_TABLES << COMMAND_READ_TABLE_HASH_SUMM;
 
 
@@ -183,11 +198,13 @@ void MainWindow::initializeMatilda()
         qDebug() << "size error " << l.size() << m.size();
         return;
     }
+    QSize s = QSize(ui->lvDevOperation->width(), ui->pbAddForward->height() * 1.2);
 
     for(int i = 0, iMax = l.size(); i < iMax; i++){
         QStandardItem *item = new QStandardItem(l.at(i));
         item->setData(m.at(i));
         item->setData(listInt.at(i), Qt::UserRole + 2);
+        item->setSizeHint(s);
         modelDevOptions->appendRow(item);
     }
 
@@ -206,6 +223,7 @@ void MainWindow::initializeMatilda()
     connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)) );
     connect(this, SIGNAL(data2matilda(quint16,QJsonObject)), client, SLOT(data2matilda(quint16,QJsonObject)) );
     connect(this, SIGNAL(closeConnection()), client, SLOT(closeConnection()) );
+
 
     connect(client, SIGNAL(onErrorWrite()), dialog,SLOT(hideAnimation()), Qt::DirectConnection );
 //    connect(client, SIGNAL(onConnectedStateChanged(bool)),dialog, SLOT(hideAnimation()), Qt::DirectConnection );
@@ -239,6 +257,7 @@ void MainWindow::initializeMatilda()
 
     connect(client, SIGNAL(changeCounters(qint64,qint64,bool)), SLOT(changeCounters(qint64,qint64,bool)) );
     connect(client, SIGNAL(infoAboutObj(QString)), ui->pteAboutConnObj, SLOT(appendHtml(QString)) );
+    connect(client, SIGNAL(add2pteLog(QString)), ui->plainTextEdit, SLOT(appendPlainText(QString)) );
 
     ui->pbLogIn->setEnabled(true);
 
@@ -721,10 +740,10 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                 tzStr.clear();
             }
         }
-        ui->pbChTz->setEnabled(true);
+//        ui->pbChTz->setEnabled(true);
 
-        ui->pbEnDisNtpSync->setEnabled(jobj.contains("ntp-dead"));
-        ui->pbDisableNtp->setEnabled(jobj.contains("ntp-dead"));
+//        ui->pbEnDisNtpSync->setEnabled(jobj.contains("ntp-dead"));
+//        ui->pbDisableNtp->setEnabled(jobj.contains("ntp-dead"));
 
         ui->pbWriteLocalTime->setEnabled(jobj.value("ntp-dead").toInt() != 0);
 
@@ -737,6 +756,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->leGPRS_Apn->setText(jobj.value("apn").toString());
         ui->leGPRS_Apn_2->setText(jobj.value("userName").toString());
         ui->leGPRS_Apn_3->setText(jobj.value("password").toString());
+        ui->leGPRS_Numbr->setText(jobj.value("nmbr").toString());
 
 
         QString portName = jobj.value("portName").toString();
@@ -992,6 +1012,16 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbProfileMeterLog->setValue( l.at(1).toInt());
         ui->sbGlbnMeterLog->setValue(l.at(2).toInt());
 
+        indx = l.at(3).toUInt();
+        indx--;
+        if(indx < 0)
+            indx = 0;
+        else{
+            if(indx > 3)
+                indx = -1;
+        }
+        ui->cbProfileML->setCurrentIndex( indx );
+
         l = jobj.value("dow").toArray().toVariantList();//1 - mon, 2 - tue, 3 - wed
         unCheckEvrDay();
         bool checked = false;
@@ -1032,6 +1062,12 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
 
         break;}
+
+    case COMMAND_READ_BACKUP_LIST:{
+        qDebug() << jobj.value("a").toArray().toVariantList();
+
+        break;}
+
 
     case COMMAND_READ_DATABASE:{
 
@@ -1683,6 +1719,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->sbWati4Poll->setValue(jobj.value("pw").toInt());
         ui->cbHardAddrsn->setChecked(jobj.value("ha").toBool());
 
+        ui->cbEnblForward->setChecked(jobj.value("frwrd").toBool());
+
         ui->cbW4E->setChecked(jobj.value("w4e").toBool());
         ui->sbW4ERtrBf->setValue(jobj.value("w4eRb").toInt());
         ui->sbW4ErA->setValue(jobj.value("w4eRa").toInt());
@@ -1947,6 +1985,30 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->cbGsmPrimary->setChecked(jobj.value("pppdFirst").toBool(false));
         ui->sbTcpInrfsRT->setValue(jobj.value("tcpRT").toInt());
         ui->sbTcpInrfsRTB->setValue(jobj.value("tcpRTB").toInt());
+        break;}
+
+
+    case COMMAND_READ_FRWRD_SETT:{
+
+        modelForward->clear();
+        QVariantList listVar = jobj.value("l2").toArray().toVariantList();
+        if(listVar.isEmpty())
+            return;
+
+        modelForward->setHorizontalHeaderLabels(tr("Meter Address;Modem Address").split(";"));
+
+        for(int i = 0, iMax = listVar.size(); i < iMax; i++){
+            QStringList l = listVar.at(i).toStringList();
+            if(l.size() != 2)
+                continue;
+
+            QList<QStandardItem*> li;
+            for(int j = 0; j < 2; j++)
+                li.append(new QStandardItem(l.at(j)));
+
+            modelForward->appendRow(li);
+        }
+
         break;}
 
     default:
@@ -2346,10 +2408,8 @@ void MainWindow::on_pbLogIn_clicked()
     ui->cbDevCommand->clear();
     ui->pbDevCommands->setText(tr("Read"));
 
-    lastConnDevInfo = tr("IP: %1, Port: %2, Login: %3")
-            .arg(ui->leIp->text().simplified().trimmed())
-            .arg(ui->sbPort->value())
-            .arg(ui->leLogin->text());
+
+
 
     emit setSttsNewPixmap( QPixmap(":/katynko/deviceisdisconnected.png"));
     emit setSttsNewTxt(lastConnDevInfo);
@@ -2359,15 +2419,31 @@ void MainWindow::on_pbLogIn_clicked()
         emit conn2thisDev( ui->cbHashSumm->currentIndex(), ui->leObjectName->text().simplified().trimmed(), ui->leLogin->text(), ui->lePasswd->text(),
                            ui->leIp->text().simplified().trimmed(), ui->sbPort->value(), ui->sbTimeOut->value() * 1000  , false, ui->cbZlib->isChecked(),
                            false, "", true);
+        lastConnDevInfo = tr("IP: %1, Port: %2, Login: %3")
+                .arg(ui->leIp->text().simplified().trimmed())
+                .arg(ui->sbPort->value())
+                .arg(ui->leLogin->text());
+
+        lastIpStr = ui->leIp->text().simplified().trimmed();
+        lastTimeOutMS = ui->sbTimeOut->value() * 1000;
+        emit showWaitMess(ui->sbTimeOut->value());
+
     }else{
         emit conn2thisDev( ui->cbHashSumm->currentIndex(), ui->leObjectName_2->text().simplified().trimmed(), ui->leLogin->text(), ui->lePasswd->text(),
                            ui->leIp_2->text().simplified().trimmed(), ui->sbPort_2->value(),   ui->sbTimeOut_2->value() * 1000 , false, ui->cbZlib->isChecked(),
                            true, ui->leObjectMac->text(), ui->rbUseMac->isChecked());
+
+        lastConnDevInfo = tr("IP: %1, Port: %2, Login: %3")
+                .arg(ui->leIp_2->text().simplified().trimmed())
+                .arg(ui->sbPort_2->value())
+                .arg(ui->leLogin->text());
+
+        lastIpStr = ui->leIp_2->text().simplified().trimmed();
+        lastTimeOutMS = ui->sbTimeOut_2->value() * 1000;
+        emit showWaitMess(ui->sbTimeOut_2->value());
     }
 
-    lastIpStr = ui->leIp->text().simplified().trimmed();
-    lastTimeOutMS = ui->sbPort->value() * 1000;
-    emit showWaitMess(ui->sbTimeOut->value());
+
 }
 //##########################################################################################
 void MainWindow::on_pbLogOut_clicked()
@@ -2469,7 +2545,7 @@ void MainWindow::on_pbRead_clicked()
         for(int i = 0, iMax = modelTimeZone->rowCount(); i < iMax; i++)
             modelTimeZone->item(i,0)->setCheckState(Qt::Unchecked);
         break;}
-    case COMMAND_READ_GPRS_SETT: ui->leGPRS_Apn->clear(); ui->leGPRS_Apn_2->clear(); ui->leGPRS_Apn_3->clear(); break;
+    case COMMAND_READ_GPRS_SETT: ui->leGPRS_Apn->clear(); ui->leGPRS_Apn_2->clear(); ui->leGPRS_Apn_3->clear(); ui->leGPRS_Numbr->clear(); break;
     case COMMAND_READ_STATE: ui->pteState->clear(); break;
 //    case COMMAND_READ_TASK_INFO: ui->pteRunningProc->clear(); break;
     case COMMAND_READ_IFCONFIG: ui->pteIfconfig->clear(); break;
@@ -2837,12 +2913,12 @@ void MainWindow::on_pbRead_clicked()
 
             allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
-            if(ui->gbMeterDataFromTo->isChecked()){
+            if(ui->gbMeterDataFromTo_3->isChecked()){
 
                 jobj.insert("FromDT", ui->dteMeterDataFrom_3->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
                 jobj.insert("ToDT", ui->dteMeterDataTo_3->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
 
-                if(ui->dteMeterDataFrom->dateTime().secsTo(ui->dteMeterDataTo->dateTime()) < 1)
+                if(ui->dteMeterDataFrom_3->dateTime().secsTo(ui->dteMeterDataTo_3->dateTime()) < 1)
                     mess.append(tr("The time interval is incorrect.<br>"));
             }else{
                 QDateTime dtFrom = QDateTime::currentDateTimeUtc();
@@ -2922,7 +2998,7 @@ void MainWindow::on_pbWrite_clicked()
             QTime time;
             time.start();
 
-            while(time.elapsed() < 3000){
+            while(time.elapsed() < 700){
                 if(QMessageBox::question(this , windowTitle(), tr("APN is empty. This will disable the GPRS modem!. Continue?"), QMessageBox::Yes|QMessageBox::No,QMessageBox::No) != QMessageBox::Yes)
                     return;
             }
@@ -2932,6 +3008,7 @@ void MainWindow::on_pbWrite_clicked()
         jobj.insert("apn", ui->leGPRS_Apn->text().simplified().trimmed());
         jobj.insert("userName", ui->leGPRS_Apn_2->text().simplified().trimmed());
         jobj.insert("password", ui->leGPRS_Apn_3->text().simplified().trimmed());
+        jobj.insert("nmbr", ui->leGPRS_Numbr->text().simplified().trimmed());
 
         if(ui->cbGsmPortName->currentIndex() >= 0 )
             jobj.insert("portName", ui->cbGsmPortName->currentData().toString());
@@ -3088,6 +3165,8 @@ void MainWindow::on_pbWrite_clicked()
 
         jobj.insert("pw", ui->sbWati4Poll->value());
         jobj.insert("ha", ui->cbHardAddrsn->isChecked());
+        jobj.insert("frwrd", ui->cbEnblForward->isChecked());
+
 
         jobj.insert("w4e", ui->cbW4E->isChecked());
         jobj.insert("w4eRb", ui->sbW4ERtrBf->value());
@@ -3175,7 +3254,23 @@ void MainWindow::on_pbWrite_clicked()
        jobj.insert("tcpRT", ui->sbTcpInrfsRT->value());
         jobj.insert("tcpRTB", ui->sbTcpInrfsRTB->value());
         break;}
+
+
+    case COMMAND_WRITE_FRWRD_SETT: {
+        QVariantList lVar;
+        for(int i = 0, iMax = modelForward->rowCount(), colMax = modelForward->columnCount(); i < iMax; i++){
+            QStringList l;
+            for(int col = 0; col < colMax; col++)
+                l.append(modelForward->item(i, col)->text());
+            lVar.append(l);
+        }
+        jobj.insert("l2", QJsonArray::fromVariantList(lVar));
+        break;}
+
     }
+
+
+
 
    mWrite2RemoteDev(writeCommand, jobj);
 
@@ -4234,3 +4329,128 @@ void MainWindow::on_pbWriteUdp_clicked()
 
 }
 //##########################################################################################
+
+void MainWindow::on_pbAddForward_clicked()
+{
+    QString mess;
+    QString meterAddr = ui->leMeterAddrFrom->text();
+    QString modemAddr = ui->leModemAddrTo->text();
+
+    if(ui->cbLeMeterAddrFromH->isChecked()){
+        bool ok;
+        meterAddr = QString::number(meterAddr.toULongLong(&ok,16));
+        if(!ok)
+            mess.append(tr("Meter address not valid: can't convert from HEX<br>"));
+
+
+    }
+
+    if(ui->cbLeModemAddrToH->isChecked()){
+        bool ok;
+        modemAddr = QString::number(modemAddr.toULongLong(&ok,16));
+        if(!ok)
+            mess.append(tr("Modem address not valid: can't convert from HEX<br>"));
+    }
+
+    if(meterAddr.isEmpty())
+        mess.append(tr("Meter Address not valid<br>"));
+
+    if(modemAddr.isEmpty())
+        mess.append(tr("Modem Address not valid<br>"));
+
+    if(!mess.isEmpty()){
+        emit showMess(mess);
+        return;
+    }
+
+
+
+    for(int i = 0, iMax = modelForward->rowCount(); i < iMax; i++){
+        if(modelForward->item(i,0) && modelForward->item(i,0)->text() == meterAddr){
+
+            if(QMessageBox::question(this, windowTitle(), tr("The meter address %1 is already exists. Replace?")
+                                     .arg(meterAddr)
+                                     , QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
+
+                modelForward->setItem(i, 1, new QStandardItem(modemAddr));
+            }
+            return;
+
+        }
+
+    }
+
+    QList<QStandardItem*> l;
+    l.append(new QStandardItem(meterAddr));
+    l.append(new QStandardItem(modemAddr));
+    modelForward->appendRow(l);
+}
+
+void MainWindow::on_tvForward_clicked(const QModelIndex &index)
+{
+    ui->tbDelFromForwardTable->setEnabled(index.isValid());
+}
+
+void MainWindow::on_tbDelFromForwardTable_clicked()
+{
+    ui->tbDelFromForwardTable->setEnabled(false);
+    if(!ui->tvForward->currentIndex().isValid() || ui->tvForward->currentIndex().row() < 0)
+        return;
+
+    modelForward->removeRow( proxy_modelForward->mapToSource( ui->tvForward->currentIndex() ).row() );
+
+}
+
+void MainWindow::on_pbWriteLocalTime_clicked()
+{
+    QJsonObject jobj;
+    jobj.insert( "dt",  QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss"));
+    mWrite2RemoteDev(COMMAND_WRITE_DATE_SETT, jobj );
+
+}
+
+
+void MainWindow::on_toolButton_2_clicked()
+{
+
+    if(ui->leFindPteLog->text().isEmpty())
+        return;
+    ui->plainTextEdit->setFocus();
+
+    if(!ui->plainTextEdit->find(ui->leFindPteLog->text())){
+        ui->plainTextEdit->moveCursor(QTextCursor::Start);
+        ui->plainTextEdit->find(ui->leFindPteLog->text());
+    }
+}
+
+void MainWindow::on_toolButton_clicked()
+{
+    if(ui->leFindPteLog->text().isEmpty())
+        return;
+    ui->plainTextEdit->setFocus();
+    if(!ui->plainTextEdit->find(ui->leFindPteLog->text(), QTextDocument::FindBackward)){
+        ui->plainTextEdit->moveCursor(QTextCursor::End);
+        ui->plainTextEdit->find(ui->leFindPteLog->text(), QTextDocument::FindBackward);
+    }
+}
+
+void MainWindow::on_toolButton_3_clicked()
+{
+    ui->plainTextEdit->clear();
+}
+
+void MainWindow::on_actionLog_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_toolButton_4_clicked()
+{
+    mWrite2RemoteDev(COMMAND_READ_BACKUP_LIST, QJsonObject());
+}
+
+void MainWindow::on_toolButton_11_clicked()
+{
+    ui->dteMeterDataFrom_3->setDateTime(QDateTime::currentDateTime().addDays(-5));
+    ui->dteMeterDataTo_3->setDateTime(QDateTime::currentDateTime());
+}

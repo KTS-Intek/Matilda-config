@@ -126,7 +126,7 @@
                <item row="1" column="1">
                 <widget class="QLineEdit" name="lePasswd">
                  <property name="text">
-                  <string>power</string>
+                  <string/>
                  </property>
                  <property name="echoMode">
                   <enum>QLineEdit::Normal</enum>
@@ -142,7 +142,7 @@
                <item row="0" column="1">
                 <widget class="QLineEdit" name="leLogin">
                  <property name="text">
-                  <string>root</string>
+                  <string>admin</string>
                  </property>
                  <property name="placeholderText">
                   <string>Login</string>
@@ -231,7 +231,7 @@
                    <item row="1" column="1">
                     <widget class="QLineEdit" name="leIp">
                      <property name="text">
-                      <string>::1</string>
+                      <string>matilda1</string>
                      </property>
                      <property name="placeholderText">
                       <string>Remote IP or URL</string>
@@ -340,7 +340,7 @@
                    <item row="0" column="1">
                     <widget class="QLineEdit" name="leObjectName_2">
                      <property name="text">
-                      <string>LabZulu8</string>
+                      <string>matilda1</string>
                      </property>
                      <property name="placeholderText">
                       <string>Object name</string>
@@ -508,6 +508,9 @@
                  </item>
                  <item>
                   <widget class="QComboBox" name="cbHashSumm">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -623,6 +626,12 @@
               <property name="alternatingRowColors">
                <bool>true</bool>
               </property>
+              <property name="spacing">
+               <number>3</number>
+              </property>
+              <property name="viewMode">
+               <enum>QListView::ListMode</enum>
+              </property>
              </widget>
             </item>
            </layout>
@@ -711,7 +720,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>12</number>
+                   <number>23</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
@@ -1022,7 +1031,7 @@
                              <item>
                               <widget class="QPushButton" name="pbEnDisNtpSync">
                                <property name="enabled">
-                                <bool>true</bool>
+                                <bool>false</bool>
                                </property>
                                <property name="text">
                                 <string>Enable NTP and write list</string>
@@ -1031,6 +1040,9 @@
                              </item>
                              <item>
                               <widget class="QPushButton" name="pbDisableNtp">
+                               <property name="enabled">
+                                <bool>false</bool>
+                               </property>
                                <property name="text">
                                 <string>Disable NTP</string>
                                </property>
@@ -1416,6 +1428,19 @@
                   </widget>
                   <widget class="QWidget" name="page_9">
                    <layout class="QGridLayout" name="gridLayout_5">
+                    <item row="6" column="1" colspan="2">
+                     <spacer name="verticalSpacer_3">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>509</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_12">
                       <property name="text">
@@ -1464,6 +1489,9 @@
                       </property>
                      </widget>
                     </item>
+                    <item row="3" column="2">
+                     <widget class="QComboBox" name="cbGsmPortName"/>
+                    </item>
                     <item row="2" column="2">
                      <widget class="QLineEdit" name="leGPRS_Apn_3">
                       <property name="clearButtonEnabled">
@@ -1478,8 +1506,8 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="2">
-                     <widget class="QComboBox" name="cbGsmPortName"/>
+                    <item row="4" column="2">
+                     <widget class="QComboBox" name="cbGsmPortSpeed"/>
                     </item>
                     <item row="4" column="0" colspan="2">
                      <widget class="QLabel" name="label_74">
@@ -1488,21 +1516,19 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="4" column="2">
-                     <widget class="QComboBox" name="cbGsmPortSpeed"/>
+                    <item row="5" column="0">
+                     <widget class="QLabel" name="label_23">
+                      <property name="text">
+                       <string>Number</string>
+                      </property>
+                     </widget>
                     </item>
-                    <item row="5" column="1" colspan="2">
-                     <spacer name="verticalSpacer_3">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
+                    <item row="5" column="2">
+                     <widget class="QLineEdit" name="leGPRS_Numbr">
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
                       </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>509</height>
-                       </size>
-                      </property>
-                     </spacer>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -1988,7 +2014,7 @@
                           <string>x</string>
                          </property>
                          <property name="autoRaise">
-                          <bool>true</bool>
+                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
@@ -2020,7 +2046,7 @@
                             <string>Add</string>
                            </property>
                            <property name="autoRaise">
-                            <bool>true</bool>
+                            <bool>false</bool>
                            </property>
                           </widget>
                          </item>
@@ -2079,7 +2105,7 @@
                           <string>x</string>
                          </property>
                          <property name="autoRaise">
-                          <bool>true</bool>
+                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
@@ -2232,7 +2258,7 @@
                             <string>Add</string>
                            </property>
                            <property name="autoRaise">
-                            <bool>true</bool>
+                            <bool>false</bool>
                            </property>
                           </widget>
                          </item>
@@ -2370,7 +2396,7 @@
                           <string>x</string>
                          </property>
                          <property name="autoRaise">
-                          <bool>true</bool>
+                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
@@ -2402,7 +2428,7 @@
                             <string>Add</string>
                            </property>
                            <property name="autoRaise">
-                            <bool>true</bool>
+                            <bool>false</bool>
                            </property>
                           </widget>
                          </item>
@@ -2619,7 +2645,7 @@
                           <string>x</string>
                          </property>
                          <property name="autoRaise">
-                          <bool>true</bool>
+                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
@@ -2631,7 +2657,7 @@
                             <string>Add</string>
                            </property>
                            <property name="autoRaise">
-                            <bool>true</bool>
+                            <bool>false</bool>
                            </property>
                           </widget>
                          </item>
@@ -2921,6 +2947,13 @@
                      </widget>
                     </item>
                     <item>
+                     <widget class="QToolButton" name="toolButton_4">
+                      <property name="text">
+                       <string>Read backup list</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <spacer name="verticalSpacer_5">
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -2985,35 +3018,35 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="2">
+                    <item row="6" column="2">
                      <widget class="QCheckBox" name="cbW4E">
                       <property name="text">
                        <string>Enable</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="4" column="0" colspan="3">
+                    <item row="5" column="0" colspan="3">
                      <widget class="Line" name="line">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="0">
+                    <item row="6" column="0">
                      <widget class="QLabel" name="label_58">
                       <property name="text">
                        <string>Wait4Embee</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="6" column="0">
+                    <item row="7" column="0">
                      <widget class="QLabel" name="label_59">
                       <property name="text">
                        <string>Retry before</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="6" column="2">
+                    <item row="7" column="2">
                      <widget class="QSpinBox" name="sbW4ERtrBf">
                       <property name="minimum">
                        <number>1</number>
@@ -3023,21 +3056,21 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="8" column="0" colspan="3">
+                    <item row="9" column="0" colspan="3">
                      <widget class="Line" name="line_4">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
-                    <item row="7" column="0">
+                    <item row="8" column="0">
                      <widget class="QLabel" name="label_60">
                       <property name="text">
                        <string>Retry after</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="7" column="2">
+                    <item row="8" column="2">
                      <widget class="QSpinBox" name="sbW4ErA">
                       <property name="minimum">
                        <number>1</number>
@@ -3047,21 +3080,21 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="9" column="2">
+                    <item row="10" column="2">
                      <widget class="QCheckBox" name="cbTimeCorrection">
                       <property name="text">
                        <string>Enable</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="9" column="0" colspan="2">
+                    <item row="10" column="0" colspan="2">
                      <widget class="QLabel" name="label_62">
                       <property name="text">
                        <string>Time correction</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="8" column="3">
+                    <item row="9" column="3">
                      <spacer name="horizontalSpacer_22">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -3074,14 +3107,21 @@
                       </property>
                      </spacer>
                     </item>
-                    <item row="10" column="0">
+                    <item row="12" column="0" colspan="3">
+                     <widget class="Line" name="line_5">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="11" column="0">
                      <widget class="QLabel" name="label_63">
                       <property name="text">
                        <string>Max Difference</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="10" column="2">
+                    <item row="11" column="2">
                      <widget class="QSpinBox" name="sbMaxSecDiff">
                       <property name="minimum">
                        <number>3</number>
@@ -3091,14 +3131,7 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="11" column="0" colspan="3">
-                     <widget class="Line" name="line_5">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="12" column="2">
+                    <item row="13" column="2">
                      <spacer name="verticalSpacer_7">
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -3126,6 +3159,149 @@
                       <property name="maximum">
                        <number>30</number>
                       </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="label_22">
+                      <property name="text">
+                       <string>Forwarding</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="1" colspan="2">
+                     <widget class="QCheckBox" name="cbEnblForward">
+                      <property name="text">
+                       <string>Enable</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_29">
+                   <layout class="QGridLayout" name="gridLayout_23">
+                    <item row="0" column="0" rowspan="2" colspan="2">
+                     <widget class="QLabel" name="label_106">
+                      <property name="text">
+                       <string>Meter Address [from protocol]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2" rowspan="2">
+                     <widget class="QCheckBox" name="cbLeMeterAddrFromH">
+                      <property name="text">
+                       <string>HEX</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="leMeterAddrFrom">
+                      <property name="maxLength">
+                       <number>32</number>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="label_107">
+                      <property name="text">
+                       <string>Modem Address [forward to]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QLineEdit" name="leModemAddrTo">
+                      <property name="maxLength">
+                       <number>32</number>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="2">
+                     <widget class="QCheckBox" name="cbLeModemAddrToH">
+                      <property name="text">
+                       <string>HEX</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="3">
+                     <spacer name="horizontalSpacer_60">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>288</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QPushButton" name="pbAddForward">
+                      <property name="text">
+                       <string>Add</string>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>:/img/img/edit_add.png</normaloff>:/img/img/edit_add.png</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="0" colspan="4">
+                     <layout class="QHBoxLayout" name="horizontalLayout_48">
+                      <item>
+                       <widget class="QLineEdit" name="leRouteFilter">
+                        <property name="clearButtonEnabled">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_61">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QToolButton" name="tbDelFromForwardTable">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
+                        <property name="text">
+                         <string>Del</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="5" column="0" colspan="4">
+                     <widget class="QTableView" name="tvForward">
+                      <property name="editTriggers">
+                       <set>QAbstractItemView::NoEditTriggers</set>
+                      </property>
+                      <property name="alternatingRowColors">
+                       <bool>true</bool>
+                      </property>
+                      <property name="selectionBehavior">
+                       <enum>QAbstractItemView::SelectRows</enum>
+                      </property>
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
+                      <attribute name="horizontalHeaderDefaultSectionSize">
+                       <number>300</number>
+                      </attribute>
                      </widget>
                     </item>
                    </layout>
@@ -3163,7 +3339,7 @@
                     <item row="0" column="4">
                      <widget class="QLabel" name="label_72">
                       <property name="text">
-                       <string>Glbn</string>
+                       <string>Depth</string>
                       </property>
                      </widget>
                     </item>
@@ -4191,7 +4367,7 @@
                          <string>Enable Table Buffering</string>
                         </property>
                         <property name="checked">
-                         <bool>true</bool>
+                         <bool>false</bool>
                         </property>
                        </widget>
                       </item>
@@ -4632,7 +4808,7 @@
                          <string>Enable Table Buffering</string>
                         </property>
                         <property name="checked">
-                         <bool>true</bool>
+                         <bool>false</bool>
                         </property>
                        </widget>
                       </item>
@@ -5224,6 +5400,61 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_30">
+       <layout class="QGridLayout" name="gridLayout_24">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QLineEdit" name="leFindPteLog">
+            <property name="placeholderText">
+             <string>Search</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton">
+            <property name="text">
+             <string>&lt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton_2">
+            <property name="text">
+             <string>&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton_3">
+            <property name="text">
+             <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -5250,6 +5481,7 @@
    </attribute>
    <addaction name="actionHome"/>
    <addaction name="actionDevice"/>
+   <addaction name="actionLog"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionDevice">
@@ -5260,6 +5492,11 @@
   <action name="actionHome">
    <property name="text">
     <string>Home</string>
+   </property>
+  </action>
+  <action name="actionLog">
+   <property name="text">
+    <string>Log</string>
    </property>
   </action>
  </widget>
