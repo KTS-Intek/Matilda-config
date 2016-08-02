@@ -186,9 +186,9 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         if(jobj.value("name").toString() == "Matilda" && jobj.value("version").toInt() == MATILDA_PROTOCOL_VERSION && QDateTime::fromString(jobj.value("UTC").toString(), "yyyy-MM-dd hh:mm:ss").isValid()){
             if(!jobj.value("err").toString().isEmpty()){
 
-                emit infoAboutObj(tr("DateTime: %1 UTC%2 <br> Version: %3 <br> message: %4")
-                                  .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
-                                  .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
+                emit infoAboutObj(tr("DateTime: %1 (UTC %2) <br> Version: %3 <br> message: %4")
+                                  .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().right(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
+                                  .arg( QString("%1 %2").arg(jobj.value("UTC").toString()).arg((jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) ))
 
                                   .arg( jobj.value("version").toInt())
                                   .arg(jobj.value("message").toString())
@@ -201,9 +201,12 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                 return;
             }else{
 
-                emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>Version: %3 <br> Black List: %4 <br> Counter: %5<br>Memo: %6")
-                                  .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
-                                  .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
+
+                emit infoAboutObj(tr("DateTime: %1 (UTC %2) <br>Version: %3 <br> Black List: %4 <br> Counter: %5<br>Memo: %6")
+                                  .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().right(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
+
+                                  .arg( QString("%1 %2").arg(jobj.value("UTC").toString()).arg((jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) ))
+
                                   .arg( jobj.value("version").toInt() )
                                   .arg(jobj.value("BLC").toInt() )
                                   .arg( jobj.value("CNTR").toInt() )
@@ -231,9 +234,9 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 
         qDebug() << jobj.value("version").toInt() << jobj.value("version").toString() << QString::number(MATILDA_PROTOCOL_VERSION);
 
-        emit infoAboutObj(tr("DateTime: %1 UTC%2 <br>Version: %3 <br> Black List: %4 <br> Counter: %5")
-                          .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().left(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
-                          .arg( (jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) )
+        emit infoAboutObj(tr("DateTime: %1 (UTC %2) <br>Version: %3 <br> Black List: %4 <br> Counter: %5")
+                          .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().right(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
+                          .arg( QString("%1 %2").arg(jobj.value("UTC").toString()).arg((jobj.value("UOFT").toInt() < 0) ? QString::number(jobj.value("UOFT").toInt()) : QString("+%1").arg(jobj.value("UOFT").toInt()) ))
                           .arg( jobj.value("version").toInt() )
                           .arg(jobj.value("BLC").toInt() )
                           .arg( jobj.value("CNTR").toInt() )
