@@ -1648,7 +1648,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         bool ignoreEmptyList = jobj.contains("t");
         if(ignoreEmptyList){
-            modelAddMeter->setHorizontalHeaderLabels(tr("Model,Serial Number,NI,Memo,Password,On/Off,Physical values,Tariff Count,Meter Version").split(","));
+            modelAddMeter->setHorizontalHeaderLabels(tr("Model,NI,Serial Number,Memo,Password,On/Off,Physical values,Tariff Count,Meter Version").split(","));
             totalTables = jobj.value("t").toInt();
             doneTables = 0;
         }
@@ -1764,7 +1764,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         //????
 
         if(ui->pteHashSumm->toPlainText().isEmpty()){
-            ui->pteHashSumm->appendPlainText(tr("Hash algoritm: %1\n   Table name   \t  Hash summ(base64)  \tHash summ (hex)  ").arg(jobj.value("hsh").toString()));
+            ui->pteHashSumm->appendPlainText(tr("Hash alg.: %1\n   Table name   \t  Hash summ(base64)  \tHash summ (hex)  ").arg(jobj.value("hsh").toString()));
         }
         qint64 lastTableRowId = jobj.value("lRwId").toString().toLongLong();
 
@@ -1906,7 +1906,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         break;}
 
     case COMMAND_READ_METER_LIST_HASH_SUMM:{
-        showMess(tr("The meter list hash summ is %1 (base64)<br>%2(hex)<br>Algorith: %3").arg(jobj.value("mhsh").toString())
+        showMess(tr("The meter list hash summ is %1 (base64)<br>%2(hex)<br>Alg.: %3").arg(jobj.value("mhsh").toString())
                  .arg(QString(QByteArray::fromBase64(jobj.value("mhsh").toString().toLocal8Bit()).toHex()))
                  .arg(jobj.value("hsh").toString()));
         break;}
@@ -3381,7 +3381,7 @@ void MainWindow::on_pbAddMeter_clicked()
     else
         list.append(ui->leAddMeterNI->text().simplified().trimmed());
 
-     list.append(ui->leAddMeterSN->text().simplified().trimmed());
+    list.append(ui->leAddMeterSN->text().simplified().trimmed());
 
 
     list.append(ui->leAddMeterMemo->text().simplified().trimmed());
@@ -3404,7 +3404,7 @@ void MainWindow::on_pbAddMeter_clicked()
         QString meterNI = ui->leAddMeterNI->text().simplified().trimmed();
 
         for(int row = 0, rowMax = modelAddMeter->rowCount(); row < rowMax; row++){
-            if(!meterSN.isEmpty() && modelAddMeter->item(row, 1)->text() == meterSN){
+            if(!meterSN.isEmpty() && modelAddMeter->item(row, 2)->text() == meterSN){
                 if(QMessageBox::question(this, windowTitle(), tr("The meter with SN: %1, already exists. Replace?")
                                          .arg(meterSN)
                                          , QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
@@ -3415,12 +3415,13 @@ void MainWindow::on_pbAddMeter_clicked()
                 break;
             }
 
-            if(modelAddMeter->item(row, 2)->text() == meterNI){
+            if(modelAddMeter->item(row, 1)->text() == meterNI){
                 if(QMessageBox::question(this, windowTitle(), tr("The meter with NI: %1, already exists. Replace?")
                                          .arg(meterNI)
                                          , QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
                     replaceIndx = row;
-                }
+                }else
+                    return;
                 break;
             }
         }
@@ -3660,7 +3661,7 @@ void MainWindow::onActWriteSeletedOff()
 
 
         QStringList l;
-//        QStringList k = QString("model,SN,NI,memo,passwd,on,politic,trff,vrsn").split(',');
+//        QStringList k = QString("model,NI,SN,memo,passwd,on,politic,trff,vrsn").split(',');
 
         while(!lRows.isEmpty())
             l.append(modelAddMeter->item(lRows.takeFirst(),1)->text());
@@ -3753,8 +3754,8 @@ void MainWindow::on_tvAddMeterTable_doubleClicked(const QModelIndex &index)
     else
         ui->cbAddMeterModel->setCurrentIndex(0);
 
-    ui->leAddMeterSN->setText(modelAddMeter->item(row, 1)->text());
-    ui->leAddMeterNI->setText(modelAddMeter->item(row, 2)->text());
+    ui->leAddMeterSN->setText(modelAddMeter->item(row, 2)->text());
+    ui->leAddMeterNI->setText(modelAddMeter->item(row, 1)->text());
     ui->leAddMeterMemo->setText(modelAddMeter->item(row,3)->text());
 
     ui->leAddMeterPasswd->setText(modelAddMeter->item(row,4)->text());

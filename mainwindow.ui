@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -197,7 +197,7 @@
                <item row="0" column="0" colspan="2">
                 <widget class="QTabWidget" name="tabWidget_2">
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="tab_6">
                   <attribute name="title">
@@ -231,7 +231,7 @@
                    <item row="1" column="1">
                     <widget class="QLineEdit" name="leIp">
                      <property name="text">
-                      <string>matilda1</string>
+                      <string>80.78.51.216</string>
                      </property>
                      <property name="placeholderText">
                       <string>Remote IP or URL</string>
@@ -720,7 +720,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>10</number>
+                   <number>23</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
