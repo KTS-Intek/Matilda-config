@@ -51,6 +51,7 @@ signals:
 
     void onDaServerStateS(bool);
 
+    void setEmptyHsh(bool empty);
 
 private slots:
     void initializeMatilda();

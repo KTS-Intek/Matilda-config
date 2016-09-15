@@ -124,6 +124,11 @@ void matildaclient::data2coordiantor(QByteArray writeArr)
     }
 }
 
+void matildaclient::setEmptyHsh(bool empty)
+{
+    this->emptyHsh = empty;
+}
+
 //################################################################################################
 void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 {
@@ -160,6 +165,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         qDebug() << "decodeReadData" << command << stopAfter << stopAll;
         qDebug()  << jDoc.object();
 
+        qDebug()  << jDoc.toJson(QJsonDocument::Compact).toHex();
     }
 
     if(!messHshIsValid(jobj, dataArr)){
@@ -217,7 +223,10 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                     QJsonObject jObj;
 
                     jObj.insert("version", jobj.value("version").toInt());
-                    jObj.insert("hsh", QString(QCryptographicHash::hash(loginPasswd.at(0) + "\n" + dataArr + "\n" + loginPasswd.at(1), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals)));
+                    if(emptyHsh)
+                        jObj.insert("hsh", "");//!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    else
+                        jObj.insert("hsh", QString(QCryptographicHash::hash(loginPasswd.at(0) + "\n" + dataArr + "\n" + loginPasswd.at(1), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals)));
 
                     jObj.insert("plg", true); //Передати інфо по плагінам (не обов’язкове значення, але потрібне для додавання лічильників)
                     if(allowCompress){

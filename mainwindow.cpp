@@ -223,7 +223,7 @@ void MainWindow::initializeMatilda()
     connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)) );
     connect(this, SIGNAL(data2matilda(quint16,QJsonObject)), client, SLOT(data2matilda(quint16,QJsonObject)) );
     connect(this, SIGNAL(closeConnection()), client, SLOT(closeConnection()) );
-
+    connect(this, SIGNAL(setEmptyHsh(bool)) , client, SLOT(setEmptyHsh(bool)) );
 
     connect(client, SIGNAL(onErrorWrite()), dialog,SLOT(hideAnimation()), Qt::DirectConnection );
 //    connect(client, SIGNAL(onConnectedStateChanged(bool)),dialog, SLOT(hideAnimation()), Qt::DirectConnection );
@@ -2409,7 +2409,7 @@ void MainWindow::on_pbLogIn_clicked()
     ui->pbDevCommands->setText(tr("Read"));
 
 
-
+    emit setEmptyHsh(ui->cbEmptyHsh->isChecked());
 
     emit setSttsNewPixmap( QPixmap(":/katynko/deviceisdisconnected.png"));
     emit setSttsNewTxt(lastConnDevInfo);

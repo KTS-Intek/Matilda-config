@@ -46,6 +46,9 @@ public slots:
     void stopAllNow();
     void data2coordiantor(QByteArray writeArr);
 
+    void setEmptyHsh(bool empty);
+
+
 
 private slots:
     void decodeReadDataJSON(const QByteArray &dataArr);
@@ -98,6 +101,7 @@ private:
     bool stopAll, stopAfter, daOpened;
     bool allowCompress;
 
+    bool emptyHsh;
 
 };
 
