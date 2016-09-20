@@ -484,8 +484,10 @@ void MainWindow::initializeMatilda()
 
 
     for(int i = 0, iMax = list.size(); i < iMax; i++){
-        QStandardItem *item = new QStandardItem(list.at(i));
+        QStandardItem *item = new QStandardItem(QString("%1 [%2]").arg(list.at(i)).arg(listData.at(i)));
         item->setData(listData.at(i), Qt::UserRole + 1);
+//        item->setCheckable(true);
+//        item->setCheckState( (i == 0) ? Qt::Checked : Qt::Unchecked);
         modelEvent4DB->appendRow(item);
     }
     ui->lvMeterDataProfile->setCurrentIndex(modelProfile4DB->index(0,0));
@@ -2822,6 +2824,16 @@ void MainWindow::on_pbRead_clicked()
 
         QString mess;
         quint8 code = modelEvent4DB->itemData(ui->lvMeterDataProfile_2->currentIndex()).value(Qt::UserRole + 1).toUInt();
+
+//        QStringList codeL;
+//        for(int i = 0, iMax = modelEvent4DB->rowCount(); i <iMax; i++){
+//            if(modelEvent4DB->item(i, 0)->checkState() == Qt::Checked)
+//                codeL.append(modelEvent4DB->item(i,0)->data(Qt::UserRole + 1).toString());
+//        }
+//        if(!codeL.isEmpty() && codeL.first() == "0")
+//            codeL.clear();
+
+//        jobj.insert("code", codeL.join(","));
 
         jobj.insert("code", code);
         jobj.insert("max_len", ui->sbReadLenML->value());
