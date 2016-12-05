@@ -189,7 +189,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 
     switch(command){
     case COMMAND_ZULU:{
-        if(jobj.value("name").toString() == "Matilda" && jobj.value("version").toInt() == MATILDA_PROTOCOL_VERSION && QDateTime::fromString(jobj.value("UTC").toString(), "yyyy-MM-dd hh:mm:ss").isValid()){
+        if(jobj.value("name").toString() == "Matilda" && jobj.value("version").toInt() > 0 && jobj.value("version").toInt() <= MATILDA_PROTOCOL_VERSION && QDateTime::fromString(jobj.value("UTC").toString(), "yyyy-MM-dd hh:mm:ss").isValid()){
             if(!jobj.value("err").toString().isEmpty()){
 
                 emit infoAboutObj(tr("DateTime: %1 (UTC %2) <br> Version: %3 <br> message: %4")
@@ -219,7 +219,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                                   .arg(jobj.value("memo").toString())
                                   );
 
-                if(jobj.value("version").toInt() == MATILDA_PROTOCOL_VERSION){
+                if(true){// jobj.value("version").toInt() == MATILDA_PROTOCOL_VERSION){
                     QJsonObject jObj;
 
                     jObj.insert("version", jobj.value("version").toInt());
