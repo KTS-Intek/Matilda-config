@@ -6,6 +6,8 @@
 #include <QStandardItemModel>
 #include "mysortfilterproxymodel.h"
 
+#include "treemodel.h"
+#include "lastdevinfo.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,12 +18,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(const QFont &font4log, QWidget *parent = 0);
     ~MainWindow();
+    LastDevInfo *lDevInfo;
+    int defFontSize;
+
+    void loadMainSett();
+
 
 signals:
 //  void conn2thisDev(int ,QString, QString , QString , quint16 , int , bool, bool);
-    void conn2thisDev(int, QString, QString, QString, QString, quint16, int, bool, bool, bool, QString, bool);
+    void conn2thisDev(int, QString, QString, QString, QString, quint16, int, bool, bool, bool, QString, bool,bool);
 
     void data2matilda(quint16 , QJsonObject );
     void closeConnection();
@@ -53,6 +60,10 @@ signals:
 
     void setEmptyHsh(bool empty);
 
+    //on dev type changed
+    void clearLastDevTreeModel();
+
+
 private slots:
     void initializeMatilda();
 
@@ -74,7 +85,6 @@ private slots:
 
     void on_actionHome_triggered();
 
-    void on_lvDevOperation_clicked(const QModelIndex &index);
 
     void on_pbRead_clicked();
 
@@ -194,9 +204,28 @@ private slots:
 
     void on_actionLog_triggered();
 
-    void on_toolButton_4_clicked();
 
     void on_toolButton_11_clicked();
+
+    void on_toolButton_13_clicked();
+
+    void on_toolButton_19_clicked();
+
+    void on_toolButton_14_clicked();
+
+    void on_pushButton_9_clicked();
+
+    void on_pbLang_clicked();
+
+    void on_actionOptions_triggered();
+
+    void on_trDevOperation_clicked(const QModelIndex &index);
+
+    void on_pbReadSn_clicked();
+
+    void on_pbMeterDataShowHide_clicked(bool checked);
+
+    void on_pbMeterDataShowHide_2_clicked(bool checked);
 
 public slots:
     void onConnectedStateChanged(bool isConnected);
@@ -218,6 +247,13 @@ public slots:
     void onDaServiceState(bool isListen);
     void onYouCanSelectDevice(QStringList listDev);
 
+    void devTypeChanged(int devType, int version, QString sn);
+
+    void onLangSelected(QString lang);
+
+    void loadSettPageOptions();
+
+    void setActiveProtocolVersion(int protocolVersion);
 
 private:
     QList<int> getFilterList(const int &startIndx, const int &count) const;
@@ -246,11 +282,21 @@ private:
 
     QVariant strList2Var(const QStringList &list);
 
+    void createLanguageMenu();
+
+    void loadLanguage(const QString& rLanguage);
+
+     void saveMainSett();
+
+     void savePageOptions();
+
+     void onlvDevOperation_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
 
     QStandardItemModel *modelDevOptions;
+    TreeModel *modelDevOptionsTree;
     QStandardItemModel *modelAddMeter;
     QStandardItemModel *modelProfile4DB;
     QStandardItemModel *modelTarif4DB;
@@ -302,6 +348,10 @@ private:
     qint64 byteReceiv, lastByteRec;
     qint64 byteSendNotComprssd, lastSendNC;
     qint64 byteReceivNotComprssd, lastRecNC;
+
+    QTranslator translator;
+    QString currLang;
+    bool youAreRoot, youAreOper, joingStts;
 
 };
 

@@ -126,8 +126,9 @@
 #define COMMAND_READ_FRWRD_SETT                 65
 
 
-//#define COMMAND_READ_MEMO_SN                36
+//protocol v2
 
+#define COMMAND_READ_DEVICE_SERIAL_NUMBER       68
 
 //ROOT || OPERATOR WRITE
 #define COMMAND_WRITE_FIRST_4_OPERATOR      40000

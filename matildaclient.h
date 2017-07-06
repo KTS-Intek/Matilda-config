@@ -37,8 +37,13 @@ signals:
 
     void add2pteLog(QString);
 
+    void devTypeChanged(int devType, int version, QString sn);
+
+
+    void setActiveProtocolVersion(int protocolVersion);
+
 public slots:
-    void conn2thisDev(int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn);
+    void conn2thisDev(int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn, bool allowProtocolV2);
 
     void data2matilda(quint16 command, QJsonObject jobj);
     void closeConnection();
@@ -52,6 +57,8 @@ public slots:
 
 private slots:
     void decodeReadDataJSON(const QByteArray &dataArr);
+
+    void mReadyReadSlot();
 
 
     void mReadyRead();
@@ -102,6 +109,10 @@ private:
     bool allowCompress;
 
     bool emptyHsh;
+
+
+    //protocol v2
+    bool allowProtocolV2;
 
 };
 

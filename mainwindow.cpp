@@ -4,7 +4,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QFileDialog>
-
+#include <QDesktopWidget>
 
 #include "ui_mainwindow.h"
 #include "matildaclient.h"
@@ -16,14 +16,22 @@
 #include "directaccesmatildaservice.h"
 #include "selectdevbymacaddrdialog.h"
 #include "scanipdialog.h"
+#include "settloader.h"
+#include "langdialog.h"
+#include "showmesshelper.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+
+MainWindow::MainWindow(const QFont &font4log, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    createLanguageMenu();
+
 
     modelDevOptions = new QStandardItemModel(this);
+    lDevInfo = new LastDevInfo(this);
+
     modelAddMeter = new QStandardItemModel(0,7, this);
 
     modelProfile4DB = new QStandardItemModel(0,1,this);
@@ -68,12 +76,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tvForward->setContextMenuPolicy(Qt::CustomContextMenu);
 
 
-    proxy_modelDevOptions->setSourceModel(modelDevOptions);
+//    proxy_modelDevOptions->setSourceModel(modelDevOptions);
     proxy_modelDevOptions->setDynamicSortFilter(true);
     connect(ui->leFilterDevOperation, SIGNAL(textChanged(QString)), proxy_modelDevOptions, SLOT(setNewFileterStr(QString)) );
 //    filterMode.append(0);
-    proxy_modelDevOptions->setFilterMode(getFilterList(0,1));
-    ui->lvDevOperation->setModel(proxy_modelDevOptions);
+    proxy_modelDevOptions->setFilterMode(getFilterList(0,2));
+//    ui->trDevOperation->setModel(proxy_modelDevOptions);
 
 
     proxy_modelAddMeter->setSourceModel(modelAddMeter);
@@ -146,11 +154,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->label_4->hide();
 
+    QFont font;
+    defFontSize = font.pointSize();
 
     allowDate2utc = false;
     dateInUtc = false;
 
-    QTimer::singleShot(2000, this, SLOT(initializeMatilda()) );
+    ui->pteAppLog->setFont(font4log);
+    ui->pteAboutObjectMemo->setFont(font4log);
+    ui->pteErrorLog->setFont(font4log);
+    ui->pteIfconfig->setFont(font4log);
+    ui->pteZbyrLog->setFont(font4log);
+    ui->pteSerialLog_2->setFont(font4log);
+    ui->plainTextEdit->setFont(font4log);
+//    QTimer::singleShot(2000, this, SLOT(initializeMatilda()) );
+    loadMainSett();
 
 }
 //##########################################################################################
@@ -159,56 +177,86 @@ MainWindow::~MainWindow()
     emit kickThrd();
     delete ui;
 }
+
+void MainWindow::loadMainSett()
+{
+    QRect rect = SettLoader::loadSett(SETT_MAIN_GEOMETRY).toRect();
+    if(!rect.isNull()){
+        qint32 desktopW = qApp->desktop()->width();
+        qint32 desktopH = qApp->desktop()->height();
+
+        if(rect.x()< 10)
+            rect.setX(10);
+        if(rect.y()<30)
+            rect.setY(31);
+        if(rect.x()>(desktopW)  || rect.y()>(desktopH)) {
+            int lastW = rect.width();
+            int lastH = rect.height();
+            rect.setX(10);
+            rect.setY(31);
+            rect.setWidth(lastW);
+            rect.setHeight(lastH);
+        }
+        setGeometry(rect);
+    }
+    if(SettLoader::loadSett(SETT_MAIN_LANG_SELECTED).toBool()){
+         loadLanguage(SettLoader::loadSett(SETT_MAIN_CURRLANG).toString());
+         QTimer::singleShot(500, this, SLOT(initializeMatilda()) );
+    }else{
+        LangDialog *d = new LangDialog(ui->cbLang, this);
+        connect(d, SIGNAL(onLangSelected(QString)), this, SLOT(onLangSelected(QString)) );
+        if(d->exec() == QDialog::Rejected)
+            QTimer::singleShot(500, this, SLOT(initializeMatilda()) );
+
+        d->deleteLater();
+    }
+
+}
 //##########################################################################################
 void MainWindow::initializeMatilda()
 {
 
-    QStringList l = tr("About Object,Date and time,State,Statistic of exchange,System Info,Network Interfaces,Meter Plugin (Activated),Application events,Zbyrator events,GPRS Settings,"
-                       "TCP interface,ZigBee Settings,"
-                       "Serial Log,Error events,Warning events,Direct Access,Direct Access Active Client,Matilda Active Client,Administration,"
-                       "Poll Settings,Forward Settings,Poll schedule,Meter list,Database,Meter logs,Hash summ").split(",");
+    if(true){
+        QStringList l = SettLoader::realPageName();
 
-    QStringList m = QString("%1,0,0,0,0,0,0,0,0,%2,%3,%4,0,0,0,%5,%6,%7,0,%8,%9,%10,%11,0,0,0")
-            .arg(COMMAND_WRITE_ABOUT_OBJECT)
+        QList<int> listIntWrite = SettLoader::getPageCanWrite();
+        QList<int> listInt = SettLoader::getPageCanRead();
 
-            .arg(COMMAND_WRITE_GPRS_SETT)
-            .arg(COMMAND_WRITE_TCP_SETT)
-            .arg(COMMAND_WRITE_ZIGBEE_SETT)
+        if(l.size() != listIntWrite.size() || l.size() != listInt.size()){
+            qDebug() << "size error " << l.size() << listInt.size() << listIntWrite.size();
+            return;
+        }
 
-            .arg(COMMAND_WRITE_DA_SERVICE_SETT)
-            .arg(COMMAND_WRITE_PEREDAVATOR_AC_SETT)
-            .arg(COMMAND_WRITE_MATILDA_AC_SETT)
+        QSize s = QSize(ui->trDevOperation->width(), ui->pbAddForward->height() * 1.2);
+        QHash<QString, QString> hashRealName2localName = SettLoader::hashRealName2localName();
+        QStringList listPath2icon = SettLoader::listPath2icon();
 
-            .arg(COMMAND_WRITE_POLL_SETT)
-            .arg(COMMAND_WRITE_FRWRD_SETT)
-            .arg(COMMAND_WRITE_POLL_SCHEDULE)
-            .arg(COMMAND_WRITE_METER_LIST_FRAMED)
-            .split(",") ;
+        for(int i = 0, iMax = l.size(); i < iMax; i++){
+            QList<QStandardItem*> li;
+            QStandardItem *item = new QStandardItem( hashRealName2localName.value(l.at(i), l.at(i))  );//l.at(i) );
+            item->setData(listIntWrite.at(i));
+            item->setData(listInt.at(i), Qt::UserRole + 2);
+            item->setSizeHint(s);
 
-    QList<int> listInt;
-    listInt << COMMAND_READ_ABOUT_OBJECT << COMMAND_READ_DATE_SETT << COMMAND_READ_STATE << COMMAND_READ_POLL_STATISTIC << COMMAND_READ_SYSTEM_SETTINGS
-            << COMMAND_READ_IFCONFIG << COMMAND_READ_ABOUT_PLG << COMMAND_READ_APP_LOG
-            << COMMAND_READ_ZBR_LOG << COMMAND_READ_GPRS_SETT << COMMAND_READ_TCP_SETT << COMMAND_READ_ZIGBEE_SETT << COMMAND_READ_SERIAL_LOG
-            << COMMAND_READ_PLUGIN_LOG_ERROR << COMMAND_READ_PLUGIN_LOG_WARN << COMMAND_READ_DA_SERVICE_SETT << COMMAND_READ_PEREDAVATOR_AC_SETT
-            << COMMAND_READ_MATILDA_AC_SETT << 0 << COMMAND_READ_POLL_SETT << COMMAND_READ_FRWRD_SETT
-            << COMMAND_READ_POLL_SCHEDULE << COMMAND_READ_METER_LIST_FRAMED << COMMAND_READ_DATABASE << COMMAND_READ_METER_LOGS_GET_TABLES << COMMAND_READ_TABLE_HASH_SUMM;
+            if(!listPath2icon.at(i).isEmpty())
+                item->setIcon(QIcon(listPath2icon.at(i)));
+            li.append(item);
 
 
-    if(l.size() != m.size()){
-        qDebug() << "size error " << l.size() << m.size();
-        return;
-    }
-    QSize s = QSize(ui->lvDevOperation->width(), ui->pbAddForward->height() * 1.2);
+            QStandardItem *item2 = new QStandardItem("");
+            item2->setData( l.at(i) ); //hashLocalName2realName.value( l.at(i)) );
+            li.append(item2);
 
-    for(int i = 0, iMax = l.size(); i < iMax; i++){
-        QStandardItem *item = new QStandardItem(l.at(i));
-        item->setData(m.at(i));
-        item->setData(listInt.at(i), Qt::UserRole + 2);
-        item->setSizeHint(s);
-        modelDevOptions->appendRow(item);
+            QStandardItem *item3 = new QStandardItem("");
+    //        item3->setData(l.at(i));
+            li.append(item3);
+
+
+            modelDevOptions->appendRow(li);
+        }
     }
 
-
+    loadSettPageOptions();
     QDateTime dateTime = QDateTime::currentDateTime();
 
     Wait4AnswerDialog *dialog = new Wait4AnswerDialog(ui->pbLogOut->height(), this);
@@ -220,7 +268,7 @@ void MainWindow::initializeMatilda()
 
     matildaclient *client = new matildaclient;
 //    connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,quint16,int,bool,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,quint16,int,bool,bool)) );
-    connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool)) );
+    connect(this, SIGNAL(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool,bool)), client, SLOT(conn2thisDev(int,QString,QString,QString,QString,quint16,int,bool,bool,bool,QString,bool,bool)) );
     connect(this, SIGNAL(data2matilda(quint16,QJsonObject)), client, SLOT(data2matilda(quint16,QJsonObject)) );
     connect(this, SIGNAL(closeConnection()), client, SLOT(closeConnection()) );
     connect(this, SIGNAL(setEmptyHsh(bool)) , client, SLOT(setEmptyHsh(bool)) );
@@ -238,6 +286,7 @@ void MainWindow::initializeMatilda()
     connect(client, SIGNAL(onYouCanSelectDevice(QStringList)), this, SLOT(onYouCanSelectDevice(QStringList)) );
 
     connect(client, SIGNAL(dataFromCoordinator(QByteArray)), this, SIGNAL(dataFromCoordinator(QByteArray)) );
+
     connect(this, SIGNAL(data2coordiantor(QByteArray)), client, SLOT(data2coordiantor(QByteArray)) );
     connect(this, SIGNAL(onDaServerStateS(bool)), client, SLOT(onDaOpened(bool)) );
 
@@ -249,15 +298,17 @@ void MainWindow::initializeMatilda()
     connect(dialog, SIGNAL(rejected()), client, SLOT(stopAllNow()), Qt::DirectConnection );
 
 
-    connect(client, SIGNAL(onConnectedStateChanged(bool)), SLOT(onConnectedStateChanged(bool)) );
-    connect(client, SIGNAL(data2gui(quint16,QJsonObject)), SLOT(data2gui(quint16,QJsonObject)) );
-    connect(client, SIGNAL(onErrorWrite()), SLOT(onErrorWrite()) );
-    connect(client, SIGNAL(showMess(QString)) , SLOT(showMess(QString)) );
-    connect(client, SIGNAL(authrizeAccess(int)), SLOT(authrizeAccess(int)) );
+    connect(client, SIGNAL(onConnectedStateChanged(bool)    ), SLOT(onConnectedStateChanged(bool))    );
+    connect(client, SIGNAL(data2gui(quint16,QJsonObject)    ), SLOT(data2gui(quint16,QJsonObject))    );
+    connect(client, SIGNAL(onErrorWrite()                   ), SLOT(onErrorWrite())                   );
+    connect(client, SIGNAL(showMess(QString)                ), SLOT(showMess(QString))                );
+    connect(client, SIGNAL(authrizeAccess(int)              ), SLOT(authrizeAccess(int))              );
+    connect(client, SIGNAL(devTypeChanged(int,int,QString)  ), SLOT(devTypeChanged(int,int,QString))  );
 
-    connect(client, SIGNAL(changeCounters(qint64,qint64,bool)), SLOT(changeCounters(qint64,qint64,bool)) );
-    connect(client, SIGNAL(infoAboutObj(QString)), ui->pteAboutConnObj, SLOT(appendHtml(QString)) );
-    connect(client, SIGNAL(add2pteLog(QString)), ui->plainTextEdit, SLOT(appendPlainText(QString)) );
+    connect(client, SIGNAL(changeCounters(qint64,qint64,bool)), SLOT(changeCounters(qint64,qint64,bool))          );
+    connect(client, SIGNAL(setActiveProtocolVersion(int)     ), SLOT(setActiveProtocolVersion(int))               );
+    connect(client, SIGNAL(infoAboutObj(QString)             ), ui->pteAboutConnObj, SLOT(appendHtml(QString))    );
+    connect(client, SIGNAL(add2pteLog(QString)               ), ui->plainTextEdit, SLOT(appendPlainText(QString)) );
 
     ui->pbLogIn->setEnabled(true);
 
@@ -575,13 +626,37 @@ void MainWindow::initializeMatilda()
         ui->cbZigBeePortSpeed->addItem(list.at(i), QString(list.at(i)).remove(" "));
     }
 
-    list = QString("1200,2400,4800,9600,19 200,38 400,57 600,115 200,230 400,460 800,500 000,750 000,921 600,1 843 200,3 000 000,3 250 000,6 000 000").split(",");//for GSM Sierra Wrllss
+    list = QString("9600,57 600,115 200,230 400,460 800,750 000,921 600,3 000 000").split(",");//for GSM Sierra Wrllss
     for(int i = 0, iMax = list.size(); i < iMax; i++){
         ui->cbGsmPortSpeed->addItem(list.at(i), QString(list.at(i)).remove(" "));
     }
     ui->cbGsmPortSpeed->setCurrentIndex(-1);
     ui->cbZigBeePortSpeed->setCurrentIndex(-1);
 
+    joingStts = false;
+
+     QVariantHash connHashG = SettLoader::loadSett(SETT_LOLO_TOTO).toHash();
+
+     ui->leLogin->setText(connHashG.value("login", "admin").toString());
+     ui->lePasswd->setText(connHashG.value("pas").toString());
+
+     ui->cbZlib->setChecked(connHashG.value("zlib", true).toBool());
+     ui->cbxAllowV2->setChecked(connHashG.value("v2", true).toBool());
+
+     QVariantHash h = connHashG.value("direct").toHash();
+     ui->leIp->setText(h.value("ip", "80.78.51.216").toString());
+     ui->sbPort->setValue(h.value("p", 9090).toInt());
+     ui->leObjectName->setText(h.value("obj", "test").toString());
+     ui->sbTimeOut->setValue(h.value("to", 15).toInt());
+
+     h = connHashG.value("mac").toHash();
+     ui->leIp_2->setText(h.value("ip", "svaha2.ddns.net").toString());
+     ui->sbPort_2->setValue(h.value("p", 65000).toInt());
+     ui->leObjectName_2->setText(h.value("obj", "matilda1").toString());
+     ui->sbTimeOut_2->setValue(h.value("to", 15).toInt());
+     ui->leObjectMac->setText(h.value("mac").toString());
+     ui->rbUseMac->setChecked(h.value("rbMax").toBool());
+     ui->rbUseObjID->setChecked(!ui->rbUseMac->isChecked());
 }
 
 //##########################################################################################
@@ -759,6 +834,9 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         ui->leGPRS_Apn_2->setText(jobj.value("userName").toString());
         ui->leGPRS_Apn_3->setText(jobj.value("password").toString());
         ui->leGPRS_Numbr->setText(jobj.value("nmbr").toString());
+
+        if(lDevInfo->matildaDev.protocolVersion >= MATILDA_PROTOCOL_VERSION_V2)
+            ui->cbxGsmPrefMode->setCurrentIndex(jobj.value("prfrd").toInt() - 1);
 
 
         QString portName = jobj.value("portName").toString();
@@ -1176,6 +1254,37 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             QString meterSN("");
             QStringList list = varList2strList(listVarData.at(hashIndex).toList());
+
+            if(joingStts){
+                //відновлюю нормальний вигляд статусів, так проще)
+                QStringList list2;
+                for(int i = 0, iMax = list.size(); i < iMax; i++){
+                    QString s = list.at(i);
+                    int jMax = s.length();
+
+                    bool okminus = (s.left(1) == "-");
+                    if(okminus)
+                        s.toLongLong(&okminus);//щоб число не попало
+
+                    if(!okminus && (i < 1 || s.contains(":")))
+                        okminus = true;
+
+                    if((s.contains("!") || s.contains("?") || (s.contains("-") && !okminus)) && jMax > 1){
+                        for(int j = 0; j < jMax; j++ )
+                            list2.append(s.mid(j,1));
+                    }else{
+                        list2.append(s);
+                    }
+                }
+                if(list2.isEmpty())
+                    list2.append("-");
+
+                while(list2.size() < columnListSize)
+                    list2.append(list2.last());
+
+                list = list2;
+            }
+
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -1268,8 +1377,15 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
                 jobj.insert("table", lastTableList.first());
                 jobj.insert("gcl", true);
+
+                if(lDevInfo->matildaDev.protocolVersion == MATILDA_PROTOCOL_VERSION_V2 && ui->cbChop->isChecked())
+                    jobj.insert("jns", ui->cbChop->isChecked());
+
+                joingStts = jobj.value("jns").toBool();
+
                 lastTableRowId = 0;
                 jobj.insert("lRwId", QString::number(lastTableRowId));
+
                 emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, jobj);
             }else{
                 emit uploadProgress( doneTables, tr("Selected: %1 tables").arg(totalTables) );
@@ -1348,6 +1464,37 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             QString meterSN("");
             QStringList list = varList2strList(listVarData.at(hashIndex).toList());// hash.value(QString::number(hashIndex)).toStringList();
+
+            if(joingStts){
+                //відновлюю нормальний вигляд статусів, так проще)
+                QStringList list2;
+                for(int i = 0, iMax = list.size(); i < iMax; i++){
+                    QString s = list.at(i);
+                    int jMax = s.length();
+
+                    bool okminus = (s.left(1) == "-");
+                    if(okminus)
+                        s.toLongLong(&okminus);//щоб число не попало
+
+                    if(!okminus && (i < 1 || s.contains(":")))
+                        okminus = true;
+
+                    if((s.contains("!") || s.contains("?") || (s.contains("-") && !okminus)) && jMax > 1){
+                        for(int j = 0; j < jMax; j++ )
+                            list2.append(s.mid(j,1));
+                    }else{
+                        list2.append(s);
+                    }
+                }
+                if(list2.isEmpty())
+                    list2.append("-");
+
+                while(list2.size() < columnListSize)
+                    list2.append(list2.last());
+
+                list = list2;
+            }
+
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -1399,6 +1546,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             jobj.insert("table", lastTableList.first());
             jobj.insert("lRwId", QString::number(lastRowId));
+            jobj.insert("jns", joingStts);
 
 //            emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, h);
             emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, jobj);
@@ -2013,6 +2161,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         break;}
 
+    case COMMAND_READ_DEVICE_SERIAL_NUMBER: ui->leSn->setText(jobj.value("s").toString()); break;
+
     default:
         qDebug() << "data2gui unknown command " << command << jobj;
         break;
@@ -2043,8 +2193,12 @@ void MainWindow::authrizeAccess(int accessLevel)
     ui->pbRead->setEnabled(accessLevel > 0);
     ui->pbLogOut->setEnabled(accessLevel > 0);
 
-    ui->pbWrite->setEnabled((accessLevel == 2 || accessLevel == 1));
-    ui->groupBox_4->setEnabled((accessLevel == 2 || accessLevel == 1));
+    ui->pbWrite->setEnabled((accessLevel == MTD_USER_OPER || accessLevel == MTD_USER_ADMIN));
+    ui->groupBox_4->setEnabled((accessLevel == MTD_USER_OPER || accessLevel == MTD_USER_ADMIN));
+    ui->pbWrite->setIcon(QIcon( (accessLevel == MTD_USER_ADMIN) ?  ":/katynko/svg/flag-red.svg" : ":/katynko/svg/flag-yellow.svg" ));
+
+    youAreRoot = (accessLevel == MTD_USER_ADMIN);
+    youAreOper = (accessLevel == MTD_USER_OPER);
 
     ui->stackedWidget->setCurrentIndex((accessLevel > 0) ? 1 : 0);
 
@@ -2148,6 +2302,177 @@ void MainWindow::onYouCanSelectDevice(QStringList listDev)
     }
 
     d->deleteLater();
+}
+//--------------------------------------------------------------------------------------------
+void MainWindow::devTypeChanged(int devType, int version, QString sn)
+{
+    bool hasDb = true, hasGsm = true, hasZigBee = true, hasMyOs = true;
+    QString s;
+    switch(devType){
+    case DEV_POLL: s = "";  break;
+    case DEV_STOR: s = "DEV_STOR"; hasGsm = false; hasZigBee = false; break;
+    case DEV_GATE: s = "DEV_GATE"; hasDb = false; break;
+    case DEV_SVAHA: s = "DEV_SVAHA"; break;
+
+    case DEV_POLL_EMULATOR_L0: s = "DEV_POLL_EMULATOR_L0"; hasGsm = false; hasMyOs = false; break;
+    case DEV_POLL_EMULATOR_L1: s = "DEV_POLL_EMULATOR_L1"; hasGsm = false; hasMyOs = false; break;
+    case DEV_POLL_EMULATOR_L2: s = "DEV_POLL_EMULATOR_L2"; hasGsm = false; hasMyOs = false; break;
+    default: s = ""; break;
+    }
+
+    lDevInfo->matildaDev.devType = devType;
+    lDevInfo->matildaDev.devVersion = version;
+
+
+//    hasMultipleML(version >= 12); //0.1.2
+
+
+    QStringList list = SettLoader::realPageNameByDev(devType);
+    qDebug() << devType << list;
+
+    for(int i = 0, iMax = modelDevOptions->rowCount(); i < iMax; i++){
+        if(modelDevOptions->item(i, 2)  && modelDevOptions->item(i, 1))
+            modelDevOptions->item(i, 2)->setText( (list.contains(modelDevOptions->item(i, 1)->data().toString())) ? s : QString(""));
+    }
+
+//    modelDevOptTree->clear();
+
+
+
+    TreeModel * modelDevOptTree = new TreeModel(this);
+
+    //    MySortFilterProxyModel *proxy_modelDevOptTree = new MySortFilterProxyModel(this);
+    //    proxy_modelDevOptTree->setSourceModel(modelDevOptTree);
+    //    proxy_modelDevOptTree->setDynamicSortFilter(true);
+    //    connect(ui->leFilterDevOperation, SIGNAL(textChanged(QString)), proxy_modelDevOptTree, SLOT(setNewFileterStr(QString)) );
+    //    proxy_modelDevOptTree->setFilterMode(SettLoader::getFilterList(0,1));//ignore
+
+    ui->trDevOperation->setModel(modelDevOptTree);
+//    proxy_modelDevOptions->setSourceModel(modelDevOptTree);
+
+
+    emit clearLastDevTreeModel();
+
+    connect(this, SIGNAL(clearLastDevTreeModel()), modelDevOptTree, SLOT(deleteLater()) );
+
+
+    modelDevOptTree->setDefSize4itms(QSize(ui->trDevOperation->width(), ui->pbAddForward->height() * 1.2));
+
+
+    QHash<QString,QStringList> h4devTree = SettLoader::pageName4devTree();
+    QStringList lKeyDevTree = h4devTree.take("\r\nlKeys\r\n");
+
+    QHash<QString, QString> hashRealName2localName = SettLoader::hashRealName2localName();
+//    hashRealName2localName.value(l.at(i), l.at(i))
+
+    ui->pteAboutConnObj->appendPlainText(QString("SN# %1").arg(sn.isEmpty() ? "-" : sn ) );
+
+    QHash<QString, QString> hashRealName2ico;
+    if(true){
+        QStringList listPath2icon = SettLoader::listPath2icon();
+        QStringList listRealName = SettLoader::realPageName();
+        for(int i = 0, iMax = listPath2icon.size(), iMax2 = listRealName.size(); i < iMax && i < iMax2; i++ )
+            hashRealName2ico.insert(listRealName.at(i), listPath2icon.at(i));
+    }
+
+
+    for(int i = 0, iMax = lKeyDevTree.size(); i < iMax; i++){
+        QString key = lKeyDevTree.at(i);
+        QStringList listData = h4devTree.value(key);
+
+        if(listData.isEmpty()){ //add row
+            if(list.contains(key) && !key.isEmpty()){
+                modelDevOptTree->appendItem(hashRealName2localName.value(key, key), key, hashRealName2ico.value(key));
+            }
+        }else{
+            QStringList listDataFiltered, path2icoLst;
+            QVariantList realName;
+
+            for(int j = 0, jMax = listData.size(); j < jMax; j++){
+                if(list.contains(listData.at(j))){
+                    listDataFiltered.append(hashRealName2localName.value(listData.at(j), listData.at(j)));
+                    realName.append(listData.at(j));
+                    path2icoLst.append(hashRealName2ico.value(listData.at(j)));
+//                    realName.append(listDataFiltered.last());
+                }
+            }
+
+            if(!listDataFiltered.isEmpty()){
+                //add key, listDataFiltered
+                modelDevOptTree->appendItem(hashRealName2localName.value(key,key), listDataFiltered, path2icoLst, realName);
+
+            }
+        }
+
+    }
+
+    ui->groupBox_4->setVisible(hasMyOs || hasGsm || hasZigBee );
+
+//    proxy_modelDevOptions->setSpecFilter(2, s);
+
+
+    ui->pbDrestart->setVisible(hasMyOs);
+
+    ui->pbReboot->setVisible(hasMyOs);
+
+    ui->pbResetGsm->setVisible(hasGsm);
+
+    ui->pbResetEmbee->setVisible(hasZigBee);
+
+    ui->groupBox_4->setVisible(hasMyOs || hasGsm || hasZigBee );
+
+    ui->label_97->setVisible(hasGsm);
+    ui->cbGsmPrimary->setVisible(hasGsm);
+
+    ui->label_57->setVisible(hasMyOs && hasZigBee);
+    ui->sbWati4Poll->setVisible(hasMyOs && hasZigBee);
+    ui->trDevOperation->collapseAll();
+}
+//------------------------------------------------------------
+void MainWindow::onLangSelected(QString lang)
+{
+    if(lang.isEmpty())
+         return;
+     ui->cbLang->setCurrentIndex(ui->cbLang->findData(lang));
+     SettLoader::saveSett(SETT_MAIN_LANG_SELECTED, true);
+     SettLoader::saveSett(SETT_MAIN_CURRLANG, lang);
+     currLang.clear();
+     loadLanguage(lang);
+ //    loadMainSett();
+ //    on_pbLang_clicked();
+
+     qDebug() << "onLang selected" << lang;
+     QTimer::singleShot(500, this, SLOT(initializeMatilda()) );
+}
+//------------------------------------------------------------
+void MainWindow::loadSettPageOptions()
+{
+    int fontSize = SettLoader::loadSett(SETT_OPTIONS_APPFONT, defFontSize).toInt();
+
+    if(fontSize > 6 && fontSize < 100){
+        QString styleSheet = QString("font-size:%1pt;").arg(fontSize);
+        this->setStyleSheet(styleSheet);
+    }
+
+}
+//------------------------------------------------------------
+void MainWindow::setActiveProtocolVersion(int protocolVersion)
+{
+    lDevInfo->matildaDev.protocolVersion = protocolVersion;
+
+    bool allowObjV2 = (protocolVersion >= MATILDA_PROTOCOL_VERSION_V2);
+
+    if(!allowObjV2){
+        ui->leSn->clear();
+        ui->cbxGsmPrefMode->setCurrentIndex(-1);
+    }
+
+    ui->leSn->setEnabled(allowObjV2);
+    ui->pbReadSn->setEnabled(allowObjV2);
+
+    ui->cbChop->setEnabled(allowObjV2);
+    ui->cbxGsmPrefMode->setEnabled(allowObjV2);
+
 }
 //##########################################################################################
 void MainWindow::onCheckDbNIfieldIsCorrect()
@@ -2391,6 +2716,121 @@ QVariant MainWindow::strList2Var(const QStringList &list)
         l.append(list.at(i));
     return QVariant(l);
 }
+//-------------------------------------------------------------------------------------
+void MainWindow::createLanguageMenu()
+{
+    // format systems language
+    QString defaultLocale = currLang;       // e.g. "de_DE"
+
+    QString langPath = QApplication::applicationDirPath();
+
+    langPath.append("/lang");
+
+    QDir dir(langPath);
+    QStringList fileNames = dir.entryList(QStringList("lang_*.qm"));
+
+    if(fileNames.isEmpty())
+        return;
+
+    QHash<QString,QString> m2h = ShowMessHelper::lang2human();
+
+    for (int i = 0, j = 0, iMax = fileNames.size(); i < iMax; ++i){
+
+        // get locale extracted by filename
+        if(fileNames.at(i) == "lang_ua.qm")//старий файл перекладу. (ua -> uk)
+                   continue;
+
+        QString locale;
+        locale = fileNames.at(i);                  // "lang_de.qm"
+        locale.truncate(locale.lastIndexOf('.'));   // "lang_de"
+        locale.remove(0, locale.indexOf('_') + 1);   // "de"
+
+        QString lang = locale;//QLocale::languageToString(QLocale(locale).language());
+
+#ifdef Q_OS_WIN
+        QString langPng = QUrl(QString("%1/%2.png").arg(langPath).arg(locale)).toString();
+#else
+        QString langPng = QUrl(QString("%1/%2.png").arg(langPath).arg(locale)).toString();
+#endif
+        QString humanLang = m2h.value(lang, lang);
+        if(humanLang.isEmpty())
+            humanLang = lang;
+
+        if (j == 0 && defaultLocale == locale){
+            j++;
+            currLang.clear();
+            loadLanguage(locale);
+
+            ui->cbLang->addItem(QIcon(langPng),humanLang,locale);
+            ui->cbLang->setCurrentIndex(ui->cbLang->count() - 1);
+        }else
+            ui->cbLang->addItem(QIcon(langPng),humanLang,locale);
+
+
+    }
+}
+//-------------------------------------------------------------------------------------
+void MainWindow::loadLanguage(const QString &rLanguage)
+{
+    if(currLang != rLanguage) {
+        currLang = rLanguage;
+        QString langPath = QApplication::applicationDirPath();
+        QLocale locale = QLocale(currLang);
+        QLocale::setDefault(locale);
+//        QString languageName = QLocale::languageToString(locale.language());
+
+        // remove the old translator
+        qApp->removeTranslator(&translator);
+
+        qDebug() << "loadLang " << currLang;
+        // load the new translator
+//        saveGuiState.clear();
+        if(translator.load(QString("%1/lang/%2").arg(langPath).arg( QString("lang_%1.qm").arg(rLanguage)))){
+            qApp->installTranslator(&translator);
+        }else
+            qDebug() << "errr load " << QString("%1/lang/%2").arg(langPath).arg( QString("lang_%1.qm").arg(rLanguage));
+    }
+}
+//-------------------------------------------------------------------------------------
+void MainWindow::saveMainSett()
+{
+    SettLoader::saveSett(SETT_MAIN_GEOMETRY, geometry());
+
+}
+//-------------------------------------------------------------------------------------
+void MainWindow::savePageOptions()
+{
+    SettLoader::saveSett(SETT_OPTIONS_APPFONT   , ui->label_112->font().pointSize() );
+
+}
+//-------------------------------------------------------------------------------------
+void MainWindow::onlvDevOperation_clicked(const QModelIndex &index)
+{
+    ui->swDeviceOperations->setCurrentIndex( index.row() + 1);
+    readCommand = index.data(Qt::UserRole + 2).toInt();
+    writeCommand = index.data(Qt::UserRole + 1).toInt() ;
+
+    qDebug() << "row " << index.row() << index.data(Qt::DisplayRole).toString();
+    for(int i = 0; i < 10; i++){
+        qDebug() << i << index.data(Qt::UserRole + i);
+    }
+
+    ui->pbWrite->setVisible( writeCommand > 0  );
+    ui->pbRead->setVisible(readCommand > 0);
+
+//    switch(readCommand){
+//    case COMMAND_READ_DATABASE             : loadSettPageDataBase(); break;
+//    case COMMAND_READ_DATABASE_GET_TABLES  : loadSettPageDataBase(); break;
+//    case COMMAND_READ_METER_LOGS           : loadSettPageMeterLog(); break;
+//    case COMMAND_READ_METER_LOGS_GET_TABLES: loadSettPageMeterLog(); break;
+//    }
+
+//    ui->pbCopy->setVisible(isThisPageHasCopyButton(readCommand));
+//    ui->pbPaste->setVisible(isThisPageHasCopyButton(readCommand) && GuiHelper::checkClipboardData(readCommand + CLBRD_ADD2READCMD));
+
+    ui->pbWrite->setVisible( ui->pbWrite->isVisible() && ((writeCommand > COMMAND_WRITE_FIRST_4_OPERATOR && youAreRoot) || (writeCommand > COMMAND_WRITE_FIRST_4_OPERATOR && writeCommand < COMMAND_WRITE_FIRST && youAreOper)));
+
+}
 //##########################################################################################
 
 void MainWindow::on_pbLogIn_clicked()
@@ -2417,10 +2857,17 @@ void MainWindow::on_pbLogIn_clicked()
     emit setSttsNewTxt(lastConnDevInfo);
 //int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn)
 
+    QVariantHash connHashG = SettLoader::loadSett(SETT_LOLO_TOTO).toHash();
+    connHashG.insert("login", ui->leLogin->text());
+    connHashG.insert("pas", ui->lePasswd->text());
+
+    connHashG.insert("zlib", ui->cbZlib->isChecked());
+    connHashG.insert("v2", ui->cbxAllowV2->isChecked());
+
     if(ui->tabWidget_2->currentIndex() == 0){
         emit conn2thisDev( ui->cbHashSumm->currentIndex(), ui->leObjectName->text().simplified().trimmed(), ui->leLogin->text(), ui->lePasswd->text(),
                            ui->leIp->text().simplified().trimmed(), ui->sbPort->value(), ui->sbTimeOut->value() * 1000  , false, ui->cbZlib->isChecked(),
-                           false, "", true);
+                           false, "", true, ui->cbxAllowV2->isChecked());
         lastConnDevInfo = tr("IP: %1, Port: %2, Login: %3")
                 .arg(ui->leIp->text().simplified().trimmed())
                 .arg(ui->sbPort->value())
@@ -2428,12 +2875,18 @@ void MainWindow::on_pbLogIn_clicked()
 
         lastIpStr = ui->leIp->text().simplified().trimmed();
         lastTimeOutMS = ui->sbTimeOut->value() * 1000;
+        QVariantHash h;
+        h.insert("ip", ui->leIp->text().simplified().trimmed());
+        h.insert("p", ui->sbPort->value());
+        h.insert("obj", ui->leObjectName->text());
+        h.insert("to", ui->sbTimeOut->value());
+        connHashG.insert("direct", h);
         emit showWaitMess(ui->sbTimeOut->value());
 
     }else{
         emit conn2thisDev( ui->cbHashSumm->currentIndex(), ui->leObjectName_2->text().simplified().trimmed(), ui->leLogin->text(), ui->lePasswd->text(),
                            ui->leIp_2->text().simplified().trimmed(), ui->sbPort_2->value(),   ui->sbTimeOut_2->value() * 1000 , false, ui->cbZlib->isChecked(),
-                           true, ui->leObjectMac->text(), ui->rbUseMac->isChecked());
+                           true, ui->leObjectMac->text(), ui->rbUseMac->isChecked(), ui->cbxAllowV2->isChecked());
 
         lastConnDevInfo = tr("IP: %1, Port: %2, Login: %3")
                 .arg(ui->leIp_2->text().simplified().trimmed())
@@ -2442,10 +2895,20 @@ void MainWindow::on_pbLogIn_clicked()
 
         lastIpStr = ui->leIp_2->text().simplified().trimmed();
         lastTimeOutMS = ui->sbTimeOut_2->value() * 1000;
+
+        QVariantHash h;
+        h.insert("ip", ui->leIp_2->text().simplified().trimmed());
+        h.insert("p", ui->sbPort_2->value());
+        h.insert("obj", ui->leObjectName_2->text());
+        h.insert("to", ui->sbTimeOut_2->value());
+        h.insert("mac", ui->leObjectMac->text());
+        h.insert("rbMax", ui->rbUseMac->isChecked());
+
+        connHashG.insert("mac", h);
         emit showWaitMess(ui->sbTimeOut_2->value());
     }
 
-
+    SettLoader::saveSett(SETT_LOLO_TOTO, connHashG);
 }
 //##########################################################################################
 void MainWindow::on_pbLogOut_clicked()
@@ -2509,16 +2972,7 @@ void MainWindow::on_actionHome_triggered()
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-//##########################################################################################
-void MainWindow::on_lvDevOperation_clicked(const QModelIndex &index)
-{
-    ui->swDeviceOperations->setCurrentIndex( proxy_modelDevOptions->mapToSource(index).row() + 1);
-    readCommand = index.data(Qt::UserRole + 2).toInt();
-    writeCommand = index.data(Qt::UserRole + 1).toInt() ;
 
-    ui->pbWrite->setVisible( writeCommand > 0 );
-    ui->pbRead->setVisible(readCommand > 0);
-}
 //##########################################################################################
 
 
@@ -2547,7 +3001,7 @@ void MainWindow::on_pbRead_clicked()
         for(int i = 0, iMax = modelTimeZone->rowCount(); i < iMax; i++)
             modelTimeZone->item(i,0)->setCheckState(Qt::Unchecked);
         break;}
-    case COMMAND_READ_GPRS_SETT: ui->leGPRS_Apn->clear(); ui->leGPRS_Apn_2->clear(); ui->leGPRS_Apn_3->clear(); ui->leGPRS_Numbr->clear(); break;
+    case COMMAND_READ_GPRS_SETT: ui->leGPRS_Apn->clear(); ui->leGPRS_Apn_2->clear(); ui->leGPRS_Apn_3->clear(); ui->leGPRS_Numbr->clear(); ui->cbxGsmPrefMode->setCurrentIndex(-1); break;
     case COMMAND_READ_STATE: ui->pteState->clear(); break;
 //    case COMMAND_READ_TASK_INFO: ui->pteRunningProc->clear(); break;
     case COMMAND_READ_IFCONFIG: ui->pteIfconfig->clear(); break;
@@ -2610,6 +3064,11 @@ void MainWindow::on_pbRead_clicked()
         jobj.insert("code", code);
         jobj.insert("cmprss", ui->cbCmprssDb->isChecked());
         jobj.insert("max_len", ui->sbReadData->value());
+
+        if(lDevInfo->matildaDev.protocolVersion == MATILDA_PROTOCOL_VERSION_V2 && ui->cbChop->isChecked())
+            jobj.insert("jns", ui->cbChop->isChecked());
+
+        joingStts = jobj.value("jns").toBool();
 
         allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
@@ -2687,7 +3146,16 @@ void MainWindow::on_pbRead_clicked()
         else
             mess.append(tr("The NI filter: incorrect data.<br>"));
 
+
         if(mess.isEmpty()){
+
+            if(jobj.value("ni").toString().isEmpty())
+                jobj.remove("ni");
+            if(jobj.value("max_len").toInt() == 0)
+                jobj.remove("max_len");
+            if(!jobj.value("cmprss").toBool())
+                jobj.remove("cmprss");
+
             lastTableList.clear();
             doneTables = 0;
             totalTables = 5000;
@@ -2804,6 +3272,14 @@ void MainWindow::on_pbRead_clicked()
 
             hashMemoWrite2.insert("max_len", ui->sbReadData->value());
             hashMemoWrite2.insert("cmprss", ui->cbCmprssDb->isChecked());
+
+
+            if(hashMemoWrite2.value("ni").toString().isEmpty())
+                hashMemoWrite2.remove("ni");
+            if(hashMemoWrite2.value("max_len").toInt() == 0)
+                hashMemoWrite2.remove("max_len");
+            if(!hashMemoWrite2.value("cmprss").toBool())
+                hashMemoWrite2.remove("cmprss");
 
             this->hashMemoWrite.insert(COMMAND_READ_DATABASE_GET_VAL, hashMemoWrite2);
         }else{
@@ -3022,6 +3498,9 @@ void MainWindow::on_pbWrite_clicked()
         jobj.insert("userName", ui->leGPRS_Apn_2->text().simplified().trimmed());
         jobj.insert("password", ui->leGPRS_Apn_3->text().simplified().trimmed());
         jobj.insert("nmbr", ui->leGPRS_Numbr->text().simplified().trimmed());
+
+        if(lDevInfo->matildaDev.protocolVersion >= MATILDA_PROTOCOL_VERSION_V2)
+            jobj.insert("prfrd", ui->cbxGsmPrefMode->currentIndex() + 1);
 
         if(ui->cbGsmPortName->currentIndex() >= 0 )
             jobj.insert("portName", ui->cbGsmPortName->currentData().toString());
@@ -4447,24 +4926,123 @@ void MainWindow::on_toolButton_clicked()
         ui->plainTextEdit->find(ui->leFindPteLog->text(), QTextDocument::FindBackward);
     }
 }
-
+//--------------------------------------------------------------
 void MainWindow::on_toolButton_3_clicked()
 {
     ui->plainTextEdit->clear();
 }
-
+//--------------------------------------------------------------
 void MainWindow::on_actionLog_triggered()
 {
     ui->stackedWidget->setCurrentIndex(2);
 }
 
-void MainWindow::on_toolButton_4_clicked()
-{
-    mWrite2RemoteDev(COMMAND_READ_BACKUP_LIST, QJsonObject());
-}
-
+//--------------------------------------------------------------
 void MainWindow::on_toolButton_11_clicked()
 {
     ui->dteMeterDataFrom_3->setDateTime(QDateTime::currentDateTime().addDays(-5));
     ui->dteMeterDataTo_3->setDateTime(QDateTime::currentDateTime());
 }
+//--------------------------------------------------------------
+void MainWindow::on_toolButton_13_clicked()
+{
+    QFont font = ui->label_112->font();
+    if(font.pointSize() > 7){
+        font.setPointSize(font.pointSize() - 1);
+        ui->label_112->setFont(font);
+        ui->label_112->setStyleSheet(QString("font-size:%1pt;").arg(font.pointSize()));
+
+    }
+}
+//--------------------------------------------------------------
+void MainWindow::on_toolButton_19_clicked()
+{
+    QFont font = ui->label_112->font();
+    if(font.pointSize() != defFontSize){
+        font.setPointSize(defFontSize);
+        ui->label_112->setFont(font);
+        ui->label_112->setStyleSheet(QString("font-size:%1pt;").arg(font.pointSize()));
+
+    }
+}
+//--------------------------------------------------------------
+void MainWindow::on_toolButton_14_clicked()
+{
+    QFont font = ui->label_112->font();
+    if(font.pointSize() < 100){
+        font.setPointSize(font.pointSize() + 1);
+        ui->label_112->setFont(font);
+        ui->label_112->setStyleSheet(QString("font-size:%1pt;").arg(font.pointSize()));
+
+    }
+}
+//--------------------------------------------------------------
+void MainWindow::on_pushButton_9_clicked()
+{
+    SettLoader::saveSett(SETT_OPTIONS_APPFONT, ui->label_112->font().pointSize());
+    QString styleSheet = QString("font-size:%1pt;").arg(ui->label_112->font().pointSize());
+    this->setStyleSheet(styleSheet);
+}
+//--------------------------------------------------------------
+void MainWindow::on_pbLang_clicked()
+{
+    QString lang = ui->cbLang->currentData().toString();
+    if(lang != currLang && !lang.isEmpty()){
+//        loadLanguage(lang);
+        SettLoader::saveSett(SETT_MAIN_CURRLANG, lang);
+
+        saveMainSett();
+        savePageOptions();
+
+        loadMainSett();
+        loadSettPageOptions();
+        return;
+    }
+}
+//--------------------------------------------------------------
+
+void MainWindow::on_actionOptions_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+
+}
+//-------------------------------------------------------------------------------------
+void MainWindow::on_trDevOperation_clicked(const QModelIndex &index)
+{
+    if(index.isValid()){
+        QString s = index.data(Qt::UserRole).toString();
+        if(!s.isEmpty()){
+            int row = SettLoader::realPageName().indexOf(s);
+            if(row > 0 || (row == 0 && SettLoader::realPageName().contains(s))){
+                onlvDevOperation_clicked( modelDevOptions->index(row, 0) );
+            }
+        }else{
+            if(ui->trDevOperation->isExpanded(index))
+                ui->trDevOperation->collapse(index);
+            else{
+//                if(SettLoader::loadSett(SETT_MAIN_OPTION_TRONE).toBool())
+//                    ui->trDevOperation->collapseAll();
+                ui->trDevOperation->expand(index);
+            }
+        }
+    }
+}
+//-------------------------------------------------------------------------------------
+void MainWindow::on_pbReadSn_clicked()
+{
+    ui->leSn->clear();
+    mWrite2RemoteDev(COMMAND_READ_DEVICE_SERIAL_NUMBER, QJsonObject());
+
+}
+//-------------------------------------------------------------------------------------
+
+void MainWindow::on_pbMeterDataShowHide_clicked(bool checked)
+{
+    ui->groupBox_8->setVisible(checked);
+}
+//-------------------------------------------------------------------------------------
+void MainWindow::on_pbMeterDataShowHide_2_clicked(bool checked)
+{
+    ui->groupBox_13->setVisible(checked);
+}
+//-------------------------------------------------------------------------------------

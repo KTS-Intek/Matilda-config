@@ -11,7 +11,7 @@
 //################################################################################################
 matildaclient::matildaclient(QObject *parent) : QTcpSocket(parent)
 {
-    connect(this, SIGNAL(readyRead()), SLOT(mReadyRead()) );
+    connect(this, SIGNAL(readyRead()), this, SLOT(mReadyReadSlot()) );
     connect(this, SIGNAL(disconnected()), SLOT(onDisconn()) );
 
     QTimer *timerWait4Answer = new QTimer;
@@ -21,7 +21,7 @@ matildaclient::matildaclient(QObject *parent) : QTcpSocket(parent)
     connect(timerWait4Answer, SIGNAL(timeout()), this, SLOT(onWaitTimerTimeOut()) );
 }
 //################################################################################################
-void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn)
+void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QString passwd, QString add, quint16 port, int timeOut, bool add2list, bool allwCmprss, bool useMac, QString macAddr, bool useMacAddr2conn, bool allowProtocolV2)
 {
     daOpened = false;
     block4activeClient = true;
@@ -49,6 +49,8 @@ void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QStr
     lastHashSumm = hashIndx;
 
     block4activeClient = false;
+
+    this->allowProtocolV2 = allowProtocolV2;
 
     if(waitForConnected((timeOut > 9000) ? 9000 : timeOut)){        
 
@@ -222,7 +224,14 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                 if(true){// jobj.value("version").toInt() == MATILDA_PROTOCOL_VERSION){
                     QJsonObject jObj;
 
-                    jObj.insert("version", jobj.value("version").toInt());
+                    int remoteDevProtocolVersion = jobj.value("version").toInt();
+                    if(allowProtocolV2 && remoteDevProtocolVersion == MATILDA_PROTOCOL_VERSION_V2)
+                        jObj.insert("version",  MATILDA_PROTOCOL_VERSION_V2);
+                    else
+                        jObj.insert("version", MATILDA_PROTOCOL_VERSION_V1);//  remoteDevProtocolVersion);
+
+                    emit setActiveProtocolVersion(jObj.value("version").toInt());
+
                     if(emptyHsh)
                         jObj.insert("hsh", "");//!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     else
@@ -295,6 +304,12 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         qDebug() << "access = " << jobj;
 
         accessLevel = jobj.value("a").toInt();
+
+        QString version = jobj.value("v").toString();
+        version.remove("Matilda v");
+        version = version.split(" ").first();
+        emit devTypeChanged(jobj.value("d").toInt(), version.remove(".").toInt(), jobj.value("sn").toString());
+
         switch(jobj.value("a").toInt()){
         case MTD_USER_ADMIN:{
             emit authrizeAccess(jobj.value("a").toInt());
@@ -342,6 +357,15 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     default:{ jobj.remove(getHshNames().at(lastHashSumm)); emit data2gui(command, jobj); return;}
 
     }
+
+
+}
+
+void matildaclient::mReadyReadSlot()
+{
+    disconnect(this, SIGNAL(readyRead()), this, SLOT(mReadyReadSlot()) );
+    mReadyRead();
+    connect(this, SIGNAL(readyRead()), this, SLOT(mReadyReadSlot()) );
 
 
 }

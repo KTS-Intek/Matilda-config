@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/katynko/matilda-dev-logo-small.png</normaloff>:/katynko/matilda-dev-logo-small.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_25">
     <item>
@@ -66,6 +70,10 @@
                 <property name="text">
                  <string>Log in</string>
                 </property>
+                <property name="icon">
+                 <iconset resource="res.qrc">
+                  <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
+                </property>
                 <property name="autoDefault">
                  <bool>false</bool>
                 </property>
@@ -84,6 +92,10 @@
                 </property>
                 <property name="text">
                  <string>Log out</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="res.qrc">
+                  <normaloff>:/katynko/svg/flag-blue.svg</normaloff>:/katynko/svg/flag-blue.svg</iconset>
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
@@ -207,6 +219,10 @@
                   <number>0</number>
                  </property>
                  <widget class="QWidget" name="tab_6">
+                  <attribute name="icon">
+                   <iconset resource="res.qrc">
+                    <normaloff>:/katynko/svg/network-disconnect.svg</normaloff>:/katynko/svg/network-disconnect.svg</iconset>
+                  </attribute>
                   <attribute name="title">
                    <string>Direct Connection</string>
                   </attribute>
@@ -253,8 +269,15 @@
                      <property name="text">
                       <string>scan</string>
                      </property>
+                     <property name="icon">
+                      <iconset resource="res.qrc">
+                       <normaloff>:/katynko/svg/irc-voice.svg</normaloff>:/katynko/svg/irc-voice.svg</iconset>
+                     </property>
+                     <property name="toolButtonStyle">
+                      <enum>Qt::ToolButtonTextBesideIcon</enum>
+                     </property>
                      <property name="autoRaise">
-                      <bool>true</bool>
+                      <bool>false</bool>
                      </property>
                     </widget>
                    </item>
@@ -320,6 +343,10 @@
                   </layout>
                  </widget>
                  <widget class="QWidget" name="tab_7">
+                  <attribute name="icon">
+                   <iconset resource="res.qrc">
+                    <normaloff>:/katynko/svg2/lc_browseview.svg</normaloff>:/katynko/svg2/lc_browseview.svg</iconset>
+                  </attribute>
                   <attribute name="title">
                    <string>MAC</string>
                   </attribute>
@@ -491,7 +518,7 @@
                  </item>
                 </layout>
                </item>
-               <item row="1" column="1" rowspan="2">
+               <item row="1" column="1" rowspan="3">
                 <spacer name="horizontalSpacer_7">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -504,7 +531,7 @@
                  </property>
                 </spacer>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <item>
                   <widget class="QLabel" name="label_20">
@@ -523,6 +550,33 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                 <item>
+                  <widget class="QLabel" name="label_24">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Protocol v2</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="cbxAllowV2">
+                   <property name="text">
+                    <string>Allow</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -620,24 +674,21 @@
              </widget>
             </item>
             <item>
-             <widget class="QListView" name="lvDevOperation">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+             <widget class="QTreeView" name="trDevOperation">
               <property name="editTriggers">
                <set>QAbstractItemView::NoEditTriggers</set>
               </property>
               <property name="alternatingRowColors">
                <bool>true</bool>
               </property>
-              <property name="spacing">
-               <number>3</number>
+              <property name="animated">
+               <bool>true</bool>
               </property>
-              <property name="viewMode">
-               <enum>QListView::ListMode</enum>
+              <property name="headerHidden">
+               <bool>true</bool>
+              </property>
+              <property name="expandsOnDoubleClick">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -655,6 +706,10 @@
                 <property name="text">
                  <string>Read</string>
                 </property>
+                <property name="icon">
+                 <iconset resource="res.qrc">
+                  <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
+                </property>
                 <property name="flat">
                  <bool>false</bool>
                 </property>
@@ -664,6 +719,10 @@
                <widget class="QPushButton" name="pbWrite">
                 <property name="text">
                  <string>Write</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="res.qrc">
+                  <normaloff>:/katynko/svg/flag-yellow.svg</normaloff>:/katynko/svg/flag-yellow.svg</iconset>
                 </property>
                 <property name="flat">
                  <bool>false</bool>
@@ -698,8 +757,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>760</width>
-                 <height>543</height>
+                 <width>756</width>
+                 <height>541</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -727,7 +786,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>23</number>
+                   <number>11</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
@@ -1435,7 +1494,17 @@
                   </widget>
                   <widget class="QWidget" name="page_9">
                    <layout class="QGridLayout" name="gridLayout_5">
-                    <item row="6" column="1" colspan="2">
+                    <item row="3" column="2">
+                     <widget class="QComboBox" name="cbGsmPortName"/>
+                    </item>
+                    <item row="5" column="0">
+                     <widget class="QLabel" name="label_23">
+                      <property name="text">
+                       <string>Number</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="7" column="1" colspan="2">
                      <spacer name="verticalSpacer_3">
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -1496,8 +1565,8 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="2">
-                     <widget class="QComboBox" name="cbGsmPortName"/>
+                    <item row="4" column="2">
+                     <widget class="QComboBox" name="cbGsmPortSpeed"/>
                     </item>
                     <item row="2" column="2">
                      <widget class="QLineEdit" name="leGPRS_Apn_3">
@@ -1513,20 +1582,10 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="4" column="2">
-                     <widget class="QComboBox" name="cbGsmPortSpeed"/>
-                    </item>
                     <item row="4" column="0" colspan="2">
                      <widget class="QLabel" name="label_74">
                       <property name="text">
                        <string>Speed [baud]</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="5" column="0">
-                     <widget class="QLabel" name="label_23">
-                      <property name="text">
-                       <string>Number</string>
                       </property>
                      </widget>
                     </item>
@@ -1535,6 +1594,37 @@
                       <property name="clearButtonEnabled">
                        <bool>true</bool>
                       </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QLabel" name="label_26">
+                      <property name="text">
+                       <string>Mode</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="2">
+                     <widget class="QComboBox" name="cbxGsmPrefMode">
+                      <item>
+                       <property name="text">
+                        <string>2G only</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>3G only</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Search for 2G first</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Search for 3G first</string>
+                       </property>
+                      </item>
                      </widget>
                     </item>
                    </layout>
@@ -1548,6 +1638,19 @@
                       </property>
                      </widget>
                     </item>
+                    <item row="3" column="1">
+                     <spacer name="verticalSpacer_22">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>438</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
                     <item row="0" column="1">
                      <widget class="QSpinBox" name="sbTcpInrfsRT">
                       <property name="minimum">
@@ -1558,13 +1661,6 @@
                       </property>
                       <property name="singleStep">
                        <number>100</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_105">
-                      <property name="text">
-                       <string>Read Block Time Out [ms]</string>
                       </property>
                      </widget>
                     </item>
@@ -1581,6 +1677,20 @@
                       </property>
                      </widget>
                     </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="label_97">
+                      <property name="text">
+                       <string>Metric</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_105">
+                      <property name="text">
+                       <string>Read Block Time Out [ms]</string>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="1" column="2">
                      <spacer name="horizontalSpacer_59">
                       <property name="orientation">
@@ -1594,32 +1704,12 @@
                       </property>
                      </spacer>
                     </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="label_97">
-                      <property name="text">
-                       <string>Metric</string>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="2" column="1">
                      <widget class="QCheckBox" name="cbGsmPrimary">
                       <property name="text">
                        <string>Make primary GSM modem interface</string>
                       </property>
                      </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <spacer name="verticalSpacer_22">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>438</height>
-                       </size>
-                      </property>
-                     </spacer>
                     </item>
                    </layout>
                   </widget>
@@ -2954,10 +3044,46 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QToolButton" name="toolButton_4">
-                      <property name="text">
-                       <string>Read backup list</string>
+                     <widget class="QGroupBox" name="groupBox_3">
+                      <property name="title">
+                       <string>Serial Number</string>
                       </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_26">
+                       <item>
+                        <widget class="QLabel" name="label_27">
+                         <property name="text">
+                          <string>SN#</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="leSn">
+                         <property name="readOnly">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pbReadSn">
+                         <property name="text">
+                          <string>Read</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_10">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>291</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                     <item>
@@ -4392,6 +4518,13 @@
                        </spacer>
                       </item>
                       <item>
+                       <widget class="QCheckBox" name="cbChop">
+                        <property name="text">
+                         <string>jnstts</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="QCheckBox" name="cbCmprssDb">
                         <property name="text">
                          <string>Always Comprss</string>
@@ -5462,6 +5595,202 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_31">
+       <layout class="QGridLayout" name="gridLayout_25">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_110">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Font size</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_49">
+          <item>
+           <widget class="QPushButton" name="toolButton_13">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="res.qrc">
+              <normaloff>:/katynko/svg/format-font-size-less.svg</normaloff>:/katynko/svg/format-font-size-less.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="toolButton_19">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="res.qrc">
+              <normaloff>:/katynko/svg/format-font-size-normal.svg</normaloff>:/katynko/svg/format-font-size-normal.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="toolButton_14">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="res.qrc">
+              <normaloff>:/katynko/svg/format-font-size-more.svg</normaloff>:/katynko/svg/format-font-size-more.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_64">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="pushButton_9">
+          <property name="text">
+           <string>Change</string>
+          </property>
+          <property name="icon">
+           <iconset resource="res.qrc">
+            <normaloff>:/katynko/svg/dialog-ok-apply.svg</normaloff>:/katynko/svg/dialog-ok-apply.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="label_112">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>the quick brown fox jumps over the lazy dog </string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_46">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Language</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="cbLang"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="pbLang">
+          <property name="text">
+           <string>Change</string>
+          </property>
+          <property name="icon">
+           <iconset resource="res.qrc">
+            <normaloff>:/katynko/svg/dialog-ok-apply.svg</normaloff>:/katynko/svg/dialog-ok-apply.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_116">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>About</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" colspan="3">
+         <widget class="QLabel" name="label_50">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <spacer name="verticalSpacer_19">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>472</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -5480,6 +5809,9 @@
    <property name="movable">
     <bool>false</bool>
    </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>LeftToolBarArea</enum>
    </attribute>
@@ -5489,25 +5821,49 @@
    <addaction name="actionHome"/>
    <addaction name="actionDevice"/>
    <addaction name="actionLog"/>
+   <addaction name="actionOptions"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionDevice">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/katynko/matilda-dev-logo-small.png</normaloff>:/katynko/matilda-dev-logo-small.png</iconset>
+   </property>
    <property name="text">
     <string>Device</string>
    </property>
   </action>
   <action name="actionHome">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/katynko/svg/go-home.svg</normaloff>:/katynko/svg/go-home.svg</iconset>
+   </property>
    <property name="text">
     <string>Home</string>
    </property>
   </action>
   <action name="actionLog">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/katynko/svg/view-list-text.svg</normaloff>:/katynko/svg/view-list-text.svg</iconset>
+   </property>
    <property name="text">
     <string>Log</string>
    </property>
   </action>
+  <action name="actionOptions">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/katynko/svg/applications-system.svg</normaloff>:/katynko/svg/applications-system.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Options</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

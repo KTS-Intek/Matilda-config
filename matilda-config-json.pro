@@ -22,7 +22,13 @@ SOURCES += main.cpp\
     directaccesmatildaservice.cpp \
     selectdevbymacaddrdialog.cpp \
     scanipdialog.cpp \
-    udpscanner.cpp
+    udpscanner.cpp \
+    treemodel.cpp \
+    treeitem.cpp \
+    lastdevinfo.cpp \
+    settloader.cpp \
+    langdialog.cpp \
+    showmesshelper.cpp
 
 HEADERS  += mainwindow.h \
     ../../matilda-bbb/moji_defy.h \
@@ -34,14 +40,26 @@ HEADERS  += mainwindow.h \
     directaccesmatildaservice.h \
     selectdevbymacaddrdialog.h \
     scanipdialog.h \
-    udpscanner.h
+    udpscanner.h \
+    treemodel.h \
+    treeitem.h \
+    lastdevinfo.h \
+    settloader.h \
+    langdialog.h \
+    showmesshelper.h \
+    ucmetereventcodes.h
 
 FORMS    += mainwindow.ui \
     energydialog.ui \
     wait4answerdialog.ui \
     insertmeterdialog.ui \
     selectdevbymacaddrdialog.ui \
-    scanipdialog.ui
+    scanipdialog.ui \
+    langdialog.ui
 
 RESOURCES += \
-    res.qrc
+    res.qrc \
+    font.qrc
+
+TRANSLATIONS = lang_uk.ts\
+        lang_en.ts
