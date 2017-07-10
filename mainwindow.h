@@ -227,6 +227,10 @@ private slots:
 
     void on_pbMeterDataShowHide_2_clicked(bool checked);
 
+    void on_tbEvComment2txt_clicked(bool checked);
+
+    void on_actionHelp_triggered();
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);
@@ -352,6 +356,7 @@ private:
     QTranslator translator;
     QString currLang;
     bool youAreRoot, youAreOper, joingStts;
+
 
 };
 

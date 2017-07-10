@@ -19,6 +19,8 @@
 #include "settloader.h"
 #include "langdialog.h"
 #include "showmesshelper.h"
+#include "ucmetereventcodes.h"
+#include "helpform.h"
 
 
 MainWindow::MainWindow(const QFont &font4log, QWidget *parent) :
@@ -498,50 +500,7 @@ void MainWindow::initializeMatilda()
          modelTarif4DB->appendRow(item);
     }
 
-    list.clear();
-    list.append(tr("All"));
-    list.append(tr("Other"));
-    list.append(tr("Meter open"));
-    list.append(tr("Klema open"));
-    list.append(tr("Bat. Low"));
-    list.append(tr("EEPROM Error"));
-    list.append(tr("Magnet"));
-    list.append(tr("Hardware Error"));
-    list.append(tr("Access"));
-    list.append(tr("Relay"));
-    list.append(tr("Internal error"));
-    list.append(tr("Date corrected"));
-    list.append(tr("Date need to correct"));
 
-    list.append(tr("Unknown protocol"));
-
-    listData.clear();
-    listData.append(0);
-    listData.append(ZBR_EVENT_OTHER);
-    listData.append(ZBR_EVENT_METER_OPEN);
-    listData.append(ZBR_EVENT_KLEMA_OPEN);
-    listData.append(ZBR_EVENT_BAT_LOW);
-    listData.append(ZBR_EVENT_EEPROM_ERROR);
-    listData.append(ZBR_EVENT_MAGNET);
-    listData.append(ZBR_EVENT_HARDWARE_ERROR);
-    listData.append(ZBR_EVENT_ACCESS);
-    listData.append(ZBR_EVENT_RELAY);
-    listData.append(ZBR_EVENT_INTERNAL_ERROR);
-    listData.append(ZBR_EVENT_DATETIME_CORRECTED);
-    listData.append(ZBR_EVENT_DATETIME_NOT_CORRECT);
-
-    listData.append(ZBR_EVENT_UNKNOWN_PROTOCOL);
-
-
-
-    for(int i = 0, iMax = list.size(); i < iMax; i++){
-        QStandardItem *item = new QStandardItem(QString("%1 [%2]").arg(list.at(i)).arg(listData.at(i)));
-        item->setData(listData.at(i), Qt::UserRole + 1);
-        item->setCheckable(true);
-        item->setCheckState( (i == 0) ? Qt::Checked : Qt::Unchecked);
-        modelEvent4DB->appendRow(item);
-    }
-    ui->lvMeterDataProfile->setCurrentIndex(modelProfile4DB->index(0,0));
 
     QTimer *niCheckTmr = new QTimer;
     niCheckTmr->setSingleShot(true);
@@ -657,6 +616,10 @@ void MainWindow::initializeMatilda()
      ui->leObjectMac->setText(h.value("mac").toString());
      ui->rbUseMac->setChecked(h.value("rbMax").toBool());
      ui->rbUseObjID->setChecked(!ui->rbUseMac->isChecked());
+
+
+     HelpForm *helpWidget = new HelpForm(this);
+     ui->stackedWidget->addWidget(helpWidget);
 }
 
 //##########################################################################################
@@ -1687,6 +1650,9 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
                 jobj.insert("table", lastTableList.first());
                 jobj.insert("lRwId", (qint64)0);
+                if(ui->cbxEvSmpl->isEnabled() && ui->cbxEvSmpl->isChecked())
+                    jobj.insert("smpl", ui->sbEvSmpl->value());
+
                 emit data2matilda(COMMAND_READ_METER_LOGS_GET_VAL, jobj);
             }else{
                 emit uploadProgress( doneTables, tr("Selected: %1 tables").arg(totalTables) );
@@ -2427,6 +2393,102 @@ void MainWindow::devTypeChanged(int devType, int version, QString sn)
     ui->label_57->setVisible(hasMyOs && hasZigBee);
     ui->sbWati4Poll->setVisible(hasMyOs && hasZigBee);
     ui->trDevOperation->collapseAll();
+
+    modelEvent4DB->clear();
+
+    if(!hasDb)
+        return;
+
+    list.clear();
+    list.append(tr("All"));
+    list.append(tr("Other"));
+    list.append(tr("Meter open"));
+    list.append(tr("Klema open"));
+    list.append(tr("Bat. Low"));
+    list.append(tr("EEPROM Error"));
+    list.append(tr("Magnet"));
+    list.append(tr("Hardware Error"));
+    list.append(tr("Access"));
+    list.append(tr("Relay"));
+    list.append(tr("Internal error"));
+    list.append(tr("Date corrected"));
+    list.append(tr("Date need to correct"));
+
+    list.append(tr("Unknown protocol"));
+
+
+    list.append(tr("No event for this day"));
+    list.append(tr("Meter done"));
+
+    QList<int> listData;
+
+    listData.append(0);
+    listData.append(ZBR_EVENT_OTHER);
+    listData.append(ZBR_EVENT_METER_OPEN);
+    listData.append(ZBR_EVENT_KLEMA_OPEN);
+    listData.append(ZBR_EVENT_BAT_LOW);
+    listData.append(ZBR_EVENT_EEPROM_ERROR);
+    listData.append(ZBR_EVENT_MAGNET);
+    listData.append(ZBR_EVENT_HARDWARE);
+    listData.append(ZBR_EVENT_ACCESS);
+    listData.append(ZBR_EVENT_RELAY);
+    listData.append(ZBR_EVENT_INTERNAL_ERROR);
+    listData.append(ZBR_EVENT_DATETIME_CORRECTED);
+    listData.append(ZBR_EVENT_DATETIME_NOT_CORRECT);
+
+    listData.append(ZBR_EVENT_UNKNOWN_PROTOCOL);
+    listData.append(ZBR_EVENT_NO_EVNT_4_THIS_DATE);//       14//
+    listData.append(ZBR_EVENT_DAY_DONE);//                  255//Ставиться в кінці таблиці в кінці дня по локальному часі (означа що за вказаний день в локальному часі всі дані зібрано, не може бути за поточний день)
+
+
+
+    if(lDevInfo->matildaDev.protocolVersion >= MATILDA_PROTOCOL_VERSION_V2){
+//події для В2
+        list.append(tr("Voltage"));
+        list.append(tr("Changed configuration"));
+        list.append(tr("Climate"));
+        list.append(tr("Metering"));
+        list.append(tr("DST state"));
+        list.append(tr("On/Off"));
+        list.append(tr("Parameters fault"));
+
+        list.append(tr("Billing"));
+        list.append(tr("Module open"));
+
+
+        ////event4matilda  UC
+        list.append(tr("Need to correct time"));
+        list.append(tr("Correct time: error"));
+        list.append(tr("Correct time: done"));
+
+
+
+        listData.append(ZBR_EVENT_VOLTAGE_PARAM);
+        listData.append(ZBR_EVENT_CHANGED_PARAM);
+        listData.append(ZBR_EVENT_CLIMAT);
+        listData.append(ZBR_EVENT_METERING_EV);
+        listData.append(ZBR_EVENT_DST_STATE_CHANGED);
+        listData.append(ZBR_EVENT_METER_ONOFF);
+        listData.append(ZBR_EVENT_PARAM_FAULT);
+        listData.append(ZBR_EVENT_BILLING);
+        listData.append(ZBR_EVENT_MODULE_OPEN);
+
+
+        ////event4matilda  UC
+
+        listData.append(ZBR_EVENT_DATETIME_NEED2CORR);
+        listData.append(ZBR_EVENT_DATETIME_NOT_CORR);
+        listData.append(ZBR_EVENT_DATETIME_CORR_DONE);
+    }
+
+    for(int i = 0, iMax = list.size(); i < iMax; i++){
+        QStandardItem *item = new QStandardItem(QString("%1 [%2]").arg(list.at(i)).arg(listData.at(i)));
+        item->setData(listData.at(i), Qt::UserRole + 1);
+        item->setCheckable(true);
+        item->setCheckState( (i == 0) ? Qt::Checked : Qt::Unchecked);
+        modelEvent4DB->appendRow(item);
+    }
+    ui->lvMeterDataProfile->setCurrentIndex(modelProfile4DB->index(0,0));
 }
 //------------------------------------------------------------
 void MainWindow::onLangSelected(QString lang)
@@ -2472,6 +2534,12 @@ void MainWindow::setActiveProtocolVersion(int protocolVersion)
 
     ui->cbChop->setEnabled(allowObjV2);
     ui->cbxGsmPrefMode->setEnabled(allowObjV2);
+
+    ui->cbxEvSmpl->setEnabled(allowObjV2);
+    ui->sbEvSmpl->setValue(5);
+    ui->sbEvSmpl->setEnabled(allowObjV2);
+    ui->tbEvComment2txt->setEnabled(allowObjV2);
+    ui->tbEvComment2txt->setChecked(false);
 
 }
 //##########################################################################################
@@ -2809,11 +2877,6 @@ void MainWindow::onlvDevOperation_clicked(const QModelIndex &index)
     ui->swDeviceOperations->setCurrentIndex( index.row() + 1);
     readCommand = index.data(Qt::UserRole + 2).toInt();
     writeCommand = index.data(Qt::UserRole + 1).toInt() ;
-
-    qDebug() << "row " << index.row() << index.data(Qt::DisplayRole).toString();
-    for(int i = 0; i < 10; i++){
-        qDebug() << i << index.data(Qt::UserRole + i);
-    }
 
     ui->pbWrite->setVisible( writeCommand > 0  );
     ui->pbRead->setVisible(readCommand > 0);
@@ -3298,6 +3361,7 @@ void MainWindow::on_pbRead_clicked()
         modelDbDataEv->clear();
         ui->leMeterDataFIlter_2->clear();
 
+        ui->tbEvComment2txt->setChecked(false);
         QString mess;
 //        quint8 code = modelEvent4DB->itemData(ui->lvMeterDataProfile_2->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
@@ -3309,10 +3373,8 @@ void MainWindow::on_pbRead_clicked()
         if(!codeL.isEmpty() && codeL.contains("0"))
             codeL.clear();
 
-//        if(code == 0)
         jobj.insert("code", codeL.join(","));
-//        else
-//            jobj.insert("code", code);
+
         jobj.insert("max_len", ui->sbReadLenML->value());
         jobj.insert("cmprss", ui->cbCmprssMeterLog->isChecked());
         if(ui->gbMeterDataFromTo_2->isChecked()){
@@ -3364,6 +3426,8 @@ void MainWindow::on_pbRead_clicked()
 
          jobj.insert("lRwId", (qint64)0);
 
+         if(ui->cbxEvSmpl->isEnabled() && ui->cbxEvSmpl->isChecked())
+             jobj.insert("smpl", ui->sbEvSmpl->value());
         ui->tvMeterDataPollData_2->resizeColumnsToContents();
         if(mess.isEmpty()){
             lastTableList.clear();
@@ -3371,6 +3435,8 @@ void MainWindow::on_pbRead_clicked()
                 readCommand = COMMAND_READ_METER_LOGS;
                 jobj.insert("lTbRwId", (qint64)0);
                 jobj.insert("msec", ui->sbTimeOut->value() * 500);
+
+
                 doneTables = 0;
                 totalTables = 5000;
                 this->hashMemoWrite.insert(COMMAND_READ_METER_LOGS, jobj.toVariantHash());
@@ -5046,3 +5112,42 @@ void MainWindow::on_pbMeterDataShowHide_2_clicked(bool checked)
     ui->groupBox_13->setVisible(checked);
 }
 //-------------------------------------------------------------------------------------
+
+void MainWindow::on_tbEvComment2txt_clicked(bool checked)
+{
+    int rowCount = modelDbDataEv->rowCount();
+    if(rowCount < 1){
+        ui->tbEvComment2txt->setChecked(false);
+        return;
+    }
+    int col = modelDbDataEv->columnCount() - 1;
+
+    if(checked){
+        for(int i = 0; i < rowCount; i++){
+            QString s = modelDbDataEv->item(i, col)->text();
+            modelDbDataEv->setData(modelDbDataEv->index(i, col), s, Qt::UserRole + 1);
+            bool ok;
+            int ucmEventCode = s.split(" ", QString::SkipEmptyParts).first().toInt(&ok, 16);
+            if(ok){
+                QString ev = ShowMessHelper::meterEvCode2humanV2(ucmEventCode);
+                if(ev.isEmpty())
+                    ev = s;
+                else
+                    ev = QString("%1 %2").arg(s.split(" ", QString::SkipEmptyParts).first()).arg(ev);
+                modelDbDataEv->setData(modelDbDataEv->index(i, col), ev, Qt::DisplayRole);
+            }
+        }
+    }else{
+        for(int i = 0; i < rowCount; i++){
+            QString s = modelDbDataEv->item(i, col)->data().toString();
+            if(!s.isEmpty())
+                modelDbDataEv->setData(modelDbDataEv->index(i, col), s, Qt::DisplayRole);
+
+        }
+    }
+}
+
+void MainWindow::on_actionHelp_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}

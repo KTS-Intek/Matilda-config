@@ -22,7 +22,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -786,7 +786,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>11</number>
+                   <number>25</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
@@ -4966,6 +4966,26 @@
                        </spacer>
                       </item>
                       <item>
+                       <widget class="QCheckBox" name="cbxEvSmpl">
+                        <property name="toolTip">
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                        <property name="text">
+                         <string>smpl</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QSpinBox" name="sbEvSmpl">
+                        <property name="toolTip">
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0 - ignore&lt;/p&gt;&lt;p&gt;1 - Remove NI, &lt;/p&gt;&lt;p&gt;2 - Remove NI, evnt_code, &lt;/p&gt;&lt;p&gt;3 - Remove NI, evnt_code, meter_model (show only UCM events), &lt;/p&gt;&lt;p&gt;4 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, &lt;/p&gt;&lt;p&gt;5 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                        <property name="maximum">
+                         <number>5</number>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="QCheckBox" name="cbCmprssMeterLog">
                         <property name="text">
                          <string>Always comprss</string>
@@ -5258,6 +5278,16 @@
                          <item>
                           <widget class="QLineEdit" name="leMeterDataFIlter_2">
                            <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="tbEvComment2txt">
+                           <property name="text">
+                            <string>Event comment</string>
+                           </property>
+                           <property name="checkable">
                             <bool>true</bool>
                            </property>
                           </widget>
@@ -5822,6 +5852,7 @@
    <addaction name="actionDevice"/>
    <addaction name="actionLog"/>
    <addaction name="actionOptions"/>
+   <addaction name="actionHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionDevice">
@@ -5858,6 +5889,21 @@
    </property>
    <property name="text">
     <string>Options</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/katynko/svg2/system-help.svg</normaloff>:/katynko/svg2/system-help.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Help</string>
+   </property>
+   <property name="toolTip">
+    <string>Documentation</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>

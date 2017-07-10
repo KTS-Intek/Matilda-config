@@ -356,35 +356,6 @@
 #define MTD_EXT_WRITE_STATE_AUTO_SEND          99
 
 
-//event_code for meters
-#define ZBR_EVENT_OTHER                     1
-#define ZBR_EVENT_METER_OPEN                2//
-#define ZBR_EVENT_KLEMA_OPEN                3
-#define ZBR_EVENT_BAT_LOW                   4//RTC bat
-#define ZBR_EVENT_EEPROM_ERROR              5//CE102v10
-#define ZBR_EVENT_MAGNET                    6//magnetic field
-#define ZBR_EVENT_HARDWARE_ERROR            7//i2c or etc.
-#define ZBR_EVENT_ACCESS                    8//only if denied
-#define ZBR_EVENT_RELAY                     9 //Load ON, Load Off
-#define ZBR_EVENT_INTERNAL_ERROR            10
-#define ZBR_EVENT_DATETIME_CORRECTED        11// Before: DT. After: DT or Error
-#define ZBR_EVENT_DATETIME_NOT_CORRECT      12// Before: DT. After: DT or Error
-
-#define ZBR_EVENT_UNKNOWN_PROTOCOL          13//protocol not supported or not ready to use
-#define ZBR_EVENT_NO_EVNT_4_THIS_DATE       14//
-#define ZBR_EVENT_READ_DONE                 15//
-
-
-#define ZBR_EVENT_MAX_EVNT_CODE             56
-#define ZBR_EVENT_DAY_DONE                  255//Ставиться в кінці таблиці в кінці дня по локальному часі (означа що за вказаний день в локальному часі всі дані зібрано, не може бути за поточний день)
-
-//event4matilda
-#define ZBR_EVENT_DATETIME_NEED2CORR        51// Before: DT. After: DT or Error
-#define ZBR_EVENT_DATETIME_NOT_CORR         52// Before: DT. After: DT or Error
-#define ZBR_EVENT_DATETIME_CORR_DONE        53// Before: DT. After: DT or Error
-#define ZBR_EVENT_INVALID_ARGUMENT          54//
-
-#define ZBR_EVENT_OTHER_4_MTDLD             55
 
 
 //network speed level
