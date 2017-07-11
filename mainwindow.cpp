@@ -1342,7 +1342,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                 jobj.insert("gcl", true);
 
                 if(lDevInfo->matildaDev.protocolVersion == MATILDA_PROTOCOL_VERSION_V2 && ui->cbChop->isChecked())
-                    jobj.insert("jns", ui->cbChop->isChecked());
+                    jobj.insert("jns", ui->sbJns->value());
 
                 joingStts = jobj.value("jns").toBool();
 
@@ -1764,7 +1764,10 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         bool ignoreEmptyList = jobj.contains("t");
         if(ignoreEmptyList){
-            modelAddMeter->setHorizontalHeaderLabels(tr("Model,NI,Serial Number,Memo,Password,On/Off,Physical values,Tariff Count,Meter Version").split(","));
+            QString s = tr("Model,NI,Serial Number,Memo,Password,On/Off,Physical values,Tariff Count,Meter Version");
+             if(lDevInfo->matildaDev.protocolVersion >= MATILDA_PROTOCOL_VERSION_V2)
+                 s.append("," + tr("Coordinates"));
+            modelAddMeter->setHorizontalHeaderLabels(s.split(","));
             totalTables = jobj.value("t").toInt();
             doneTables = 0;
         }
@@ -1778,6 +1781,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         }
 
         QStringList k = QString("model,NI,SN,memo,passwd,on,politic,trff,vrsn").split(',');
+        if(lDevInfo->matildaDev.protocolVersion >= MATILDA_PROTOCOL_VERSION_V2)
+            k.append("crdnts");
 
         int iMax = lVar.size();
         int rowF = modelAddMeter->rowCount();
@@ -1785,7 +1790,6 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         for(int i = 0, colMax = k.size(); i < iMax; i++){
             QStringList lh = varList2strList(lVar.at(i).toList());
             QList<QStandardItem*> m ;
-
 
             for(int col = 0, lhMax = lh.size(); col < colMax; col++)
                 m.append(new QStandardItem( (col < lhMax) ? lh.at(col) : "---"));
@@ -1920,6 +1924,10 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         int rowCount = modelAddMeter->rowCount();
 
         QStringList k = QString("model,NI,SN,memo,passwd,on,politic,trff").split(',');//,vrsn
+        if(lDevInfo->matildaDev.protocolVersion >= MATILDA_PROTOCOL_VERSION_V2){
+            k.append("");//ignore meter version
+            k.append("crdnts");
+        }
 
         int row = jobj.value("i").toInt();
         if(row >= rowCount){
@@ -1937,11 +1945,14 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
         if(maxLen < 400)
             maxLen = MAX_PACKET_LEN_RECOMENDATION;
 
-        for(int j = 0, colMax = k.size(), bytes = 50; row < rowCount; row++, j++){
+        for(int j = 0, colMax = qMin(k.size(), modelAddMeter->columnCount()), bytes = 50; row < rowCount; row++, j++){
 
             QStringList l;
-            for(int col = 0; col < colMax; col++)
+            for(int col = 0; col < colMax; col++){
+                if(k.at(col).isEmpty())
+                    continue;
                 l.append(modelAddMeter->item(row,col)->text());
+            }
 
             bytes += l.join("___").size(); // "",
             if(bytes > maxLen){
@@ -2533,6 +2544,8 @@ void MainWindow::setActiveProtocolVersion(int protocolVersion)
     ui->pbReadSn->setEnabled(allowObjV2);
 
     ui->cbChop->setEnabled(allowObjV2);
+    ui->sbJns->setEnabled(allowObjV2 && ui->cbChop->isChecked());
+
     ui->cbxGsmPrefMode->setEnabled(allowObjV2);
 
     ui->cbxEvSmpl->setEnabled(allowObjV2);
@@ -3129,7 +3142,7 @@ void MainWindow::on_pbRead_clicked()
         jobj.insert("max_len", ui->sbReadData->value());
 
         if(lDevInfo->matildaDev.protocolVersion == MATILDA_PROTOCOL_VERSION_V2 && ui->cbChop->isChecked())
-            jobj.insert("jns", ui->cbChop->isChecked());
+            jobj.insert("jns", ui->sbJns->value());
 
         joingStts = jobj.value("jns").toBool();
 
@@ -3693,23 +3706,31 @@ void MainWindow::on_pbWrite_clicked()
 
         QVariantList lVar;
         QStringList k = QString("model,NI,SN,memo,passwd,on,politic,trff").split(',');//,vrsn
+        if(lDevInfo->matildaDev.protocolVersion >= MATILDA_PROTOCOL_VERSION_V2){
+            k.append("");//ignore meter version
+            k.append("crdnts");
+        }
 
         int row = 0;
          int maxSize = ui->sbReadWriteMeterLen->value();
          if(maxSize < 300)
              maxSize = MAX_PACKET_LEN_RECOMENDATION;
 
-        for(int j = 0, colMax = k.size(), bts = 50; row < rowCount; row++, j++){
-            QStringList lOneMeter;
-            for(int col = 0; col < colMax; col++)
-                lOneMeter.append( modelAddMeter->item(row,col)->text());
 
-            bts += lOneMeter.join("___").size();
-            if(bts > maxSize){
+         for(int j = 0, colMax = qMin(k.size(), modelAddMeter->columnCount()), bytes = 50; row < rowCount; row++, j++){
+
+             QStringList l;
+             for(int col = 0; col < colMax; col++){
+                 if(k.at(col).isEmpty())
+                     continue;
+                 l.append(modelAddMeter->item(row,col)->text());
+             }
+            bytes += l.join("___").size();
+            if(bytes > maxSize){
                 row--;
                 break;
             }
-            lVar.append(strList2Var(lOneMeter));
+            lVar.append(strList2Var(l));
         }
 
         row++;
@@ -5150,4 +5171,9 @@ void MainWindow::on_tbEvComment2txt_clicked(bool checked)
 void MainWindow::on_actionHelp_triggered()
 {
     ui->stackedWidget->setCurrentIndex(4);
+}
+
+void MainWindow::on_cbChop_toggled(bool checked)
+{
+    ui->sbJns->setEnabled(checked && ui->cbChop->isEnabled());
 }

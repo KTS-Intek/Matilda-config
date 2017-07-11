@@ -226,3 +226,8 @@ void HelpForm::on_pushButton_clicked()
 
     QDesktopServices::openUrl(QUrl(fileName ));
 }
+
+void HelpForm::on_leFindPteLog_2_returnPressed()
+{
+    on_toolButton_6_clicked();
+}

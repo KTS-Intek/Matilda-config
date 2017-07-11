@@ -750,10 +750,10 @@ QString ShowMessHelper::meterEvCode2humanV2(const int &ucmEventCode)
     switch (ucmEventCode) {
 
     ///MTX3 Section
-    case UCM_EV_ENERGY_T0_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("1")                                           ; break;  //0x01 //значення накоплюючих регістрів тарифу 1 втрачені
-    case UCM_EV_ENERGY_T1_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("2")                                           ; break;  //0x02 //значення накоплюючих регістрів тарифу 2 втрачені
-    case UCM_EV_ENERGY_T2_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("3")                                           ; break;  //0x03 //значення накоплюючих регістрів тарифу 3 втрачені
-    case UCM_EV_ENERGY_T3_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("4")                                           ; break;  //0x04 //значення накоплюючих регістрів тарифу 4 втрачені
+    case UCM_EV_ENRG_T1_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("1")                                           ; break;  //0x01 //значення накоплюючих регістрів тарифу 1 втрачені
+    case UCM_EV_ENRG_T2_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("2")                                           ; break;  //0x02 //значення накоплюючих регістрів тарифу 2 втрачені
+    case UCM_EV_ENRG_T3_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("3")                                           ; break;  //0x03 //значення накоплюючих регістрів тарифу 3 втрачені
+    case UCM_EV_ENRG_T4_FAULT      : localEvntCode = tr("Energy T%1 registers broken").arg("4")                                           ; break;  //0x04 //значення накоплюючих регістрів тарифу 4 втрачені
     case UCM_EV_ACCESS_LOCKED        : localEvntCode = tr("Access: Locked")                                                                 ; break;  //0x11  //доступ закритий до кінця доби із-за помилки ключа доступу
     case UCM_EV_ACCESS_UNLOCKED      : localEvntCode = tr("Access: Unlocked")                                                               ; break;  //0x12  //доступ відкритий ( була помилки ключа доступу)
     case UCM_EV_ERR_ACCESS           : localEvntCode = tr("Access: bad key")                                                                ; break;  //0x13 //Неправильний ключ
@@ -780,20 +780,20 @@ QString ShowMessHelper::meterEvCode2humanV2(const int &ucmEventCode)
     case UCM_EV_RESTART              : localEvntCode = tr("Meter restart")                                                                  ; break;  //0x38 //рестарт ПЗ контролера
     case UCM_EV_WD_RESTART           : localEvntCode = tr("WDT: %1").arg(tr("Meter restart"))                                               ; break;  //0x39 //рестарт по Сторожовику
 
-    case UCM_EV_VA_MAX_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("1").arg(tr("overvoltage"))                   ; break;  //0x40 //Відновлення нормальної напруги Фази А після підвищеної напруги
-    case UCM_EV_VA_MAX_OVER          : localEvntCode = tr("Voltage L%1: %2, %3").arg("1").arg(tr("overvoltage")).arg(tr("wait for normal")) ; break;  //0x41 //напруга Фази А вище порогу максимальної напруги
-    case UCM_EV_VA_MIN_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("1").arg(tr("undervoltage"))                  ; break;  //0x42 //Відновлення нормальної напруги Фази А після пониженої напруги
-    case UCM_EV_VA_MIN_UNDER         : localEvntCode = tr("Voltage L%1: %2, %3").arg("1").arg(tr("undervoltage")).arg(tr("wait for normal")); break;  //0x43 //Напруга Фази А нище порогу мінімальної напруги
+    case UCM_EV_VA_MAX_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("1").arg(tr("overvoltage"))                   ; break;  //0x40 //Відновлення нормальної напруги L1 після підвищеної напруги
+    case UCM_EV_VA_MAX_OVER          : localEvntCode = tr("Voltage L%1: %2, %3").arg("1").arg(tr("overvoltage")).arg(tr("wait for normal")) ; break;  //0x41 //напруга L1 вище порогу максимальної напруги
+    case UCM_EV_VA_MIN_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("1").arg(tr("undervoltage"))                  ; break;  //0x42 //Відновлення нормальної напруги L1 після пониженої напруги
+    case UCM_EV_VA_MIN_UNDER         : localEvntCode = tr("Voltage L%1: %2, %3").arg("1").arg(tr("undervoltage")).arg(tr("wait for normal")); break;  //0x43 //Напруга L1 нище порогу мінімальної напруги
 
-    case UCM_EV_VB_MAX_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("2").arg(tr("overvoltage"))                   ; break;  //0x44 //Відновлення нормальної напруги Фази B після підвищеної напруги
-    case UCM_EV_VB_MAX_OVER          : localEvntCode = tr("Voltage L%1: %2, %3").arg("2").arg(tr("overvoltage")).arg(tr("wait for normal")) ; break;  //0x45 //напруга Фази B вище порогу максимальної напруги
-    case UCM_EV_VB_MIN_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("2").arg(tr("undervoltage"))                  ; break;  //0x46 //Відновлення нормальної напруги Фази B після пониженої напруги
-    case UCM_EV_VB_MIN_UNDER         : localEvntCode = tr("Voltage L%1: %2, %3").arg("2").arg(tr("undervoltage")).arg(tr("wait for normal")); break;  //0x47 //Напруга Фази B нище порогу мінімальної напруги
+    case UCM_EV_VB_MAX_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("2").arg(tr("overvoltage"))                   ; break;  //0x44 //Відновлення нормальної напруги L2 після підвищеної напруги
+    case UCM_EV_VB_MAX_OVER          : localEvntCode = tr("Voltage L%1: %2, %3").arg("2").arg(tr("overvoltage")).arg(tr("wait for normal")) ; break;  //0x45 //напруга L2 вище порогу максимальної напруги
+    case UCM_EV_VB_MIN_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("2").arg(tr("undervoltage"))                  ; break;  //0x46 //Відновлення нормальної напруги L2 після пониженої напруги
+    case UCM_EV_VB_MIN_UNDER         : localEvntCode = tr("Voltage L%1: %2, %3").arg("2").arg(tr("undervoltage")).arg(tr("wait for normal")); break;  //0x47 //Напруга L2 нище порогу мінімальної напруги
 
-    case UCM_EV_VC_MAX_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("3").arg(tr("overvoltage"))                   ; break;  //0x48 //Відновлення нормальної напруги Фази C після підвищеної напруги
-    case UCM_EV_VC_MAX_OVER          : localEvntCode = tr("Voltage L%1: %2, %3").arg("1").arg(tr("overvoltage")).arg(tr("wait for normal")) ; break;  //0x49 //напруга Фази C вище порогу максимальної напруги
-    case UCM_EV_VC_MIN_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("3").arg(tr("undervoltage"))                  ; break;  //0x4A //Відновлення нормальної напруги Фази C після пониженої напруги
-    case UCM_EV_VC_MIN_UNDER         : localEvntCode = tr("Voltage L%1: %2, %3").arg("3").arg(tr("undervoltage")).arg(tr("wait for normal")); break;  //0x4B //Напруга Фази C нище порогу мінімальної напруги
+    case UCM_EV_VC_MAX_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("3").arg(tr("overvoltage"))                   ; break;  //0x48 //Відновлення нормальної напруги L3 після підвищеної напруги
+    case UCM_EV_VC_MAX_OVER          : localEvntCode = tr("Voltage L%1: %2, %3").arg("1").arg(tr("overvoltage")).arg(tr("wait for normal")) ; break;  //0x49 //напруга L3 вище порогу максимальної напруги
+    case UCM_EV_VC_MIN_OK            : localEvntCode = tr("Voltage L%1: normal after %2").arg("3").arg(tr("undervoltage"))                  ; break;  //0x4A //Відновлення нормальної напруги L3 після пониженої напруги
+    case UCM_EV_VC_MIN_UNDER         : localEvntCode = tr("Voltage L%1: %2, %3").arg("3").arg(tr("undervoltage")).arg(tr("wait for normal")); break;  //0x4B //Напруга L3 нище порогу мінімальної напруги
 
     case UCM_EV_F_MAX_OK             : localEvntCode = tr("Frequency: normal after %1").arg(tr("high"))                                     ; break;  //0x4C //Відновлення нормальної частоти після підвищеної
     case UCM_EV_F_MAX_OVER           : localEvntCode = tr("Frequency: %1, %2").arg(tr("over")).arg(tr("wait for normal"))                   ; break;  //0x4D //Частота вижче порогу нормальної
@@ -805,12 +805,12 @@ QString ShowMessHelper::meterEvCode2humanV2(const int &ucmEventCode)
     case UCM_EV_T_MIN_OK             : localEvntCode = tr("Temperature: normal after %1").arg(tr("low"))                                    ; break;  //0x52 //Відновлення нормальної температури після пониженої
     case UCM_EV_T_MIN_UNDER          : localEvntCode = tr("Temperature: %1, %2").arg(tr("low")).arg(tr("wait for normal"))                  ; break;  //0x53 //Температура нижче порогу нормальної
 
-    case UCM_EV_IA_MAX_OK            : localEvntCode = tr("Current L%1: normal after %2").arg("1").arg(tr("high"))                          ; break;  //0x54 //Відновлення допустимого струму Фази А після підвищеного
-    case UCM_EV_IA_MAX_OVER          : localEvntCode = tr("Current L%1: %2, %3").arg("1").arg(tr("high")).arg(tr("wait for normal"))        ; break;  //0x55 //Струм Фази А вище порогу допустимого
-    case UCM_EV_IB_MAX_OK            : localEvntCode = tr("Current L%1: normal after %2").arg("2").arg(tr("high"))                          ; break;  //0x56 //Відновлення допустимого струму Фази B після підвищеного
-    case UCM_EV_IB_MAX_OVER          : localEvntCode = tr("Current L%1: %2, %3").arg("2").arg(tr("high")).arg(tr("wait for normal"))        ; break;  //0x57 //Струм Фази B вище порогу допустимого
-    case UCM_EV_IC_MAX_OK            : localEvntCode = tr("Current L%1: normal after %2").arg("3").arg(tr("high"))                          ; break;  //0x58 //Відновлення допустимого струму Фази C після підвищеного
-    case UCM_EV_IC_MAX_OVER          : localEvntCode = tr("Current L%1: %2, %3").arg("3").arg(tr("high")).arg(tr("wait for normal"))        ; break;  //0x59 //Струм Фази C вище порогу допустимого
+    case UCM_EV_IA_MAX_OK            : localEvntCode = tr("Current L%1: normal after %2").arg("1").arg(tr("high"))                          ; break;  //0x54 //Відновлення допустимого струму L1 після підвищеного
+    case UCM_EV_IA_MAX_OVER          : localEvntCode = tr("Current L%1: %2, %3").arg("1").arg(tr("high")).arg(tr("wait for normal"))        ; break;  //0x55 //Струм L1 вище порогу допустимого
+    case UCM_EV_IB_MAX_OK            : localEvntCode = tr("Current L%1: normal after %2").arg("2").arg(tr("high"))                          ; break;  //0x56 //Відновлення допустимого струму L2 після підвищеного
+    case UCM_EV_IB_MAX_OVER          : localEvntCode = tr("Current L%1: %2, %3").arg("2").arg(tr("high")).arg(tr("wait for normal"))        ; break;  //0x57 //Струм L2 вище порогу допустимого
+    case UCM_EV_IC_MAX_OK            : localEvntCode = tr("Current L%1: normal after %2").arg("3").arg(tr("high"))                          ; break;  //0x58 //Відновлення допустимого струму L3 після підвищеного
+    case UCM_EV_IC_MAX_OVER          : localEvntCode = tr("Current L%1: %2, %3").arg("3").arg(tr("high")).arg(tr("wait for normal"))        ; break;  //0x59 //Струм L3 вище порогу допустимого
 
     case UCM_EV_PA_MAX_OK            : localEvntCode = tr("Power A+: normal after %1").arg(tr("high"))                                      ; break;  //0x5A //Відновлення допустимої активної споживаної потужності після підвищеної
     case UCM_EV_PA_MAX_OVER          : localEvntCode = tr("Power A+: %1, %2").arg(tr("high")).arg(tr("wait for normal"))                    ; break;  //0x5B //Активна споживана потужність вище максимальної
@@ -822,12 +822,12 @@ QString ShowMessHelper::meterEvCode2humanV2(const int &ucmEventCode)
     case UCM_EV_CLOCK_OK             : localEvntCode = tr("Clock: %1").arg(tr("ok"))                                                        ; break;  //0x60 //Нормальний стан RTC відновлено
     case UCM_EV_CLOCK_FAULT          : localEvntCode = tr("Clock: %1, %2").arg(tr("error")).arg(tr("wait for ok"))                          ; break;  //0x61 //RTC не встановлені
 
-    case UCM_EV_POWER_C_ON           : localEvntCode = tr("Power L%1: %2").arg("3").arg(tr("on"))                                           ; break;  //0x62 //Увімкнення напруги Фази C
-    case UCM_EV_POWER_C_OFF          : localEvntCode = tr("Power L%1: %2").arg("3").arg(tr("off"))                                          ; break;  //0x63 //Вимкнення напруги Фази C
+    case UCM_EV_POWER_C_ON           : localEvntCode = tr("Power L%1: %2").arg("3").arg(tr("on"))                                           ; break;  //0x62 //Увімкнення напруги L3
+    case UCM_EV_POWER_C_OFF          : localEvntCode = tr("Power L%1: %2").arg("3").arg(tr("off"))                                          ; break;  //0x63 //Вимкнення напруги L3
     case UCM_EV_POWER_B_ON           : localEvntCode = tr("Power L%1: %2").arg("2").arg(tr("on"))                                           ; break;  //0x64 //Увімкнення напруги Фази В
     case UCM_EV_POWER_B_OFF          : localEvntCode = tr("Power L%1: %2").arg("2").arg(tr("off"))                                          ; break;  //0x65 //Вимкнення напруги Фази В
-    case UCM_EV_POWER_A_ON           : localEvntCode = tr("Power L%1: %2").arg("1").arg(tr("on"))                                           ; break;  //0x66 //Увімкнення напруги Фази А
-    case UCM_EV_POWER_A_OFF          : localEvntCode = tr("Power L%1: %2").arg("1").arg(tr("off"))                                          ; break;  //0x67 //Вимкнення напруги Фази А
+    case UCM_EV_POWER_A_ON           : localEvntCode = tr("Power L%1: %2").arg("1").arg(tr("on"))                                           ; break;  //0x66 //Увімкнення напруги L1
+    case UCM_EV_POWER_A_OFF          : localEvntCode = tr("Power L%1: %2").arg("1").arg(tr("off"))                                          ; break;  //0x67 //Вимкнення напруги L1
 
     case UCM_EV_BAT_OK               : localEvntCode = tr("RTC Bat.: %1").arg(tr("ok"))                                                     ; break;  //0x68 //Відновлення нормальної напруги батареї RTC
     case UCM_EV_BAT_FAULT            : localEvntCode = tr("RTC Bat.: %1").arg(tr("error"))                                                  ; break;  //0x69 //Понижена напруга батареї RTC
@@ -840,18 +840,18 @@ QString ShowMessHelper::meterEvCode2humanV2(const int &ucmEventCode)
     case UCM_EV_CHANGE_COR_TIME      : localEvntCode = tr("DST settings chaged")                                                            ; break;  //0x70 //Змінено параметри переходу на літній час
     case UCM_EV_CMD_RELAY_2_ON       : localEvntCode = tr("Received command to switch the relay #2 %1").arg(tr("on"))                       ; break;   //0x71 //Включення другого реле
     case UCM_EV_CMD_RELAY_2_OFF      : localEvntCode = tr("Received command to switch the relay #2 %1").arg(tr("off"))                      ; break;   //0x72 //Вимкнення другого реле
-    case UCM_EV_CROSSZERO_ENT0       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("1")                                            ; break;  //0x73 //Перехід через 0 лічильника активної енергії по тарифу 1 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_ENT1       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("2")                                            ; break;  //0x74 //Перехід через 0 лічильника активної енергії по тарифу 2 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_ENT2       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("3")                                            ; break;  //0x75 //Перехід через 0 лічильника активної енергії по тарифу 3 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_ENT3       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("4")                                            ; break;  //0x76 //Перехід через 0 лічильника активної енергії по тарифу 4 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_VARi0      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("1")                                            ; break;  //0x77 //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 1 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_VARi1      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("2")                                            ; break;  //0x78 //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 2 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_VARi2      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("3")                                            ; break;   //0x79 //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 3 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_VARi3      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("4")                                            ; break;  //0x7A //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 4 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_VARe0      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("1")                                            ; break;  //0x7B //Перехід через 0 лічильника негативної реактивної енергії по тарифу 1 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_VARe1      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("2")                                            ; break;  //0x7C //Перехід через 0 лічильника негативної реактивної енергії по тарифу 2 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_VARe2      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("3")                                            ; break;  //0x7D //Перехід через 0 лічильника негативної реактивної енергії по тарифу 3 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_VARe3      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("4")                                            ; break;  //0x7E //Перехід через 0 лічильника негативної реактивної енергії по тарифу 4 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_ENT1       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("1")                                            ; break;  //0x73 //Перехід через 0 лічильника активної енергії по тарифу 1 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_ENT2       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("2")                                            ; break;  //0x74 //Перехід через 0 лічильника активної енергії по тарифу 2 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_ENT3       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("3")                                            ; break;  //0x75 //Перехід через 0 лічильника активної енергії по тарифу 3 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_ENT4       : localEvntCode = tr("Crosszero %1 T%2").arg("A+").arg("4")                                            ; break;  //0x76 //Перехід через 0 лічильника активної енергії по тарифу 4 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_VARi1      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("1")                                            ; break;  //0x77 //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 1 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_VARi2      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("2")                                            ; break;  //0x78 //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 2 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_VARi3      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("3")                                            ; break;   //0x79 //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 3 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_VARi4      : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("4")                                            ; break;  //0x7A //Перехід через 0 лічильника позитивної реактивної енергії по тарифу 4 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_VARe1      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("1")                                            ; break;  //0x7B //Перехід через 0 лічильника негативної реактивної енергії по тарифу 1 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_VARe2      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("2")                                            ; break;  //0x7C //Перехід через 0 лічильника негативної реактивної енергії по тарифу 2 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_VARe3      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("3")                                            ; break;  //0x7D //Перехід через 0 лічильника негативної реактивної енергії по тарифу 3 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_VARe4      : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("4")                                            ; break;  //0x7E //Перехід через 0 лічильника негативної реактивної енергії по тарифу 4 при досягненні 1000000.00 кВар
     case UCM_EV_CALFLAG_SET          : localEvntCode = tr("Calibration bit %1").arg(tr("set"))                                              ; break;  //0x7F //Калібровочний біт встановлено
     case UCM_EV_CALFLAG_RESET        : localEvntCode = tr("Calibration bit %1").arg(tr("reset"))                                            ; break;  //0x80 //Калібровочний біт скинено
     case UCM_EV_BAD_TEST_EEPROM      : localEvntCode = tr("Bad EEPROM")                                                                     ; break;   //0x81 //Тест EEPROM не пройшов
@@ -888,18 +888,18 @@ QString ShowMessHelper::meterEvCode2humanV2(const int &ucmEventCode)
     case UCM_EV_CHANGE_PARAM_CANAL4  : localEvntCode = tr("Load profile #%1, changed parameters").arg("4")                                  ; break;  //0xA1 //Змінено параметр профіля навантаження 4
     case UCM_EV_CHANGE_PARAM_CANAL5  : localEvntCode = tr("Load profile #%1, changed parameters").arg("5")                                  ; break;  //0xA2 //Змінено параметр профіля навантаження 5
     case UCM_EV_CHANGE_PARAM_CANAL6  : localEvntCode = tr("Load profile #%1, changed parameters").arg("6")                                  ; break;  //0xA3 //Змінено параметр профіля навантаження 6
-    case UCM_EV_CROSSZERO_EXP_ENT0   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("1")                                            ; break;  //0xA4 //Перехід через 0 лічильника активної експортної енергії по тарифу 1 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_EXP_ENT1   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("2")                                            ; break;  //0xA5 //Перехід через 0 лічильника активної експортної енергії по тарифу 2 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_EXP_ENT2   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("3")                                            ; break;  //0xA6 //Перехід через 0 лічильника активної експортної енергії по тарифу 3 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_EXP_ENT3   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("4")                                            ; break;  //0xA7 //Перехід через 0 лічильника активної експортної енергії по тарифу 4 при досягненні 1000000.00 кВт
-    case UCM_EV_CROSSZERO_EXP_VARi0  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("1")                                            ; break;  //0xA8 //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 1 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_EXP_VARi1  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("2")                                            ; break;  //0xA9 //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 2 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_EXP_VARi2  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("3")                                            ; break;  //0xAA //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 3 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_EXP_VARi3  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("4")                                            ; break;  //0xAB //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 4 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_EXP_VARe0  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("1")                                            ; break;   //0xAC //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 1 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_EXP_VARe1  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("2")                                            ; break;  //0xAD //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 2 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_EXP_VARe2  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("3")                                            ; break;  //0xAE //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 3 при досягненні 1000000.00 кВар
-    case UCM_EV_CROSSZERO_EXP_VARe3  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("4")                                            ; break;  //0xAF //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 4 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_ENT1   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("1")                                            ; break;  //0xA4 //Перехід через 0 лічильника активної експортної енергії по тарифу 1 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_EXP_ENT2   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("2")                                            ; break;  //0xA5 //Перехід через 0 лічильника активної експортної енергії по тарифу 2 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_EXP_ENT3   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("3")                                            ; break;  //0xA6 //Перехід через 0 лічильника активної експортної енергії по тарифу 3 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_EXP_ENT4   : localEvntCode = tr("Crosszero %1 T%2").arg("A-").arg("4")                                            ; break;  //0xA7 //Перехід через 0 лічильника активної експортної енергії по тарифу 4 при досягненні 1000000.00 кВт
+    case UCM_EV_CRSSZERO_EXP_VARi1  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("1")                                            ; break;  //0xA8 //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 1 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_VARi2  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("2")                                            ; break;  //0xA9 //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 2 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_VARi3  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("3")                                            ; break;  //0xAA //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 3 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_VARi4  : localEvntCode = tr("Crosszero %1 T%2").arg("R+").arg("4")                                            ; break;  //0xAB //Перехід через 0 лічильника реактивної позитивної експортної енергії по тарифу 4 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_VARe1  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("1")                                            ; break;   //0xAC //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 1 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_VARe2  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("2")                                            ; break;  //0xAD //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 2 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_VARe3  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("3")                                            ; break;  //0xAE //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 3 при досягненні 1000000.00 кВар
+    case UCM_EV_CRSSZERO_EXP_VARe4  : localEvntCode = tr("Crosszero %1 T%2").arg("R-").arg("4")                                            ; break;  //0xAF //Перехід через 0 лічильника реактивної негативної експортної енергії по тарифу 4 при досягненні 1000000.00 кВар
     case UCM_EV_EM_MAGNETIC_ON       : localEvntCode = tr("AC magnetic field, %1").arg(tr("begining"))                                      ; break;   //0xB0 //Виявлено наявність впливу змінного магнітного поля
     case UCM_EV_EM_MAGNETIC_OFF      : localEvntCode = tr("AC magnetic field, %1").arg(tr("end"))                                           ; break;   //0xB1 //Виявлено закінчення впливу змінного магнітного поля
 
@@ -935,13 +935,13 @@ QString ShowMessHelper::meterEvCode2humanV2(const int &ucmEventCode)
     case UCM_EV_MSTATE_POWEROFF         : localEvntCode = tr("Meter: %1").arg(tr("power off"))                                              ; break; //             0x302 //
 
         //Події що фіксуюють лише початок зміни стану
-    case UCM_EV_VA_MIN_UNDER_SS         : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("undervoltage"))                            ; break; //             0x600 //Напруга Фази А нище порогу мінімальної напруги, не очікую на нормальну
-    case UCM_EV_VB_MIN_UNDER_SS         : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("undervoltage"))                            ; break; //             0x601 //Напруга Фази B нище порогу мінімальної напруги, не очікую на нормальну
-    case UCM_EV_VC_MIN_UNDER_SS         : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("undervoltage"))                            ; break; //             0x602 //Напруга Фази C нище порогу мінімальної напруги, не очікую на нормальну
+    case UCM_EV_VA_MIN_UNDER_SS         : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("undervoltage"))                            ; break; //             0x600 //Напруга L1 нище порогу мінімальної напруги, не очікую на нормальну
+    case UCM_EV_VB_MIN_UNDER_SS         : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("undervoltage"))                            ; break; //             0x601 //Напруга L2 нище порогу мінімальної напруги, не очікую на нормальну
+    case UCM_EV_VC_MIN_UNDER_SS         : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("undervoltage"))                            ; break; //             0x602 //Напруга L3 нище порогу мінімальної напруги, не очікую на нормальну
 
-    case UCM_EV_VA_MAX_OVER_SS          : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("overvoltage"))                             ; break; //              0x603 //напруга Фази А вище порогу максимальної напруги, не очікую на нормальну
-    case UCM_EV_VB_MAX_OVER_SS          : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("overvoltage"))                             ; break; //             0x604 //напруга Фази B вище порогу максимальної напруги, не очікую на нормальну
-    case UCM_EV_VC_MAX_OVER_SS          : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("overvoltage"))                             ; break; //             0x605 //напруга Фази C вище порогу максимальної напруги, не очікую на нормальну
+    case UCM_EV_VA_MAX_OVER_SS          : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("overvoltage"))                             ; break; //              0x603 //напруга L1 вище порогу максимальної напруги, не очікую на нормальну
+    case UCM_EV_VB_MAX_OVER_SS          : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("overvoltage"))                             ; break; //             0x604 //напруга L2 вище порогу максимальної напруги, не очікую на нормальну
+    case UCM_EV_VC_MAX_OVER_SS          : localEvntCode = tr("Voltage L%1: %2").arg("1").arg(tr("overvoltage"))                             ; break; //             0x605 //напруга L3 вище порогу максимальної напруги, не очікую на нормальну
     case UCM_EV_CASE_OPEN_SS            : localEvntCode = tr("Meter cover: %1").arg(tr("opened"))                                           ; break; //            0x606 //Корпус лічильника відкритий, не очікую на закриття
     case UCM_EV_CASE_KLEMA_OPEN_SS      : localEvntCode = tr("Terminal box was %1").arg(tr("opened"))                                       ; break; //         0x607 //Клемна коробка лічильника відкрита, не очікую на закриття
 

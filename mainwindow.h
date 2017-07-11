@@ -231,6 +231,8 @@ private slots:
 
     void on_actionHelp_triggered();
 
+    void on_cbChop_toggled(bool checked);
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);

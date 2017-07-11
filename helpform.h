@@ -45,6 +45,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_leFindPteLog_2_returnPressed();
+
 private:
     Ui::HelpForm *ui;
 

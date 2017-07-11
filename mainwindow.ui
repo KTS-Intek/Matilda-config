@@ -22,7 +22,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -786,7 +786,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>25</number>
+                   <number>24</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
@@ -4520,7 +4520,17 @@
                       <item>
                        <widget class="QCheckBox" name="cbChop">
                         <property name="text">
-                         <string>jnstts</string>
+                         <string>jns</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QSpinBox" name="sbJns">
+                        <property name="maximum">
+                         <number>2</number>
+                        </property>
+                        <property name="value">
+                         <number>1</number>
                         </property>
                        </widget>
                       </item>
