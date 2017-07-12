@@ -5,7 +5,6 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
-#include <QWebEngineHistory>
 #include "settloader.h"
 #include <QSaveFile>
 
@@ -18,7 +17,8 @@ HelpForm::HelpForm(QWidget *parent) :
     ui->setupUi(this);
 
 
-    myWeb = new QWebEngineView;
+    myWeb = new WebTextDocument(false);
+    myWeb->setSearchPathsExt(QString("").split(" "), ":/help", "qrc");
 
     timerDec.setInterval(350);
     timerInc.setInterval(350);
@@ -99,20 +99,19 @@ void HelpForm::slotFinished(bool bOk)
 
 
 
-    ui->pbBack->setEnabled(myWeb->page()->history()->canGoBack());
+    ui->pbBack->setEnabled(myWeb->canGoBack());
     if(ui->pbBack->isEnabled())
-         ui->pbBack->setToolTip(myWeb->page()->history()->backItem().title());
+         ui->pbBack->setToolTip(myWeb->title());
     else
         ui->pbBack->setToolTip(tr("Back"));
 
-    ui->pbForward->setEnabled(myWeb->page()->history()->canGoForward());
+    ui->pbForward->setEnabled(myWeb->canGoForward());
     if(ui->pbForward->isEnabled())
-         ui->pbForward->setToolTip(myWeb->page()->history()->forwardItem().title());
+         ui->pbForward->setToolTip(myWeb->title());
     else
         ui->pbForward->setToolTip( tr("Forward"));
 
 
-    qDebug() << "load finished " << myWeb->url().toString();
 }
 
 //--------------------------------------------------------------
@@ -174,24 +173,12 @@ void HelpForm::reloadLangSett()
 
 void HelpForm::on_toolButton_6_clicked()
 {
-    if(ui->checkBox->isChecked())
-        myWeb->findText(ui->leFindPteLog_2->text(), QWebEnginePage::FindCaseSensitively);
-    else
-        myWeb->findText(ui->leFindPteLog_2->text());
-
+    myWeb->findTextInPage(ui->leFindPteLog_2->text(), ui->checkBox->isChecked());
 }
 
 void HelpForm::on_toolButton_4_clicked()
 {
-    QWebEnginePage::FindFlag flags;
-    int ff = (QWebEnginePage::FindCaseSensitively|QWebEnginePage::FindBackward);
-    flags = static_cast<QWebEnginePage::FindFlag>(ff);
-    if(ui->checkBox->isChecked())
-        myWeb->findText(ui->leFindPteLog_2->text(), flags);
-    else
-        myWeb->findText(ui->leFindPteLog_2->text(), QWebEnginePage::FindBackward);
-
-
+    myWeb->findTextInPage(ui->leFindPteLog_2->text(), ui->checkBox->isChecked(), true);
 }
 
 void HelpForm::on_pushButton_clicked()
@@ -216,8 +203,6 @@ void HelpForm::on_pushButton_clicked()
             sfile.write(file.readAll());
             sfile.commit();
             file.close();
-        }else{
-            qDebug() << "can't write sfile " << sfile.errorString();
         }
     }
     if(fileName.startsWith("/"))

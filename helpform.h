@@ -2,13 +2,12 @@
 #define HELPFORM_H
 
 #include <QWidget>
-#include <QWebEngineView>
 
 //#include <QtWebKit>
 //#include <QWebView>
 
 #include <QTimer>
-
+#include "webtextdocument.h"
 
 namespace Ui {
 class HelpForm;
@@ -50,7 +49,7 @@ private slots:
 private:
     Ui::HelpForm *ui;
 
-    QWebEngineView *myWeb;
+    WebTextDocument *myWeb;
     QTimer timerDec;
     QTimer timerInc;
 

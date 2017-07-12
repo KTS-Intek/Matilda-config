@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network webenginewidgets
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     settloader.cpp \
     langdialog.cpp \
     showmesshelper.cpp \
-    helpform.cpp
+    helpform.cpp \
+    webtextdocument.cpp
 
 HEADERS  += mainwindow.h \
     ../../matilda-bbb/moji_defy.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     langdialog.h \
     showmesshelper.h \
     ucmetereventcodes.h \
-    helpform.h
+    helpform.h \
+    webtextdocument.h
 
 FORMS    += mainwindow.ui \
     energydialog.ui \
