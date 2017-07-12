@@ -233,6 +233,13 @@ private slots:
 
     void on_cbChop_toggled(bool checked);
 
+    void on_pbAddMeterHideShow_clicked(bool checked);
+
+    void on_cbxEvSmpl_toggled(bool checked);
+
+protected:
+    void changeEvent(QEvent *event);
+
 public slots:
     void onConnectedStateChanged(bool isConnected);
     void onConnectedStateChangedDbg(bool isConnected);
@@ -357,7 +364,7 @@ private:
 
     QTranslator translator;
     QString currLang;
-    bool youAreRoot, youAreOper, joingStts;
+    bool youAreRoot, youAreOper, joingStts, joinSttsVerticalLine, smplMeterJrnlVerticalLine;
 
 
 };

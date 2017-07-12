@@ -94,6 +94,92 @@
     </message>
 </context>
 <context>
+    <name>HelpForm</name>
+    <message>
+        <location filename="helpform.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="37"/>
+        <location filename="helpform.cpp" line="106"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="48"/>
+        <location filename="helpform.cpp" line="112"/>
+        <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="59"/>
+        <source>Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="70"/>
+        <source>Minus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="81"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="92"/>
+        <source>Plus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="103"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="126"/>
+        <source>PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="144"/>
+        <source>Case Sensitively</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="151"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="161"/>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="168"/>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.cpp" line="58"/>
+        <source>x1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.cpp" line="97"/>
+        <source>&lt;CENTER&gt;An error has occured while loading the web page&lt;/CENTER&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.cpp" line="120"/>
+        <location filename="helpform.cpp" line="121"/>
+        <source>x%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InsertMeterDialog</name>
     <message>
         <location filename="insertmeterdialog.ui" line="14"/>
@@ -176,7 +262,7 @@
         <location filename="mainwindow.ui" line="147"/>
         <location filename="mainwindow.ui" line="190"/>
         <location filename="mainwindow.ui" line="1564"/>
-        <location filename="mainwindow.ui" line="4254"/>
+        <location filename="mainwindow.ui" line="4333"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -243,8 +329,8 @@
         <location filename="mainwindow.ui" line="287"/>
         <location filename="mainwindow.ui" line="439"/>
         <location filename="mainwindow.ui" line="1581"/>
-        <location filename="mainwindow.ui" line="1738"/>
-        <location filename="mainwindow.ui" line="2018"/>
+        <location filename="mainwindow.ui" line="1721"/>
+        <location filename="mainwindow.ui" line="2001"/>
         <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -308,10 +394,10 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="512"/>
-        <location filename="mainwindow.ui" line="3167"/>
-        <location filename="mainwindow.ui" line="3174"/>
-        <location filename="mainwindow.ui" line="3236"/>
-        <location filename="mainwindow.ui" line="3324"/>
+        <location filename="mainwindow.ui" line="3230"/>
+        <location filename="mainwindow.ui" line="3237"/>
+        <location filename="mainwindow.ui" line="3299"/>
+        <location filename="mainwindow.ui" line="3387"/>
         <source>Enable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -332,35 +418,36 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="669"/>
-        <location filename="mainwindow.ui" line="5567"/>
+        <location filename="mainwindow.ui" line="5723"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="707"/>
-        <location filename="mainwindow.ui" line="2966"/>
-        <location filename="mainwindow.ui" line="3036"/>
-        <location filename="mainwindow.ui" line="3086"/>
-        <location filename="mainwindow.cpp" line="2085"/>
-        <location filename="mainwindow.cpp" line="2850"/>
+        <location filename="mainwindow.ui" line="3013"/>
+        <location filename="mainwindow.ui" line="3087"/>
+        <location filename="mainwindow.ui" line="3145"/>
+        <location filename="mainwindow.cpp" line="2088"/>
+        <location filename="mainwindow.cpp" line="2950"/>
         <source>Read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="721"/>
-        <location filename="mainwindow.ui" line="3043"/>
-        <location filename="mainwindow.cpp" line="2091"/>
+        <location filename="mainwindow.ui" line="3098"/>
+        <location filename="mainwindow.cpp" line="2094"/>
         <source>Write</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="824"/>
-        <location filename="mainwindow.ui" line="4231"/>
+        <location filename="mainwindow.ui" line="4310"/>
         <source>Memo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="837"/>
+        <location filename="mainwindow.cpp" line="1790"/>
         <source>Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -499,7 +586,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="1344"/>
-        <location filename="mainwindow.cpp" line="4017"/>
+        <location filename="mainwindow.cpp" line="4179"/>
         <source>Reset sorting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -520,7 +607,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="1588"/>
-        <location filename="mainwindow.ui" line="1768"/>
+        <location filename="mainwindow.ui" line="1751"/>
         <source>Speed [baud]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -551,1562 +638,1661 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="1637"/>
-        <location filename="mainwindow.ui" line="1785"/>
+        <location filename="mainwindow.ui" line="1768"/>
         <source>Read Time Out [ms]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1657"/>
-        <location filename="mainwindow.ui" line="1808"/>
+        <location filename="mainwindow.ui" line="1690"/>
+        <location filename="mainwindow.ui" line="1791"/>
         <source>Read Block Time Out [ms]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1690"/>
+        <location filename="mainwindow.ui" line="1683"/>
         <source>Metric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1697"/>
+        <location filename="mainwindow.ui" line="1710"/>
         <source>Make primary GSM modem interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1717"/>
-        <source>Multiplier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="1831"/>
+        <location filename="mainwindow.ui" line="1814"/>
         <source>Protocol detector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1838"/>
+        <location filename="mainwindow.ui" line="1821"/>
         <source>process unknown protocol as data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1901"/>
+        <location filename="mainwindow.ui" line="1884"/>
         <source>Direct Access service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1920"/>
+        <location filename="mainwindow.ui" line="1903"/>
         <source>Always ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1930"/>
+        <location filename="mainwindow.ui" line="1913"/>
         <source>Always ready + Magic sequence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1940"/>
+        <location filename="mainwindow.ui" line="1923"/>
         <source>Magic sequence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1950"/>
+        <location filename="mainwindow.ui" line="1933"/>
         <source>Disable always ready mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1957"/>
+        <location filename="mainwindow.ui" line="1940"/>
         <source>In hex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1967"/>
+        <location filename="mainwindow.ui" line="1950"/>
         <source>Direct Access over Matilda</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1973"/>
+        <location filename="mainwindow.ui" line="1956"/>
         <source>Only Local IPv4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1983"/>
+        <location filename="mainwindow.ui" line="1966"/>
         <source>Only Local IPv6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2003"/>
+        <location filename="mainwindow.ui" line="1986"/>
         <source>All interfaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2046"/>
-        <location filename="mainwindow.cpp" line="2278"/>
+        <location filename="mainwindow.ui" line="2029"/>
+        <location filename="mainwindow.cpp" line="2281"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2063"/>
+        <location filename="mainwindow.ui" line="2050"/>
         <source>State: Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2090"/>
+        <location filename="mainwindow.ui" line="2077"/>
         <source>Enable Direct Access Socket</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2103"/>
+        <location filename="mainwindow.ui" line="2090"/>
         <source>Direct Access Service List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2128"/>
-        <location filename="mainwindow.ui" line="2219"/>
-        <location filename="mainwindow.ui" line="2510"/>
-        <location filename="mainwindow.ui" line="2759"/>
+        <location filename="mainwindow.ui" line="2115"/>
+        <location filename="mainwindow.ui" line="2217"/>
+        <location filename="mainwindow.ui" line="2519"/>
+        <location filename="mainwindow.ui" line="2779"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2150"/>
-        <location filename="mainwindow.ui" line="2532"/>
+        <location filename="mainwindow.ui" line="2141"/>
+        <location filename="mainwindow.ui" line="2545"/>
         <source>IPv4:Port or [IPv4 or IPv6]:Port or URL:Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2160"/>
-        <location filename="mainwindow.ui" line="2372"/>
-        <location filename="mainwindow.ui" line="2542"/>
-        <location filename="mainwindow.ui" line="2771"/>
-        <location filename="mainwindow.ui" line="3396"/>
+        <location filename="mainwindow.ui" line="2151"/>
+        <location filename="mainwindow.ui" line="2374"/>
+        <location filename="mainwindow.ui" line="2555"/>
+        <location filename="mainwindow.ui" line="2795"/>
+        <location filename="mainwindow.ui" line="3459"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2210"/>
-        <location filename="mainwindow.ui" line="2602"/>
+        <location filename="mainwindow.ui" line="2208"/>
+        <location filename="mainwindow.ui" line="2622"/>
         <source>Day Profiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2231"/>
-        <location filename="mainwindow.ui" line="2690"/>
-        <location filename="mainwindow.ui" line="4034"/>
+        <location filename="mainwindow.ui" line="2233"/>
+        <location filename="mainwindow.ui" line="2710"/>
+        <location filename="mainwindow.ui" line="4101"/>
         <source>From</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2238"/>
-        <location filename="mainwindow.ui" line="2252"/>
-        <location filename="mainwindow.ui" line="2697"/>
-        <location filename="mainwindow.ui" line="2711"/>
-        <location filename="mainwindow.ui" line="4041"/>
-        <location filename="mainwindow.ui" line="4058"/>
+        <location filename="mainwindow.ui" line="2240"/>
+        <location filename="mainwindow.ui" line="2254"/>
+        <location filename="mainwindow.ui" line="2717"/>
+        <location filename="mainwindow.ui" line="2731"/>
+        <location filename="mainwindow.ui" line="4108"/>
+        <location filename="mainwindow.ui" line="4125"/>
         <source>HH:mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2245"/>
-        <location filename="mainwindow.ui" line="2704"/>
-        <location filename="mainwindow.ui" line="4051"/>
+        <location filename="mainwindow.ui" line="2247"/>
+        <location filename="mainwindow.ui" line="2724"/>
+        <location filename="mainwindow.ui" line="4118"/>
         <source>To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2306"/>
-        <location filename="mainwindow.ui" line="2610"/>
-        <location filename="mainwindow.ui" line="3961"/>
+        <location filename="mainwindow.ui" line="2308"/>
+        <location filename="mainwindow.ui" line="2630"/>
+        <location filename="mainwindow.ui" line="4028"/>
         <source>Mon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2313"/>
-        <location filename="mainwindow.ui" line="2617"/>
-        <location filename="mainwindow.ui" line="3968"/>
+        <location filename="mainwindow.ui" line="2315"/>
+        <location filename="mainwindow.ui" line="2637"/>
+        <location filename="mainwindow.ui" line="4035"/>
         <source>Tue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2320"/>
-        <location filename="mainwindow.ui" line="2624"/>
-        <location filename="mainwindow.ui" line="3975"/>
+        <location filename="mainwindow.ui" line="2322"/>
+        <location filename="mainwindow.ui" line="2644"/>
+        <location filename="mainwindow.ui" line="4042"/>
         <source>Wed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2327"/>
-        <location filename="mainwindow.ui" line="2631"/>
-        <location filename="mainwindow.ui" line="3982"/>
+        <location filename="mainwindow.ui" line="2329"/>
+        <location filename="mainwindow.ui" line="2651"/>
+        <location filename="mainwindow.ui" line="4049"/>
         <source>Thu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2334"/>
-        <location filename="mainwindow.ui" line="2638"/>
-        <location filename="mainwindow.ui" line="3989"/>
+        <location filename="mainwindow.ui" line="2336"/>
+        <location filename="mainwindow.ui" line="2658"/>
+        <location filename="mainwindow.ui" line="4056"/>
         <source>Fri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2341"/>
-        <location filename="mainwindow.ui" line="2645"/>
-        <location filename="mainwindow.ui" line="3996"/>
+        <location filename="mainwindow.ui" line="2343"/>
+        <location filename="mainwindow.ui" line="2665"/>
+        <location filename="mainwindow.ui" line="4063"/>
         <source>Sat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2348"/>
-        <location filename="mainwindow.ui" line="2652"/>
-        <location filename="mainwindow.ui" line="4003"/>
+        <location filename="mainwindow.ui" line="2350"/>
+        <location filename="mainwindow.ui" line="2672"/>
+        <location filename="mainwindow.ui" line="4070"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2404"/>
+        <location filename="mainwindow.ui" line="2413"/>
         <source>Connect to remote service: Days of week</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2413"/>
-        <location filename="mainwindow.ui" line="2812"/>
-        <location filename="mainwindow.ui" line="3464"/>
+        <location filename="mainwindow.ui" line="2422"/>
+        <location filename="mainwindow.ui" line="2843"/>
+        <location filename="mainwindow.ui" line="3531"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2429"/>
+        <location filename="mainwindow.ui" line="2438"/>
         <source>Connect to remote service: Time Interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2494"/>
+        <location filename="mainwindow.ui" line="2503"/>
         <source>Enable Matilda Active Socket</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2501"/>
+        <location filename="mainwindow.ui" line="2510"/>
         <source>Svaha Service List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2674"/>
+        <location filename="mainwindow.ui" line="2694"/>
         <source>Connect to Svaha service: Time Interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2796"/>
+        <location filename="mainwindow.ui" line="2827"/>
         <source>Connect to Svaha service: Days of week</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2886"/>
+        <location filename="mainwindow.ui" line="2917"/>
         <source>Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2892"/>
+        <location filename="mainwindow.ui" line="2923"/>
         <source>Daemon Restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2902"/>
+        <location filename="mainwindow.ui" line="2937"/>
         <source>Reboot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2912"/>
+        <location filename="mainwindow.ui" line="2951"/>
         <source>Restart GSM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2919"/>
+        <location filename="mainwindow.ui" line="2962"/>
         <source>Restart Embee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2948"/>
+        <location filename="mainwindow.ui" line="2995"/>
         <source>Device Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3000"/>
+        <location filename="mainwindow.ui" line="3051"/>
         <source>Command line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3013"/>
+        <location filename="mainwindow.ui" line="3064"/>
         <source>Please press &quot;Read&quot; to show help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3023"/>
+        <location filename="mainwindow.ui" line="3074"/>
         <source>UDP beacon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3029"/>
+        <location filename="mainwindow.ui" line="3080"/>
         <source>Enable UDP beacon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3066"/>
+        <location filename="mainwindow.ui" line="3125"/>
         <source>Serial Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3072"/>
+        <location filename="mainwindow.ui" line="3131"/>
         <source>SN#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3136"/>
+        <location filename="mainwindow.ui" line="3199"/>
         <source>Meter Retry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3143"/>
+        <location filename="mainwindow.ui" line="3206"/>
         <source>Poll wait (sec)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3160"/>
+        <location filename="mainwindow.ui" line="3223"/>
         <source>HardAddressing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3188"/>
+        <location filename="mainwindow.ui" line="3251"/>
         <source>Wait4Embee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3195"/>
+        <location filename="mainwindow.ui" line="3258"/>
         <source>Retry before</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3219"/>
+        <location filename="mainwindow.ui" line="3282"/>
         <source>Retry after</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3243"/>
+        <location filename="mainwindow.ui" line="3306"/>
         <source>Time correction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3270"/>
+        <location filename="mainwindow.ui" line="3333"/>
         <source>Max Difference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3300"/>
+        <location filename="mainwindow.ui" line="3363"/>
         <source>Meter Retry (FA)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3317"/>
+        <location filename="mainwindow.ui" line="3380"/>
         <source>Forwarding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3335"/>
+        <location filename="mainwindow.ui" line="3398"/>
         <source>Meter Address [from protocol]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3342"/>
-        <location filename="mainwindow.ui" line="3376"/>
+        <location filename="mainwindow.ui" line="3405"/>
+        <location filename="mainwindow.ui" line="3439"/>
         <source>HEX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3359"/>
+        <location filename="mainwindow.ui" line="3422"/>
         <source>Modem Address [forward to]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3432"/>
+        <location filename="mainwindow.ui" line="3495"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3471"/>
+        <location filename="mainwindow.ui" line="3538"/>
+        <location filename="mainwindow.cpp" line="2486"/>
         <source>On/Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3478"/>
+        <location filename="mainwindow.ui" line="3545"/>
         <source>Interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3485"/>
+        <location filename="mainwindow.ui" line="3552"/>
         <source>Priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3492"/>
+        <location filename="mainwindow.ui" line="3559"/>
         <source>Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3499"/>
-        <location filename="mainwindow.cpp" line="426"/>
+        <location filename="mainwindow.ui" line="3566"/>
+        <location filename="mainwindow.cpp" line="428"/>
         <source>Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3506"/>
-        <location filename="mainwindow.ui" line="3596"/>
-        <location filename="mainwindow.ui" line="3652"/>
-        <location filename="mainwindow.ui" line="3716"/>
-        <location filename="mainwindow.ui" line="3808"/>
-        <location filename="mainwindow.ui" line="3901"/>
+        <location filename="mainwindow.ui" line="3573"/>
+        <location filename="mainwindow.ui" line="3663"/>
+        <location filename="mainwindow.ui" line="3719"/>
+        <location filename="mainwindow.ui" line="3783"/>
+        <location filename="mainwindow.ui" line="3875"/>
+        <location filename="mainwindow.ui" line="3968"/>
         <source>Enable poll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3514"/>
-        <location filename="mainwindow.ui" line="3724"/>
-        <location filename="mainwindow.ui" line="3819"/>
+        <location filename="mainwindow.ui" line="3581"/>
+        <location filename="mainwindow.ui" line="3791"/>
+        <location filename="mainwindow.ui" line="3886"/>
         <source>30 minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3519"/>
-        <location filename="mainwindow.ui" line="3729"/>
-        <location filename="mainwindow.ui" line="3824"/>
+        <location filename="mainwindow.ui" line="3586"/>
+        <location filename="mainwindow.ui" line="3796"/>
+        <location filename="mainwindow.ui" line="3891"/>
         <source>1 hour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3524"/>
-        <location filename="mainwindow.ui" line="3734"/>
-        <location filename="mainwindow.ui" line="3829"/>
+        <location filename="mainwindow.ui" line="3591"/>
+        <location filename="mainwindow.ui" line="3801"/>
+        <location filename="mainwindow.ui" line="3896"/>
         <source>2 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3529"/>
-        <location filename="mainwindow.ui" line="3739"/>
-        <location filename="mainwindow.ui" line="3834"/>
+        <location filename="mainwindow.ui" line="3596"/>
+        <location filename="mainwindow.ui" line="3806"/>
+        <location filename="mainwindow.ui" line="3901"/>
         <source>3 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3534"/>
-        <location filename="mainwindow.ui" line="3744"/>
-        <location filename="mainwindow.ui" line="3839"/>
+        <location filename="mainwindow.ui" line="3601"/>
+        <location filename="mainwindow.ui" line="3811"/>
+        <location filename="mainwindow.ui" line="3906"/>
         <source>4 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3539"/>
-        <location filename="mainwindow.ui" line="3749"/>
-        <location filename="mainwindow.ui" line="3844"/>
+        <location filename="mainwindow.ui" line="3606"/>
+        <location filename="mainwindow.ui" line="3816"/>
+        <location filename="mainwindow.ui" line="3911"/>
         <source>6 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3544"/>
-        <location filename="mainwindow.ui" line="3754"/>
-        <location filename="mainwindow.ui" line="3849"/>
+        <location filename="mainwindow.ui" line="3611"/>
+        <location filename="mainwindow.ui" line="3821"/>
+        <location filename="mainwindow.ui" line="3916"/>
         <source>8 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3549"/>
-        <location filename="mainwindow.ui" line="3759"/>
-        <location filename="mainwindow.ui" line="3854"/>
+        <location filename="mainwindow.ui" line="3616"/>
+        <location filename="mainwindow.ui" line="3826"/>
+        <location filename="mainwindow.ui" line="3921"/>
         <source>12 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3554"/>
-        <location filename="mainwindow.ui" line="3764"/>
-        <location filename="mainwindow.ui" line="3859"/>
+        <location filename="mainwindow.ui" line="3621"/>
+        <location filename="mainwindow.ui" line="3831"/>
+        <location filename="mainwindow.ui" line="3926"/>
         <source>24 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3559"/>
-        <location filename="mainwindow.ui" line="3769"/>
-        <location filename="mainwindow.ui" line="3864"/>
+        <location filename="mainwindow.ui" line="3626"/>
+        <location filename="mainwindow.ui" line="3836"/>
+        <location filename="mainwindow.ui" line="3931"/>
         <source>48 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3564"/>
-        <location filename="mainwindow.ui" line="3774"/>
-        <location filename="mainwindow.ui" line="3869"/>
+        <location filename="mainwindow.ui" line="3631"/>
+        <location filename="mainwindow.ui" line="3841"/>
+        <location filename="mainwindow.ui" line="3936"/>
         <source>72 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3589"/>
-        <location filename="mainwindow.cpp" line="427"/>
+        <location filename="mainwindow.ui" line="3656"/>
+        <location filename="mainwindow.cpp" line="429"/>
         <source>Day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3604"/>
-        <location filename="mainwindow.ui" line="3909"/>
+        <location filename="mainwindow.ui" line="3671"/>
+        <location filename="mainwindow.ui" line="3976"/>
         <source>1 day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3609"/>
-        <location filename="mainwindow.ui" line="3914"/>
+        <location filename="mainwindow.ui" line="3676"/>
+        <location filename="mainwindow.ui" line="3981"/>
         <source>2 day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3614"/>
-        <location filename="mainwindow.ui" line="3919"/>
+        <location filename="mainwindow.ui" line="3681"/>
+        <location filename="mainwindow.ui" line="3986"/>
         <source>3 day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3619"/>
-        <location filename="mainwindow.ui" line="3924"/>
+        <location filename="mainwindow.ui" line="3686"/>
+        <location filename="mainwindow.ui" line="3991"/>
         <source>4 day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3624"/>
+        <location filename="mainwindow.ui" line="3691"/>
         <source>5 day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3645"/>
-        <location filename="mainwindow.cpp" line="428"/>
+        <location filename="mainwindow.ui" line="3712"/>
+        <location filename="mainwindow.cpp" line="430"/>
         <source>Month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3660"/>
+        <location filename="mainwindow.ui" line="3727"/>
         <source>1 month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3665"/>
+        <location filename="mainwindow.ui" line="3732"/>
         <source>2 month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3670"/>
+        <location filename="mainwindow.ui" line="3737"/>
         <source>3 month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3675"/>
+        <location filename="mainwindow.ui" line="3742"/>
         <source>4 month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3709"/>
-        <location filename="mainwindow.cpp" line="429"/>
-        <location filename="mainwindow.cpp" line="492"/>
+        <location filename="mainwindow.ui" line="3776"/>
+        <location filename="mainwindow.cpp" line="431"/>
+        <location filename="mainwindow.cpp" line="494"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3798"/>
-        <location filename="mainwindow.cpp" line="430"/>
+        <location filename="mainwindow.ui" line="3865"/>
+        <location filename="mainwindow.cpp" line="432"/>
+        <location filename="mainwindow.cpp" line="2481"/>
         <source>Voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3894"/>
+        <location filename="mainwindow.ui" line="3961"/>
         <source>Meter Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3945"/>
+        <location filename="mainwindow.ui" line="4012"/>
         <source>Enable Poll: Days of week</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3954"/>
+        <location filename="mainwindow.ui" line="4021"/>
         <source>Every day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4025"/>
+        <location filename="mainwindow.ui" line="4092"/>
         <source>Enable Poll: Time Interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4127"/>
+        <location filename="mainwindow.ui" line="4194"/>
         <source>Show/Hide Meter Add Tool</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4140"/>
+        <location filename="mainwindow.ui" line="4211"/>
         <source>Read Hash Summ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4160"/>
-        <location filename="mainwindow.ui" line="4988"/>
-        <location filename="mainwindow.ui" line="5523"/>
-        <source>Always comprss</source>
+        <location filename="mainwindow.ui" line="4235"/>
+        <location filename="mainwindow.ui" line="4661"/>
+        <location filename="mainwindow.ui" line="5126"/>
+        <location filename="mainwindow.ui" line="5679"/>
+        <source>cmprss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4167"/>
-        <source>Read/Write byte</source>
+        <location filename="mainwindow.ui" line="4242"/>
+        <location filename="mainwindow.ui" line="4668"/>
+        <location filename="mainwindow.ui" line="5133"/>
+        <source>max_len</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4195"/>
+        <location filename="mainwindow.ui" line="4533"/>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4631"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Group the sequence of physical quantities.&lt;/p&gt;&lt;p&gt;Only for Voltage profile.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4634"/>
+        <source>Phs. Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4644"/>
+        <source>jns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6043"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6046"/>
+        <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6049"/>
+        <source>F1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4270"/>
         <source>Add/Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4202"/>
+        <location filename="mainwindow.ui" line="4281"/>
         <source>Optional</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4214"/>
+        <location filename="mainwindow.ui" line="4293"/>
         <source>Serial number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4279"/>
+        <location filename="mainwindow.ui" line="4358"/>
         <source>Poll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4286"/>
-        <location filename="mainwindow.cpp" line="787"/>
+        <location filename="mainwindow.ui" line="4365"/>
+        <location filename="mainwindow.cpp" line="760"/>
         <source>On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4311"/>
+        <location filename="mainwindow.ui" line="4390"/>
         <source>Required fields</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4330"/>
+        <location filename="mainwindow.ui" line="4409"/>
         <source>Physical values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4343"/>
+        <location filename="mainwindow.ui" line="4422"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4356"/>
+        <location filename="mainwindow.ui" line="4435"/>
         <source>NI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4363"/>
+        <location filename="mainwindow.ui" line="4442"/>
         <source>E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4373"/>
+        <location filename="mainwindow.ui" line="4456"/>
         <source>Tariff count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4423"/>
-        <location filename="mainwindow.ui" line="4900"/>
-        <location filename="mainwindow.ui" line="5271"/>
+        <location filename="mainwindow.ui" line="4506"/>
+        <location filename="mainwindow.ui" line="5011"/>
+        <location filename="mainwindow.ui" line="5413"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4450"/>
-        <source>Redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="4504"/>
-        <location filename="mainwindow.ui" line="4952"/>
+        <location filename="mainwindow.ui" line="4591"/>
+        <location filename="mainwindow.ui" line="5063"/>
         <source>Show/Hide Data Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4517"/>
-        <location filename="mainwindow.ui" line="4965"/>
+        <location filename="mainwindow.ui" line="4608"/>
+        <location filename="mainwindow.ui" line="5080"/>
         <source>Enable Table Buffering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4540"/>
-        <source>jnstts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="4547"/>
-        <source>Always Comprss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="4554"/>
-        <location filename="mainwindow.ui" line="4995"/>
-        <source>Read len</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="4576"/>
-        <location filename="mainwindow.ui" line="5014"/>
+        <location filename="mainwindow.ui" line="4690"/>
+        <location filename="mainwindow.ui" line="5152"/>
         <source>Select from database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4618"/>
-        <location filename="mainwindow.ui" line="5090"/>
-        <location filename="mainwindow.ui" line="5370"/>
+        <location filename="mainwindow.ui" line="4702"/>
+        <location filename="mainwindow.ui" line="5228"/>
+        <location filename="mainwindow.ui" line="5522"/>
         <source>Time interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4653"/>
-        <location filename="mainwindow.ui" line="4676"/>
-        <location filename="mainwindow.ui" line="5125"/>
-        <location filename="mainwindow.ui" line="5148"/>
-        <location filename="mainwindow.ui" line="5405"/>
-        <location filename="mainwindow.ui" line="5428"/>
+        <location filename="mainwindow.ui" line="4737"/>
+        <location filename="mainwindow.ui" line="4760"/>
+        <location filename="mainwindow.ui" line="5263"/>
+        <location filename="mainwindow.ui" line="5286"/>
+        <location filename="mainwindow.ui" line="5557"/>
+        <location filename="mainwindow.ui" line="5580"/>
         <source>yyyy/MM/dd HH:mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4686"/>
-        <location filename="mainwindow.ui" line="5158"/>
-        <location filename="mainwindow.ui" line="5438"/>
+        <location filename="mainwindow.ui" line="4770"/>
+        <location filename="mainwindow.ui" line="5296"/>
+        <location filename="mainwindow.ui" line="5590"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4711"/>
-        <location filename="mainwindow.ui" line="5028"/>
+        <location filename="mainwindow.ui" line="4792"/>
+        <location filename="mainwindow.ui" line="5166"/>
         <source>Select only Meter NI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4725"/>
-        <location filename="mainwindow.ui" line="5042"/>
+        <location filename="mainwindow.ui" line="4806"/>
+        <location filename="mainwindow.ui" line="5180"/>
         <source>(0,1,2-11)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4773"/>
-        <location filename="mainwindow.ui" line="5174"/>
-        <location filename="mainwindow.ui" line="5454"/>
+        <location filename="mainwindow.ui" line="4854"/>
+        <location filename="mainwindow.ui" line="5316"/>
+        <location filename="mainwindow.ui" line="5610"/>
         <source>Time from now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4789"/>
-        <location filename="mainwindow.ui" line="5190"/>
-        <location filename="mainwindow.ui" line="5470"/>
+        <location filename="mainwindow.ui" line="4870"/>
+        <location filename="mainwindow.ui" line="5332"/>
+        <location filename="mainwindow.ui" line="5626"/>
         <source>Minute(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4794"/>
-        <location filename="mainwindow.ui" line="5195"/>
-        <location filename="mainwindow.ui" line="5475"/>
+        <location filename="mainwindow.ui" line="4875"/>
+        <location filename="mainwindow.ui" line="5337"/>
+        <location filename="mainwindow.ui" line="5631"/>
         <source>Hour(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4799"/>
-        <location filename="mainwindow.ui" line="5200"/>
-        <location filename="mainwindow.ui" line="5480"/>
+        <location filename="mainwindow.ui" line="4880"/>
+        <location filename="mainwindow.ui" line="5342"/>
+        <location filename="mainwindow.ui" line="5636"/>
         <source>Day(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4804"/>
-        <location filename="mainwindow.ui" line="5205"/>
-        <location filename="mainwindow.ui" line="5485"/>
+        <location filename="mainwindow.ui" line="4885"/>
+        <location filename="mainwindow.ui" line="5347"/>
+        <location filename="mainwindow.ui" line="5641"/>
         <source>Month(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4874"/>
-        <location filename="mainwindow.ui" line="5245"/>
+        <location filename="mainwindow.ui" line="4985"/>
+        <location filename="mainwindow.ui" line="5387"/>
         <source>Selected Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5325"/>
-        <location filename="mainwindow.cpp" line="1172"/>
-        <location filename="mainwindow.cpp" line="1416"/>
+        <location filename="mainwindow.ui" line="5103"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5106"/>
+        <source>smpl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5113"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0 - ignore&lt;/p&gt;&lt;p&gt;1 - Remove NI, &lt;/p&gt;&lt;p&gt;2 - Remove NI, evnt_code, &lt;/p&gt;&lt;p&gt;3 - Remove NI, evnt_code, meter_model (show only UCM events), &lt;/p&gt;&lt;p&gt;4 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, &lt;/p&gt;&lt;p&gt;5 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5427"/>
+        <source>Event comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5477"/>
+        <location filename="mainwindow.cpp" line="1148"/>
+        <location filename="mainwindow.cpp" line="1396"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5510"/>
+        <location filename="mainwindow.ui" line="5666"/>
         <source>Table names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5577"/>
+        <location filename="mainwindow.ui" line="5733"/>
         <source>&lt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5584"/>
+        <location filename="mainwindow.ui" line="5740"/>
         <source>&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5604"/>
+        <location filename="mainwindow.ui" line="5760"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5629"/>
+        <location filename="mainwindow.ui" line="5785"/>
         <source>Font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5710"/>
-        <location filename="mainwindow.ui" line="5759"/>
+        <location filename="mainwindow.ui" line="5866"/>
+        <location filename="mainwindow.ui" line="5915"/>
         <source>Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5727"/>
+        <location filename="mainwindow.ui" line="5883"/>
         <source>the quick brown fox jumps over the lazy dog </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5746"/>
+        <location filename="mainwindow.ui" line="5902"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5779"/>
+        <location filename="mainwindow.ui" line="5935"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5850"/>
+        <location filename="mainwindow.ui" line="6007"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5859"/>
+        <location filename="mainwindow.ui" line="6016"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5868"/>
+        <location filename="mainwindow.ui" line="6025"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5877"/>
+        <location filename="mainwindow.ui" line="6034"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="341"/>
+        <location filename="mainwindow.cpp" line="343"/>
         <source>Last R/W: last operation read/wrie to socket&lt;br&gt;Total R/W: total received/sended bytes&lt;br&gt;R/W (NC): uncompressed data (shows how much occupied uncompressed data)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="349"/>
+        <location filename="mainwindow.cpp" line="351"/>
         <source>Not connected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="423"/>
+        <location filename="mainwindow.cpp" line="425"/>
         <source>Model,Serial Number,NI,Memo,Password,On/Off,Physical values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="446"/>
+        <location filename="mainwindow.cpp" line="448"/>
         <source>Active import,Active export,Reactive import,Reactive export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="451"/>
+        <location filename="mainwindow.cpp" line="453"/>
         <source>Voltage,Current,Active Power,Reactive Power,cos φ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="452"/>
+        <location filename="mainwindow.cpp" line="454"/>
         <source>A,B,C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="455"/>
+        <location filename="mainwindow.cpp" line="457"/>
         <source>Phs %1 %2,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="457"/>
+        <location filename="mainwindow.cpp" line="459"/>
         <source>Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="462"/>
-        <location filename="mainwindow.cpp" line="502"/>
+        <location filename="mainwindow.cpp" line="464"/>
+        <location filename="mainwindow.cpp" line="2437"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="489"/>
-        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="491"/>
+        <location filename="mainwindow.cpp" line="497"/>
         <source>Summ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="490"/>
+        <location filename="mainwindow.cpp" line="492"/>
         <source>Tariff 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="491"/>
+        <location filename="mainwindow.cpp" line="493"/>
         <source>T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="497"/>
         <source>Tariff %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="503"/>
+        <location filename="mainwindow.cpp" line="2438"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="504"/>
+        <location filename="mainwindow.cpp" line="2439"/>
         <source>Meter open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="505"/>
+        <location filename="mainwindow.cpp" line="2440"/>
         <source>Klema open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="506"/>
+        <location filename="mainwindow.cpp" line="2441"/>
         <source>Bat. Low</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="507"/>
+        <location filename="mainwindow.cpp" line="2442"/>
         <source>EEPROM Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="508"/>
+        <location filename="mainwindow.cpp" line="2443"/>
         <source>Magnet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="509"/>
+        <location filename="mainwindow.cpp" line="2444"/>
         <source>Hardware Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="510"/>
+        <location filename="mainwindow.cpp" line="2445"/>
         <source>Access</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="511"/>
+        <location filename="mainwindow.cpp" line="2446"/>
         <source>Relay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="512"/>
+        <location filename="mainwindow.cpp" line="2447"/>
         <source>Internal error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="513"/>
+        <location filename="mainwindow.cpp" line="2448"/>
         <source>Date corrected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="514"/>
+        <location filename="mainwindow.cpp" line="2449"/>
         <source>Date need to correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="516"/>
+        <location filename="mainwindow.cpp" line="2451"/>
         <source>Unknown protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="560"/>
+        <location filename="mainwindow.cpp" line="519"/>
         <source>Area,Region,UTC offset,Country,Has DST,Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="573"/>
+        <location filename="mainwindow.cpp" line="532"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="573"/>
+        <location filename="mainwindow.cpp" line="532"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="764"/>
+        <location filename="mainwindow.cpp" line="626"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Matilda Configuration Dev&lt;/p&gt;&lt;p&gt;Version %1&lt;/p&gt;&lt;p&gt;%2 KTS Intek Ltd, %3&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://kts-intek.com.ua&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://kts-intek.com.ua&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="737"/>
         <source>#  Plugin	Create Date and Time		Info		Meter models		RegExp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="784"/>
+        <location filename="mainwindow.cpp" line="757"/>
         <source>%1, UTC offset %2, DST is %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="787"/>
+        <location filename="mainwindow.cpp" line="760"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="793"/>
+        <location filename="mainwindow.cpp" line="766"/>
         <source>%1, Time difference: %2 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="799"/>
+        <location filename="mainwindow.cpp" line="772"/>
         <source>No data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="801"/>
+        <location filename="mainwindow.cpp" line="774"/>
         <source>Device time zone: %1 (%2, %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="807"/>
+        <location filename="mainwindow.cpp" line="780"/>
         <source>Device time zone: n/a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="847"/>
-        <location filename="mainwindow.cpp" line="2107"/>
+        <location filename="mainwindow.cpp" line="823"/>
+        <location filename="mainwindow.cpp" line="2110"/>
         <source>&lt;b&gt;%1&lt;b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="850"/>
-        <location filename="mainwindow.cpp" line="2110"/>
+        <location filename="mainwindow.cpp" line="826"/>
+        <location filename="mainwindow.cpp" line="2113"/>
         <source>&lt;b&gt;%1&lt;b&gt; (Not found!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="946"/>
-        <location filename="mainwindow.cpp" line="984"/>
+        <location filename="mainwindow.cpp" line="922"/>
+        <location filename="mainwindow.cpp" line="960"/>
         <source>Remote host;Day Profile Name;Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="963"/>
-        <location filename="mainwindow.cpp" line="1001"/>
+        <location filename="mainwindow.cpp" line="939"/>
+        <location filename="mainwindow.cpp" line="977"/>
         <source>Name;Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1167"/>
-        <location filename="mainwindow.cpp" line="1411"/>
-        <location filename="mainwindow.cpp" line="1573"/>
-        <location filename="mainwindow.cpp" line="1717"/>
-        <location filename="mainwindow.cpp" line="1807"/>
+        <location filename="mainwindow.cpp" line="1143"/>
+        <location filename="mainwindow.cpp" line="1391"/>
+        <location filename="mainwindow.cpp" line="1555"/>
+        <location filename="mainwindow.cpp" line="1705"/>
+        <location filename="mainwindow.cpp" line="1800"/>
         <location filename="mainwindow.cpp" line="1957"/>
         <source>Corrupted data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1208"/>
+        <location filename="mainwindow.cpp" line="1184"/>
         <source>Corrupted packet!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1318"/>
-        <location filename="mainwindow.cpp" line="1534"/>
-        <location filename="mainwindow.cpp" line="1628"/>
-        <location filename="mainwindow.cpp" line="1776"/>
-        <location filename="mainwindow.cpp" line="1844"/>
+        <location filename="mainwindow.cpp" line="1297"/>
+        <location filename="mainwindow.cpp" line="1516"/>
+        <location filename="mainwindow.cpp" line="1613"/>
+        <location filename="mainwindow.cpp" line="1766"/>
+        <location filename="mainwindow.cpp" line="1840"/>
         <location filename="mainwindow.cpp" line="1961"/>
         <source>Done.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1337"/>
-        <location filename="mainwindow.cpp" line="1646"/>
+        <location filename="mainwindow.cpp" line="1316"/>
+        <location filename="mainwindow.cpp" line="1631"/>
         <source>Total count: %1 values.&lt;br&gt;Last Table ID: %2, Last Meter ID: %3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1364"/>
-        <location filename="mainwindow.cpp" line="1672"/>
+        <location filename="mainwindow.cpp" line="1343"/>
+        <location filename="mainwindow.cpp" line="1657"/>
         <source>No table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1372"/>
-        <location filename="mainwindow.cpp" line="1680"/>
+        <location filename="mainwindow.cpp" line="1351"/>
+        <location filename="mainwindow.cpp" line="1665"/>
         <source>Total count: %1 tables, Downloaded: 0 tables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1388"/>
-        <location filename="mainwindow.cpp" line="1689"/>
+        <location filename="mainwindow.cpp" line="1368"/>
+        <location filename="mainwindow.cpp" line="1677"/>
         <source>Selected: %1 tables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1538"/>
+        <location filename="mainwindow.cpp" line="1520"/>
         <source>Total count: %1 tables, %2: %3 tables.&lt;br&gt;Block: %4, Last ID: %5.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1539"/>
-        <location filename="mainwindow.cpp" line="1780"/>
+        <location filename="mainwindow.cpp" line="1521"/>
+        <location filename="mainwindow.cpp" line="1770"/>
         <source>Parsed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1539"/>
-        <location filename="mainwindow.cpp" line="1780"/>
+        <location filename="mainwindow.cpp" line="1521"/>
+        <location filename="mainwindow.cpp" line="1770"/>
         <source>Downloaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1779"/>
+        <location filename="mainwindow.cpp" line="1769"/>
         <source>Total count: %1 tables, %2: %3 tables.&lt;br&gt;Block: %4, Last RowID: %5.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1798"/>
+        <location filename="mainwindow.cpp" line="1788"/>
         <source>Model,NI,Serial Number,Memo,Password,On/Off,Physical values,Tariff Count,Meter Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1833"/>
+        <location filename="mainwindow.cpp" line="1827"/>
         <source>Total count: %1 meters, Downloaded: %2 meters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1914"/>
+        <location filename="mainwindow.cpp" line="1910"/>
         <source>Hash alg.: %1
    Table name   	  Hash summ(base64)  	Hash summ (hex)  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1922"/>
+        <location filename="mainwindow.cpp" line="1918"/>
         <source>Corrupted data. Ignoring...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1938"/>
+        <location filename="mainwindow.cpp" line="1934"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1988"/>
+        <location filename="mainwindow.cpp" line="1991"/>
         <source>Total count: %1 meters, Uploaded: %2 meters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="2003"/>
-        <location filename="mainwindow.cpp" line="2030"/>
-        <source>Command %1. Database not opened.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="2004"/>
-        <location filename="mainwindow.cpp" line="2031"/>
-        <source>Command %1. Incorrect request.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="2005"/>
-        <location filename="mainwindow.cpp" line="2032"/>
-        <source>Command %1. Internal error.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2006"/>
         <location filename="mainwindow.cpp" line="2033"/>
+        <source>Command %1. Database not opened.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2007"/>
+        <location filename="mainwindow.cpp" line="2034"/>
+        <source>Command %1. Incorrect request.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2008"/>
+        <location filename="mainwindow.cpp" line="2035"/>
+        <source>Command %1. Internal error.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2009"/>
+        <location filename="mainwindow.cpp" line="2036"/>
         <source>Command %1. Data not found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="2010"/>
-        <location filename="mainwindow.cpp" line="2037"/>
-        <source>Command %1. Table count limit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="2011"/>
-        <location filename="mainwindow.cpp" line="2038"/>
-        <source>Command %1. Corrupted data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="2012"/>
-        <location filename="mainwindow.cpp" line="2039"/>
-        <source>Command %1. Duplicating NI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2013"/>
         <location filename="mainwindow.cpp" line="2040"/>
-        <source>Command %1. Duplicating SN</source>
+        <source>Command %1. Table count limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2014"/>
         <location filename="mainwindow.cpp" line="2041"/>
-        <source>Command %1. Date not valid</source>
+        <source>Command %1. Corrupted data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2015"/>
-        <location filename="mainwindow.cpp" line="2016"/>
-        <location filename="mainwindow.cpp" line="2017"/>
         <location filename="mainwindow.cpp" line="2042"/>
+        <source>Command %1. Duplicating NI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2016"/>
         <location filename="mainwindow.cpp" line="2043"/>
+        <source>Command %1. Duplicating SN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2017"/>
         <location filename="mainwindow.cpp" line="2044"/>
+        <source>Command %1. Date not valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2018"/>
+        <location filename="mainwindow.cpp" line="2019"/>
+        <location filename="mainwindow.cpp" line="2020"/>
+        <location filename="mainwindow.cpp" line="2045"/>
+        <location filename="mainwindow.cpp" line="2046"/>
+        <location filename="mainwindow.cpp" line="2047"/>
         <source>Command %1. Command not allowed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2020"/>
-        <location filename="mainwindow.cpp" line="2047"/>
+        <location filename="mainwindow.cpp" line="2023"/>
+        <location filename="mainwindow.cpp" line="2050"/>
         <source>Command %1. Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2021"/>
-        <location filename="mainwindow.cpp" line="2048"/>
+        <location filename="mainwindow.cpp" line="2024"/>
+        <location filename="mainwindow.cpp" line="2051"/>
         <source>Command %1. Unknown error. Error code: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2051"/>
+        <location filename="mainwindow.cpp" line="2054"/>
         <source>&lt;br&gt;Device: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2056"/>
+        <location filename="mainwindow.cpp" line="2059"/>
         <source>The meter list hash summ is %1 (base64)&lt;br&gt;%2(hex)&lt;br&gt;Alg.: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2071"/>
+        <location filename="mainwindow.cpp" line="2074"/>
         <source>Total count: %1 tables, Deleted: %2 tables.&lt;br&gt;Speed: %3 tables per secound.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2145"/>
+        <location filename="mainwindow.cpp" line="2148"/>
         <source>Meter Address;Modem Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2171"/>
-        <location filename="mainwindow.cpp" line="2208"/>
+        <location filename="mainwindow.cpp" line="2174"/>
+        <location filename="mainwindow.cpp" line="2211"/>
         <source>No answer from device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2243"/>
+        <location filename="mainwindow.cpp" line="2246"/>
         <source>Last R/W: %1/%2 bytes, R/W (NC): %3/%4; Total R/W: %5/%6, R/W (NC): %7/%8, Saving: %9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2278"/>
+        <location filename="mainwindow.cpp" line="2281"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2686"/>
+        <location filename="mainwindow.cpp" line="2454"/>
+        <source>No event for this day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2455"/>
+        <source>Meter done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2482"/>
+        <source>Changed configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2483"/>
+        <source>Climate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2484"/>
+        <source>Metering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2485"/>
+        <source>DST state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2487"/>
+        <source>Parameters fault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2489"/>
+        <source>Billing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2490"/>
+        <source>Module open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2494"/>
+        <source>Need to correct time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2495"/>
+        <source>Correct time: error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2496"/>
+        <source>Correct time: done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2791"/>
         <source>Device disconnected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2870"/>
-        <location filename="mainwindow.cpp" line="2890"/>
+        <location filename="mainwindow.cpp" line="2970"/>
+        <location filename="mainwindow.cpp" line="2990"/>
         <source>IP: %1, Port: %2, Login: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3080"/>
-        <location filename="mainwindow.cpp" line="3101"/>
-        <location filename="mainwindow.cpp" line="3197"/>
-        <location filename="mainwindow.cpp" line="3218"/>
-        <location filename="mainwindow.cpp" line="3323"/>
-        <location filename="mainwindow.cpp" line="3345"/>
-        <location filename="mainwindow.cpp" line="3410"/>
-        <location filename="mainwindow.cpp" line="3431"/>
+        <location filename="mainwindow.cpp" line="3185"/>
+        <location filename="mainwindow.cpp" line="3206"/>
+        <location filename="mainwindow.cpp" line="3318"/>
+        <location filename="mainwindow.cpp" line="3339"/>
+        <location filename="mainwindow.cpp" line="3465"/>
+        <location filename="mainwindow.cpp" line="3487"/>
+        <location filename="mainwindow.cpp" line="3561"/>
+        <location filename="mainwindow.cpp" line="3582"/>
         <source>The time interval is incorrect.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3110"/>
-        <location filename="mainwindow.cpp" line="3227"/>
-        <location filename="mainwindow.cpp" line="3354"/>
-        <location filename="mainwindow.cpp" line="3440"/>
+        <location filename="mainwindow.cpp" line="3215"/>
+        <location filename="mainwindow.cpp" line="3348"/>
+        <location filename="mainwindow.cpp" line="3496"/>
+        <location filename="mainwindow.cpp" line="3591"/>
         <source>Can&apos;t calculte date.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3121"/>
-        <location filename="mainwindow.cpp" line="3238"/>
+        <location filename="mainwindow.cpp" line="3226"/>
+        <location filename="mainwindow.cpp" line="3359"/>
         <source>The tariff list is empty.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3133"/>
-        <location filename="mainwindow.cpp" line="3250"/>
+        <location filename="mainwindow.cpp" line="3258"/>
+        <location filename="mainwindow.cpp" line="3392"/>
         <source>The energy list is empty.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3146"/>
-        <location filename="mainwindow.cpp" line="3261"/>
-        <location filename="mainwindow.cpp" line="3362"/>
+        <location filename="mainwindow.cpp" line="3271"/>
+        <location filename="mainwindow.cpp" line="3403"/>
+        <location filename="mainwindow.cpp" line="3504"/>
         <source>The NI filter: incorrect data.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3448"/>
+        <location filename="mainwindow.cpp" line="3599"/>
         <source>Table list is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3490"/>
+        <location filename="mainwindow.cpp" line="3641"/>
         <source>APN is empty. This will disable the GPRS modem!. Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3519"/>
+        <location filename="mainwindow.cpp" line="3673"/>
         <source>Priority: duplicate values.&lt;br&gt;Please fill the fields priorities unique values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3605"/>
+        <location filename="mainwindow.cpp" line="3759"/>
         <source>Days of week is empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3618"/>
+        <location filename="mainwindow.cpp" line="3772"/>
         <source>You really want to clear the list of electric meters?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3795"/>
+        <location filename="mainwindow.cpp" line="3957"/>
         <source>Statistic of exchange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3796"/>
+        <location filename="mainwindow.cpp" line="3958"/>
         <source>CSV Files(*.csv</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3803"/>
+        <location filename="mainwindow.cpp" line="3965"/>
         <source>Statistic of exchange;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3861"/>
+        <location filename="mainwindow.cpp" line="4023"/>
         <source>Model: invalid index.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3868"/>
+        <location filename="mainwindow.cpp" line="4030"/>
         <source>NI is empty.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3880"/>
+        <location filename="mainwindow.cpp" line="4042"/>
         <source>Physical values: invalid index.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3887"/>
+        <location filename="mainwindow.cpp" line="4049"/>
         <source>MAX_METER_COUNT=%1.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3896"/>
+        <location filename="mainwindow.cpp" line="4058"/>
         <source>The meter with SN: %1, already exists. Replace?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3907"/>
+        <location filename="mainwindow.cpp" line="4069"/>
         <source>The meter with NI: %1, already exists. Replace?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4007"/>
+        <location filename="mainwindow.cpp" line="4169"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4008"/>
+        <location filename="mainwindow.cpp" line="4170"/>
         <source>Selected: poll on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4009"/>
+        <location filename="mainwindow.cpp" line="4171"/>
         <source>Selected: poll off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4012"/>
+        <location filename="mainwindow.cpp" line="4174"/>
         <source>Selected: insert to list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4013"/>
+        <location filename="mainwindow.cpp" line="4175"/>
         <source>Selected: insert to list with Poll off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4014"/>
+        <location filename="mainwindow.cpp" line="4176"/>
         <source>Selected: insert to list with Poll on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4015"/>
+        <location filename="mainwindow.cpp" line="4177"/>
         <source>Selected: delete from list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4018"/>
+        <location filename="mainwindow.cpp" line="4180"/>
         <source>Delete selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4085"/>
+        <location filename="mainwindow.cpp" line="4247"/>
         <source>Max size is 50. Meter count is %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4118"/>
-        <location filename="mainwindow.cpp" line="4147"/>
-        <location filename="mainwindow.cpp" line="4176"/>
+        <location filename="mainwindow.cpp" line="4280"/>
+        <location filename="mainwindow.cpp" line="4309"/>
+        <location filename="mainwindow.cpp" line="4338"/>
         <source>Max size is %1. Meter count is %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4179"/>
+        <location filename="mainwindow.cpp" line="4341"/>
         <source>R U really want to delete this meter from list?&lt;br&gt;This will be delete this meter directly from remote device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4361"/>
-        <location filename="mainwindow.cpp" line="4524"/>
+        <location filename="mainwindow.cpp" line="4523"/>
+        <location filename="mainwindow.cpp" line="4686"/>
         <source>No day profile&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4366"/>
-        <location filename="mainwindow.cpp" line="4393"/>
-        <location filename="mainwindow.cpp" line="4531"/>
-        <location filename="mainwindow.cpp" line="4558"/>
+        <location filename="mainwindow.cpp" line="4528"/>
+        <location filename="mainwindow.cpp" line="4555"/>
+        <location filename="mainwindow.cpp" line="4693"/>
+        <location filename="mainwindow.cpp" line="4720"/>
         <source>remote address not found&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4396"/>
-        <location filename="mainwindow.cpp" line="4561"/>
+        <location filename="mainwindow.cpp" line="4558"/>
+        <location filename="mainwindow.cpp" line="4723"/>
         <source>remote port not found&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4399"/>
-        <location filename="mainwindow.cpp" line="4437"/>
-        <location filename="mainwindow.cpp" line="4601"/>
+        <location filename="mainwindow.cpp" line="4561"/>
+        <location filename="mainwindow.cpp" line="4599"/>
+        <location filename="mainwindow.cpp" line="4763"/>
         <source>Max. client count is %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4411"/>
-        <location filename="mainwindow.cpp" line="4576"/>
+        <location filename="mainwindow.cpp" line="4573"/>
+        <location filename="mainwindow.cpp" line="4738"/>
         <source>Add remote host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4411"/>
-        <location filename="mainwindow.cpp" line="4576"/>
+        <location filename="mainwindow.cpp" line="4573"/>
+        <location filename="mainwindow.cpp" line="4738"/>
         <source>This address already exists.&lt;br&gt;Overwrite?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4446"/>
-        <location filename="mainwindow.cpp" line="4611"/>
+        <location filename="mainwindow.cpp" line="4608"/>
+        <location filename="mainwindow.cpp" line="4773"/>
         <source>Name is empty&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4449"/>
-        <location filename="mainwindow.cpp" line="4614"/>
+        <location filename="mainwindow.cpp" line="4611"/>
+        <location filename="mainwindow.cpp" line="4776"/>
         <source>All days disabled&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4452"/>
-        <location filename="mainwindow.cpp" line="4515"/>
-        <location filename="mainwindow.cpp" line="4617"/>
+        <location filename="mainwindow.cpp" line="4614"/>
+        <location filename="mainwindow.cpp" line="4677"/>
+        <location filename="mainwindow.cpp" line="4779"/>
         <source>Max. profile count is %1&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4466"/>
-        <location filename="mainwindow.cpp" line="4631"/>
+        <location filename="mainwindow.cpp" line="4628"/>
+        <location filename="mainwindow.cpp" line="4793"/>
         <source>Add day profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4466"/>
-        <location filename="mainwindow.cpp" line="4631"/>
+        <location filename="mainwindow.cpp" line="4628"/>
+        <location filename="mainwindow.cpp" line="4793"/>
         <source>This name already exists.&lt;br&gt;Overwrite?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4564"/>
+        <location filename="mainwindow.cpp" line="4726"/>
         <source>Max. client count is %1&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4679"/>
+        <location filename="mainwindow.cpp" line="4841"/>
         <source>Max. profile count is %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4832"/>
+        <location filename="mainwindow.cpp" line="4994"/>
         <source>Meter address not valid: can&apos;t convert from HEX&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4841"/>
+        <location filename="mainwindow.cpp" line="5003"/>
         <source>Modem address not valid: can&apos;t convert from HEX&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4845"/>
+        <location filename="mainwindow.cpp" line="5007"/>
         <source>Meter Address not valid&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4848"/>
+        <location filename="mainwindow.cpp" line="5010"/>
         <source>Modem Address not valid&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4860"/>
+        <location filename="mainwindow.cpp" line="5022"/>
         <source>The meter address %1 is already exists. Replace?</source>
         <translation type="unfinished"></translation>
     </message>

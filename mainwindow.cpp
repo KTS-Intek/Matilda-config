@@ -593,6 +593,8 @@ void MainWindow::initializeMatilda()
     ui->cbZigBeePortSpeed->setCurrentIndex(-1);
 
     joingStts = false;
+    joinSttsVerticalLine = false;
+    smplMeterJrnlVerticalLine = false;
 
      QVariantHash connHashG = SettLoader::loadSett(SETT_LOLO_TOTO).toHash();
 
@@ -1227,6 +1229,9 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             QStringList list = varList2strList(listVarData.at(hashIndex).toList());
 
             if(joingStts){
+                if(joinSttsVerticalLine && !list.isEmpty())
+                    list = list.first().split("|");
+
                 //відновлюю нормальний вигляд статусів, так проще)
                 QStringList list2;
                 for(int i = 0, iMax = list.size(); i < iMax; i++){
@@ -1352,7 +1357,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
                 if(lDevInfo->matildaDev.protocolVersion == MATILDA_PROTOCOL_VERSION_V2 && ui->cbChop->isChecked())
                     jobj.insert("jns", ui->sbJns->value());
 
-                joingStts = jobj.value("jns").toBool();
+                joingStts = (jobj.value("jns").toInt() > 0);
+                joinSttsVerticalLine = (jobj.value("jns").toInt() > 4);//5 && 6
 
                 lastTableRowId = 0;
                 jobj.insert("lRwId", QString::number(lastTableRowId));
@@ -1437,6 +1443,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
             QStringList list = varList2strList(listVarData.at(hashIndex).toList());// hash.value(QString::number(hashIndex)).toStringList();
 
             if(joingStts){
+                if(joinSttsVerticalLine && !list.isEmpty())
+                    list = list.first().split("|");
                 //відновлюю нормальний вигляд статусів, так проще)
                 QStringList list2;
                 for(int i = 0, iMax = list.size(); i < iMax; i++){
@@ -1517,7 +1525,7 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             jobj.insert("table", lastTableList.first());
             jobj.insert("lRwId", QString::number(lastRowId));
-            jobj.insert("jns", joingStts);
+            jobj.insert("jns", ui->sbJns->value());
 
 //            emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, h);
             emit data2matilda(COMMAND_READ_DATABASE_GET_VAL, jobj);
@@ -1568,6 +1576,9 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             QString meterSN("");
             QStringList list = varList2strList(listVarData.at(hashIndex).toList());// h.value(QString::number(hashIndex)).toStringList();
+            if(smplMeterJrnlVerticalLine && !list.isEmpty())
+                list = list.first().split("|");
+
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -1714,6 +1725,8 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
             QString meterSN("");
             QStringList list = varList2strList(listVarData.at(hashIndex).toList());// h.value(QString::number(hashIndex)).toStringList();
+            if(smplMeterJrnlVerticalLine && !list.isEmpty())
+                list = list.first().split("|");
             for(int i = 0; i < columnListSize; i++){
                 QString str("");
                 if(!list.isEmpty())
@@ -1816,8 +1829,10 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
              jobj = QJsonObject();
              jobj.insert("i", lastIndx);
-             jobj.insert("max_len", ui->sbReadWriteMeterLen->value());
-             jobj.insert("cmprss", ui->cbCmprssMeterList->isChecked());
+             if(ui->sbReadWriteMeterLen->value() > 0)
+                 jobj.insert("max_len", ui->sbReadWriteMeterLen->value());
+             if(ui->cbCmprssMeterList->isChecked())
+                 jobj.insert("cmprss", ui->cbCmprssMeterList->isChecked());
              emit data2matilda(COMMAND_READ_METER_LIST_FRAMED, jobj);
 
         }else{
@@ -2558,7 +2573,7 @@ void MainWindow::setActiveProtocolVersion(int protocolVersion)
 
     ui->cbxEvSmpl->setEnabled(allowObjV2);
     ui->sbEvSmpl->setValue(5);
-    ui->sbEvSmpl->setEnabled(allowObjV2);
+    ui->sbEvSmpl->setEnabled(allowObjV2 && ui->cbxEvSmpl->isChecked());
     ui->tbEvComment2txt->setEnabled(allowObjV2);
     ui->tbEvComment2txt->setChecked(false);
 
@@ -2874,8 +2889,10 @@ void MainWindow::loadLanguage(const QString &rLanguage)
         qDebug() << "loadLang " << currLang;
         // load the new translator
 //        saveGuiState.clear();
+        bool rez = false;
         if(translator.load(QString("%1/lang/%2").arg(langPath).arg( QString("lang_%1.qm").arg(rLanguage)))){
-            qApp->installTranslator(&translator);
+             rez = qApp->installTranslator(&translator);
+             qDebug() << "translator " << rez;
         }else
             qDebug() << "errr load " << QString("%1/lang/%2").arg(langPath).arg( QString("lang_%1.qm").arg(rLanguage));
     }
@@ -3111,8 +3128,10 @@ void MainWindow::on_pbRead_clicked()
         modelAddMeter->clear();
         ui->leAddMeterFilter->clear();
         jobj.insert("i", -1);
-        jobj.insert("max_len", ui->sbReadWriteMeterLen->value());
-        jobj.insert("cmprss", ui->cbCmprssMeterList->isChecked());
+        if(ui->sbReadWriteMeterLen->value() > 0)
+            jobj.insert("max_len", ui->sbReadWriteMeterLen->value());
+        if(ui->cbCmprssMeterList->isChecked())
+            jobj.insert("cmprss", ui->cbCmprssMeterList->isChecked());
         break;}
 
     case COMMAND_READ_POLL_STATISTIC:{
@@ -3146,13 +3165,16 @@ void MainWindow::on_pbRead_clicked()
         quint8 code = modelProfile4DB->itemData(ui->lvMeterDataProfile->currentIndex()).value(Qt::UserRole + 1).toUInt();
 
         jobj.insert("code", code);
-        jobj.insert("cmprss", ui->cbCmprssDb->isChecked());
-        jobj.insert("max_len", ui->sbReadData->value());
+        if(ui->cbCmprssDb->isChecked())
+            jobj.insert("cmprss", ui->cbCmprssDb->isChecked());
+        if(ui->sbReadData->value() > 0)
+            jobj.insert("max_len", ui->sbReadData->value());
 
         if(lDevInfo->matildaDev.protocolVersion == MATILDA_PROTOCOL_VERSION_V2 && ui->cbChop->isChecked())
             jobj.insert("jns", ui->sbJns->value());
 
-        joingStts = jobj.value("jns").toBool();
+        joingStts = (jobj.value("jns").toInt() > 0);
+        joinSttsVerticalLine = (jobj.value("jns").toInt() > 4);//5 && 6
 
         allowDate2utc = (code == POLL_CODE_READ_CURRENT || code == POLL_CODE_READ_VOLTAGE || code == POLL_CODE_READ_POWER);
 
@@ -3214,6 +3236,26 @@ void MainWindow::on_pbRead_clicked()
             if(modelPhVal4DB->item(realRow)->checkState() == Qt::Checked)
                 listEnrg.append(modelPhVal4DB->item(realRow)->data().toString());
         }
+
+        if(code == POLL_CODE_READ_VOLTAGE && ui->cbxGroupPhase->isChecked()){
+            QStringList l = listEnrg;
+            listEnrg.clear();
+            QStringList listPhase = QString("A B C").split(" ");
+
+            if(l.contains("F"))
+                listEnrg.append("F");
+
+            QStringList enrg = QString("U I P cos_f Q").split(" ");
+
+            for(int i = 0, iMax = listPhase.size(), jMax = enrg.size(); i < iMax; i++){
+                for(int j = 0; j < jMax; j++){
+                    QString e = enrg.at(j) + listPhase.at(i);
+                    if(l.contains(e))
+                        listEnrg.append(e);
+                }
+            }
+        }
+
         if(listEnrg.isEmpty())
             mess.append(tr("The energy list is empty.<br>"));
         else
@@ -3235,10 +3277,6 @@ void MainWindow::on_pbRead_clicked()
 
             if(jobj.value("ni").toString().isEmpty())
                 jobj.remove("ni");
-            if(jobj.value("max_len").toInt() == 0)
-                jobj.remove("max_len");
-            if(!jobj.value("cmprss").toBool())
-                jobj.remove("cmprss");
 
             lastTableList.clear();
             doneTables = 0;
@@ -3331,6 +3369,27 @@ void MainWindow::on_pbRead_clicked()
             if(modelPhVal4DB->item(realRow)->checkState() == Qt::Checked)
                 listEnrg.append(modelPhVal4DB->item(realRow)->data().toString());
         }
+
+        if(code == POLL_CODE_READ_VOLTAGE && ui->cbxGroupPhase->isChecked()){
+            QStringList l = listEnrg;
+            listEnrg.clear();
+            QStringList listPhase = QString("A B C").split(" ");
+
+            if(l.contains("F"))
+                listEnrg.append("F");
+
+
+            QStringList enrg = QString("P U I cos_f Q").split(" ");
+
+            for(int i = 0, iMax = listPhase.size(), jMax = enrg.size(); i < iMax; i++){
+                for(int j = 0; j < jMax; j++){
+                    QString e = enrg.at(j) + listPhase.at(i);
+                    if(l.contains(e))
+                        listEnrg.append(e);
+                }
+            }
+        }
+
         if(listEnrg.isEmpty())
             mess.append(tr("The energy list is empty.<br>"));
         else
@@ -3354,16 +3413,15 @@ void MainWindow::on_pbRead_clicked()
             QVariantHash  hashMemoWrite2 = jobj.toVariantHash();
             this->hashMemoWrite.insert(COMMAND_READ_DATABASE_GET_TABLES, hashMemoWrite);
 
-            hashMemoWrite2.insert("max_len", ui->sbReadData->value());
-            hashMemoWrite2.insert("cmprss", ui->cbCmprssDb->isChecked());
+            if(ui->sbReadData->value() > 0)
+                hashMemoWrite2.insert("max_len", ui->sbReadData->value());
+            if(ui->cbCmprssDb->isChecked())
+                hashMemoWrite2.insert("cmprss", ui->cbCmprssDb->isChecked());
 
 
             if(hashMemoWrite2.value("ni").toString().isEmpty())
                 hashMemoWrite2.remove("ni");
-            if(hashMemoWrite2.value("max_len").toInt() == 0)
-                hashMemoWrite2.remove("max_len");
-            if(!hashMemoWrite2.value("cmprss").toBool())
-                hashMemoWrite2.remove("cmprss");
+
 
             this->hashMemoWrite.insert(COMMAND_READ_DATABASE_GET_VAL, hashMemoWrite2);
         }else{
@@ -3396,8 +3454,10 @@ void MainWindow::on_pbRead_clicked()
 
         jobj.insert("code", codeL.join(","));
 
-        jobj.insert("max_len", ui->sbReadLenML->value());
-        jobj.insert("cmprss", ui->cbCmprssMeterLog->isChecked());
+        if(ui->sbReadLenML->value() > 0)
+            jobj.insert("max_len", ui->sbReadLenML->value());
+        if(ui->cbCmprssMeterLog->isChecked())
+            jobj.insert("cmprss", ui->cbCmprssMeterLog->isChecked());
         if(ui->gbMeterDataFromTo_2->isChecked()){
 
             jobj.insert("FromDT", ui->dteMeterDataFrom_2->dateTime().toUTC().toString("yyyy-MM-dd hh:mm:ss"));
@@ -3447,8 +3507,12 @@ void MainWindow::on_pbRead_clicked()
 
          jobj.insert("lRwId", (qint64)0);
 
-         if(ui->cbxEvSmpl->isEnabled() && ui->cbxEvSmpl->isChecked())
+         if(ui->cbxEvSmpl->isEnabled() && ui->cbxEvSmpl->isChecked()){
              jobj.insert("smpl", ui->sbEvSmpl->value());
+             smplMeterJrnlVerticalLine = (ui->sbEvSmpl->value() > 5);
+         }else{
+             smplMeterJrnlVerticalLine = false;
+         }
         ui->tvMeterDataPollData_2->resizeColumnsToContents();
         if(mess.isEmpty()){
             lastTableList.clear();
@@ -3477,6 +3541,7 @@ void MainWindow::on_pbRead_clicked()
         //????
         QString mess;
 
+        if(ui->cbCmprssHsh->isChecked())
         jobj.insert("cmprss", ui->cbCmprssHsh->isChecked());
         jobj.insert("hsh", ui->cbHashSumm_2->currentText());
 
@@ -5184,4 +5249,38 @@ void MainWindow::on_actionHelp_triggered()
 void MainWindow::on_cbChop_toggled(bool checked)
 {
     ui->sbJns->setEnabled(checked && ui->cbChop->isEnabled());
+}
+
+void MainWindow::on_pbAddMeterHideShow_clicked(bool checked)
+{
+    ui->widget->setVisible(checked);
+}
+
+void MainWindow::on_cbxEvSmpl_toggled(bool checked)
+{
+    ui->sbEvSmpl->setEnabled(checked);
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if(0 != event) {
+        switch(event->type()) {
+        // this event is send if a translator is loaded
+        case QEvent::LanguageChange: {
+
+                ui->retranslateUi(this);
+                qDebug() << "font " << qApp->font().family() << qApp->font().pointSize() ;
+
+
+            break; }
+        // this event is send, if the system, language changes
+        case QEvent::LocaleChange: {
+                QString locale = QLocale::system().name();
+                locale.truncate(locale.lastIndexOf('_'));
+                loadLanguage(locale);
+            break;}
+            default: break;
+        }
+    }
+    QMainWindow::changeEvent(event);
 }

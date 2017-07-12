@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1237</width>
-    <height>634</height>
+    <width>1579</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -757,8 +757,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>756</width>
-                 <height>541</height>
+                 <width>982</width>
+                 <height>612</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -786,7 +786,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>24</number>
+                   <number>23</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>
@@ -2028,6 +2028,10 @@
                          <property name="text">
                           <string>Open</string>
                          </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-yellow.svg</normaloff>:/katynko/svg/flag-yellow.svg</iconset>
+                         </property>
                          <property name="checkable">
                           <bool>true</bool>
                          </property>
@@ -2110,6 +2114,10 @@
                          <property name="text">
                           <string>x</string>
                          </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
+                         </property>
                          <property name="autoRaise">
                           <bool>false</bool>
                          </property>
@@ -2141,6 +2149,13 @@
                           <widget class="QToolButton" name="tbAdd2SvahaService_2">
                            <property name="text">
                             <string>Add</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="res.qrc">
+                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
+                           </property>
+                           <property name="toolButtonStyle">
+                            <enum>Qt::ToolButtonTextBesideIcon</enum>
                            </property>
                            <property name="autoRaise">
                             <bool>false</bool>
@@ -2200,6 +2215,10 @@
                          </property>
                          <property name="text">
                           <string>x</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
                          </property>
                          <property name="autoRaise">
                           <bool>false</bool>
@@ -2354,6 +2373,13 @@
                            <property name="text">
                             <string>Add</string>
                            </property>
+                           <property name="icon">
+                            <iconset resource="res.qrc">
+                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
+                           </property>
+                           <property name="toolButtonStyle">
+                            <enum>Qt::ToolButtonTextBesideIcon</enum>
+                           </property>
                            <property name="autoRaise">
                             <bool>false</bool>
                            </property>
@@ -2492,6 +2518,10 @@
                          <property name="text">
                           <string>x</string>
                          </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
+                         </property>
                          <property name="autoRaise">
                           <bool>false</bool>
                          </property>
@@ -2523,6 +2553,13 @@
                           <widget class="QToolButton" name="tbAdd2SvahaService">
                            <property name="text">
                             <string>Add</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="res.qrc">
+                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
+                           </property>
+                           <property name="toolButtonStyle">
+                            <enum>Qt::ToolButtonTextBesideIcon</enum>
                            </property>
                            <property name="autoRaise">
                             <bool>false</bool>
@@ -2741,6 +2778,10 @@
                          <property name="text">
                           <string>x</string>
                          </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
+                         </property>
                          <property name="autoRaise">
                           <bool>false</bool>
                          </property>
@@ -2752,6 +2793,13 @@
                           <widget class="QToolButton" name="tbAddDayProfile">
                            <property name="text">
                             <string>Add</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="res.qrc">
+                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
+                           </property>
+                           <property name="toolButtonStyle">
+                            <enum>Qt::ToolButtonTextBesideIcon</enum>
                            </property>
                            <property name="autoRaise">
                             <bool>false</bool>
@@ -2874,6 +2922,10 @@
                          <property name="text">
                           <string>Daemon Restart</string>
                          </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-red.svg</normaloff>:/katynko/svg/flag-red.svg</iconset>
+                         </property>
                          <property name="flat">
                           <bool>false</bool>
                          </property>
@@ -2883,6 +2935,10 @@
                         <widget class="QPushButton" name="pbReboot">
                          <property name="text">
                           <string>Reboot</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-red.svg</normaloff>:/katynko/svg/flag-red.svg</iconset>
                          </property>
                          <property name="flat">
                           <bool>false</bool>
@@ -2894,12 +2950,20 @@
                          <property name="text">
                           <string>Restart GSM</string>
                          </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-yellow.svg</normaloff>:/katynko/svg/flag-yellow.svg</iconset>
+                         </property>
                         </widget>
                        </item>
                        <item>
                         <widget class="QPushButton" name="pbResetEmbee">
                          <property name="text">
                           <string>Restart Embee</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-yellow.svg</normaloff>:/katynko/svg/flag-yellow.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -2947,6 +3011,10 @@
                           <widget class="QPushButton" name="pbDevCommands">
                            <property name="text">
                             <string>Read</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="res.qrc">
+                             <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
                            </property>
                           </widget>
                          </item>
@@ -3018,12 +3086,20 @@
                          <property name="text">
                           <string>Read</string>
                          </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
+                         </property>
                         </widget>
                        </item>
                        <item>
                         <widget class="QPushButton" name="pbWriteUdp">
                          <property name="text">
                           <string>Write</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-red.svg</normaloff>:/katynko/svg/flag-red.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -3067,6 +3143,10 @@
                         <widget class="QPushButton" name="pbReadSn">
                          <property name="text">
                           <string>Read</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -3379,8 +3459,8 @@
                        <string>Add</string>
                       </property>
                       <property name="icon">
-                       <iconset>
-                        <normaloff>:/img/img/edit_add.png</normaloff>:/img/img/edit_add.png</iconset>
+                       <iconset resource="res.qrc">
+                        <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
                       </property>
                      </widget>
                     </item>
@@ -3413,6 +3493,10 @@
                         </property>
                         <property name="text">
                          <string>Del</string>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="res.qrc">
+                          <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
                         </property>
                        </widget>
                       </item>
@@ -4109,6 +4193,10 @@
                         <property name="text">
                          <string>Show/Hide Meter Add Tool</string>
                         </property>
+                        <property name="icon">
+                         <iconset resource="res.qrc">
+                          <normaloff>:/katynko/svg2/arrow-up-double.svg</normaloff>:/katynko/svg2/arrow-up-double.svg</iconset>
+                        </property>
                         <property name="checkable">
                          <bool>true</bool>
                         </property>
@@ -4121,6 +4209,10 @@
                        <widget class="QPushButton" name="pbReadHashSumm">
                         <property name="text">
                          <string>Read Hash Summ</string>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="res.qrc">
+                          <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
                         </property>
                        </widget>
                       </item>
@@ -4140,14 +4232,14 @@
                       <item>
                        <widget class="QCheckBox" name="cbCmprssMeterList">
                         <property name="text">
-                         <string>Always comprss</string>
+                         <string>cmprss</string>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="label_17">
                         <property name="text">
-                         <string>Read/Write byte</string>
+                         <string>max_len</string>
                         </property>
                        </widget>
                       </item>
@@ -4176,6 +4268,10 @@
                         <widget class="QPushButton" name="pbAddMeter">
                          <property name="text">
                           <string>Add/Change</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="res.qrc">
+                           <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -4345,6 +4441,10 @@
                             <property name="text">
                              <string>E</string>
                             </property>
+                            <property name="icon">
+                             <iconset resource="res.qrc">
+                              <normaloff>:/katynko/svg/document-edit.svg</normaloff>:/katynko/svg/document-edit.svg</iconset>
+                            </property>
                            </widget>
                           </item>
                           <item row="0" column="1">
@@ -4430,7 +4530,11 @@
                       <item>
                        <widget class="QPushButton" name="pbRedo">
                         <property name="text">
-                         <string>Redo</string>
+                         <string>Undo</string>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="res.qrc">
+                          <normaloff>:/katynko/svg/edit-undo.svg</normaloff>:/katynko/svg/edit-undo.svg</iconset>
                         </property>
                        </widget>
                       </item>
@@ -4486,6 +4590,10 @@
                         <property name="text">
                          <string>Show/Hide Data Filter</string>
                         </property>
+                        <property name="icon">
+                         <iconset resource="res.qrc">
+                          <normaloff>:/katynko/svg2/arrow-up-double.svg</normaloff>:/katynko/svg2/arrow-up-double.svg</iconset>
+                        </property>
                         <property name="checkable">
                          <bool>true</bool>
                         </property>
@@ -4518,6 +4626,19 @@
                        </spacer>
                       </item>
                       <item>
+                       <widget class="QCheckBox" name="cbxGroupPhase">
+                        <property name="toolTip">
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Group the sequence of physical quantities.&lt;/p&gt;&lt;p&gt;Only for Voltage profile.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                        <property name="text">
+                         <string>Phs. Group</string>
+                        </property>
+                        <property name="checked">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="QCheckBox" name="cbChop">
                         <property name="text">
                          <string>jns</string>
@@ -4527,24 +4648,24 @@
                       <item>
                        <widget class="QSpinBox" name="sbJns">
                         <property name="maximum">
-                         <number>2</number>
+                         <number>6</number>
                         </property>
                         <property name="value">
-                         <number>1</number>
+                         <number>3</number>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QCheckBox" name="cbCmprssDb">
                         <property name="text">
-                         <string>Always Comprss</string>
+                         <string>cmprss</string>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="label_18">
                         <property name="text">
-                         <string>Read len</string>
+                         <string>max_len</string>
                         </property>
                        </widget>
                       </item>
@@ -4569,36 +4690,6 @@
                        <string>Select from database</string>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_12">
-                       <item row="1" column="2" rowspan="3">
-                        <widget class="QListView" name="lvMeterDataTariff">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>12</pointsize>
-                          </font>
-                         </property>
-                         <property name="editTriggers">
-                          <set>QAbstractItemView::NoEditTriggers</set>
-                         </property>
-                         <property name="showDropIndicator" stdset="0">
-                          <bool>false</bool>
-                         </property>
-                         <property name="alternatingRowColors">
-                          <bool>true</bool>
-                         </property>
-                         <property name="selectionMode">
-                          <enum>QAbstractItemView::NoSelection</enum>
-                         </property>
-                         <property name="resizeMode">
-                          <enum>QListView::Adjust</enum>
-                         </property>
-                        </widget>
-                       </item>
                        <item row="1" column="1" rowspan="2">
                         <widget class="QGroupBox" name="gbMeterDataFromTo">
                          <property name="sizePolicy">
@@ -4678,16 +4769,13 @@
                             <property name="text">
                              <string>...</string>
                             </property>
+                            <property name="icon">
+                             <iconset resource="res.qrc">
+                              <normaloff>:/katynko/svg/view-refresh.svg</normaloff>:/katynko/svg/view-refresh.svg</iconset>
+                            </property>
                            </widget>
                           </item>
                          </layout>
-                        </widget>
-                       </item>
-                       <item row="1" column="3" colspan="2">
-                        <widget class="QLineEdit" name="leAddMeterPhysicalVal">
-                         <property name="clearButtonEnabled">
-                          <bool>true</bool>
-                         </property>
                         </widget>
                        </item>
                        <item row="0" column="0" colspan="7">
@@ -4724,7 +4812,7 @@
                        <item row="1" column="0" rowspan="3">
                         <widget class="QListView" name="lvMeterDataProfile">
                          <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
@@ -4815,10 +4903,10 @@
                          </layout>
                         </widget>
                        </item>
-                       <item row="2" column="3" rowspan="2" colspan="3">
-                        <widget class="QListView" name="lvMeterDataPhVal">
+                       <item row="1" column="2" rowspan="3">
+                        <widget class="QListView" name="lvMeterDataTariff">
                          <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
@@ -4845,18 +4933,48 @@
                          </property>
                         </widget>
                        </item>
-                       <item row="1" column="6" rowspan="3">
-                        <spacer name="horizontalSpacer_14">
-                         <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
+                       <item row="2" column="3" rowspan="2" colspan="4">
+                        <widget class="QListView" name="lvMeterDataPhVal">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                           <horstretch>19</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
                          </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>130</width>
-                           <height>20</height>
-                          </size>
+                         <property name="font">
+                          <font>
+                           <pointsize>12</pointsize>
+                          </font>
                          </property>
-                        </spacer>
+                         <property name="editTriggers">
+                          <set>QAbstractItemView::NoEditTriggers</set>
+                         </property>
+                         <property name="showDropIndicator" stdset="0">
+                          <bool>false</bool>
+                         </property>
+                         <property name="alternatingRowColors">
+                          <bool>true</bool>
+                         </property>
+                         <property name="selectionMode">
+                          <enum>QAbstractItemView::NoSelection</enum>
+                         </property>
+                         <property name="resizeMode">
+                          <enum>QListView::Adjust</enum>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="3" colspan="4">
+                        <widget class="QLineEdit" name="leAddMeterPhysicalVal">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                           <horstretch>18</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="clearButtonEnabled">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
                        </item>
                       </layout>
                      </widget>
@@ -4944,6 +5062,10 @@
                         <property name="text">
                          <string>Show/Hide Data Filter</string>
                         </property>
+                        <property name="icon">
+                         <iconset resource="res.qrc">
+                          <normaloff>:/katynko/svg2/arrow-up-double.svg</normaloff>:/katynko/svg2/arrow-up-double.svg</iconset>
+                        </property>
                         <property name="checkable">
                          <bool>true</bool>
                         </property>
@@ -4991,21 +5113,24 @@
                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0 - ignore&lt;/p&gt;&lt;p&gt;1 - Remove NI, &lt;/p&gt;&lt;p&gt;2 - Remove NI, evnt_code, &lt;/p&gt;&lt;p&gt;3 - Remove NI, evnt_code, meter_model (show only UCM events), &lt;/p&gt;&lt;p&gt;4 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, &lt;/p&gt;&lt;p&gt;5 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                         </property>
                         <property name="maximum">
-                         <number>5</number>
+                         <number>6</number>
+                        </property>
+                        <property name="value">
+                         <number>6</number>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QCheckBox" name="cbCmprssMeterLog">
                         <property name="text">
-                         <string>Always comprss</string>
+                         <string>cmprss</string>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="label_19">
                         <property name="text">
-                         <string>Read len</string>
+                         <string>max_len</string>
                         </property>
                        </widget>
                       </item>
@@ -5169,6 +5294,10 @@
                            <widget class="QToolButton" name="toolButton_10">
                             <property name="text">
                              <string>...</string>
+                            </property>
+                            <property name="icon">
+                             <iconset resource="res.qrc">
+                              <normaloff>:/katynko/svg/view-refresh.svg</normaloff>:/katynko/svg/view-refresh.svg</iconset>
                             </property>
                            </widget>
                           </item>
@@ -5460,6 +5589,10 @@
                              <property name="text">
                               <string>...</string>
                              </property>
+                             <property name="icon">
+                              <iconset resource="res.qrc">
+                               <normaloff>:/katynko/svg/view-refresh.svg</normaloff>:/katynko/svg/view-refresh.svg</iconset>
+                             </property>
                             </widget>
                            </item>
                           </layout>
@@ -5543,7 +5676,7 @@
                     <item row="0" column="1">
                      <widget class="QCheckBox" name="cbCmprssHsh">
                       <property name="text">
-                       <string>Always comprss</string>
+                       <string>cmprss</string>
                       </property>
                      </widget>
                     </item>
@@ -5840,7 +5973,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1237</width>
+     <width>1579</width>
      <height>19</height>
     </rect>
    </property>

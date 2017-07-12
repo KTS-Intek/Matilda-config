@@ -94,11 +94,97 @@
     </message>
 </context>
 <context>
+    <name>HelpForm</name>
+    <message>
+        <location filename="helpform.ui" line="14"/>
+        <source>Form</source>
+        <translation>Форма</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="37"/>
+        <location filename="helpform.cpp" line="106"/>
+        <source>Back</source>
+        <translation>Назад</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="48"/>
+        <location filename="helpform.cpp" line="112"/>
+        <source>Forward</source>
+        <translation>Вперед</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="59"/>
+        <source>Home</source>
+        <translation>Домівка</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="70"/>
+        <source>Minus</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="81"/>
+        <source>Normal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="92"/>
+        <source>Plus</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="103"/>
+        <source>Language</source>
+        <translation>Мова</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="126"/>
+        <source>PDF</source>
+        <translation>PDF</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="144"/>
+        <source>Case Sensitively</source>
+        <translation>Чутливість до регістру</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="151"/>
+        <source>Search</source>
+        <translation>Шукати</translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="161"/>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.ui" line="168"/>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.cpp" line="58"/>
+        <source>x1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="helpform.cpp" line="97"/>
+        <source>&lt;CENTER&gt;An error has occured while loading the web page&lt;/CENTER&gt;</source>
+        <translation>&lt;CENTER&gt;Виникла помилка при завантаженні сторінки&lt;/CENTER&gt;</translation>
+    </message>
+    <message>
+        <location filename="helpform.cpp" line="120"/>
+        <location filename="helpform.cpp" line="121"/>
+        <source>x%1</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>InsertMeterDialog</name>
     <message>
         <location filename="insertmeterdialog.ui" line="14"/>
         <source>Insert Meter Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Діалог додавання лічильника</translation>
     </message>
     <message>
         <location filename="insertmeterdialog.ui" line="20"/>
@@ -146,12 +232,12 @@
     <message>
         <location filename="langdialog.ui" line="14"/>
         <source>Language Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Діалог вибору мови</translation>
     </message>
     <message>
         <location filename="langdialog.ui" line="20"/>
         <source>Please select a language</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь-ласка виберіть мову</translation>
     </message>
 </context>
 <context>
@@ -159,7 +245,7 @@
     <message>
         <location filename="mainwindow.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Матільда Конф. Розробник</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="71"/>
@@ -176,14 +262,14 @@
         <location filename="mainwindow.ui" line="147"/>
         <location filename="mainwindow.ui" line="190"/>
         <location filename="mainwindow.ui" line="1564"/>
-        <location filename="mainwindow.ui" line="4254"/>
+        <location filename="mainwindow.ui" line="4333"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="157"/>
         <source>admin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="160"/>
@@ -194,7 +280,7 @@
     <message>
         <location filename="mainwindow.ui" line="197"/>
         <source>Empty hsh</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустий hsh</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="213"/>
@@ -222,12 +308,12 @@
         <location filename="mainwindow.ui" line="250"/>
         <location filename="mainwindow.ui" line="446"/>
         <source>IP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="257"/>
         <source>80.78.51.216</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="260"/>
@@ -237,14 +323,14 @@
     <message>
         <location filename="mainwindow.ui" line="270"/>
         <source>scan</source>
-        <translation type="unfinished"></translation>
+        <translation>сканувати</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="287"/>
         <location filename="mainwindow.ui" line="439"/>
         <location filename="mainwindow.ui" line="1581"/>
-        <location filename="mainwindow.ui" line="1738"/>
-        <location filename="mainwindow.ui" line="2018"/>
+        <location filename="mainwindow.ui" line="1721"/>
+        <location filename="mainwindow.ui" line="2001"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
@@ -269,7 +355,7 @@
     <message>
         <location filename="mainwindow.ui" line="357"/>
         <source>svaha2.ddns.net</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="360"/>
@@ -284,7 +370,7 @@
     <message>
         <location filename="mainwindow.ui" line="377"/>
         <source>matilda1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="390"/>
@@ -294,24 +380,24 @@
     <message>
         <location filename="mainwindow.ui" line="473"/>
         <source>Connect using Object ID</source>
-        <translation type="unfinished"></translation>
+        <translation>З&apos;єднатись використовуючи Object ID</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="483"/>
         <source>Connect using MAC</source>
-        <translation type="unfinished"></translation>
+        <translation>З&apos;єднатись використовуючи MAC</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="505"/>
         <source>zlib</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="512"/>
-        <location filename="mainwindow.ui" line="3167"/>
-        <location filename="mainwindow.ui" line="3174"/>
-        <location filename="mainwindow.ui" line="3236"/>
-        <location filename="mainwindow.ui" line="3324"/>
+        <location filename="mainwindow.ui" line="3230"/>
+        <location filename="mainwindow.ui" line="3237"/>
+        <location filename="mainwindow.ui" line="3299"/>
+        <location filename="mainwindow.ui" line="3387"/>
         <source>Enable</source>
         <translation>Активувати</translation>
     </message>
@@ -323,44 +409,45 @@
     <message>
         <location filename="mainwindow.ui" line="569"/>
         <source>Protocol v2</source>
-        <translation type="unfinished"></translation>
+        <translation>Протокол v2</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="576"/>
         <source>Allow</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволити</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="669"/>
-        <location filename="mainwindow.ui" line="5567"/>
+        <location filename="mainwindow.ui" line="5723"/>
         <source>Search</source>
         <translation>Шукати</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="707"/>
-        <location filename="mainwindow.ui" line="2966"/>
-        <location filename="mainwindow.ui" line="3036"/>
-        <location filename="mainwindow.ui" line="3086"/>
-        <location filename="mainwindow.cpp" line="2085"/>
-        <location filename="mainwindow.cpp" line="2850"/>
+        <location filename="mainwindow.ui" line="3013"/>
+        <location filename="mainwindow.ui" line="3087"/>
+        <location filename="mainwindow.ui" line="3145"/>
+        <location filename="mainwindow.cpp" line="2088"/>
+        <location filename="mainwindow.cpp" line="2950"/>
         <source>Read</source>
         <translation>Зчитати</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="721"/>
-        <location filename="mainwindow.ui" line="3043"/>
-        <location filename="mainwindow.cpp" line="2091"/>
+        <location filename="mainwindow.ui" line="3098"/>
+        <location filename="mainwindow.cpp" line="2094"/>
         <source>Write</source>
         <translation>Записати</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="824"/>
-        <location filename="mainwindow.ui" line="4231"/>
+        <location filename="mainwindow.ui" line="4310"/>
         <source>Memo</source>
         <translation>Пам&apos;ятка</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="837"/>
+        <location filename="mainwindow.cpp" line="1790"/>
         <source>Coordinates</source>
         <translation>Координати</translation>
     </message>
@@ -397,7 +484,7 @@
     <message>
         <location filename="mainwindow.ui" line="979"/>
         <source>Write local PC time</source>
-        <translation type="unfinished"></translation>
+        <translation>Записати локальний час ПК</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1002"/>
@@ -417,7 +504,7 @@
     <message>
         <location filename="mainwindow.ui" line="1074"/>
         <source>NTP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1103"/>
@@ -439,27 +526,27 @@
         <location filename="mainwindow.ui" line="1170"/>
         <location filename="mainwindow.ui" line="1193"/>
         <source>dd/MM/yyyy HH:mm:ss   </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1177"/>
         <source>Local (UTC)</source>
-        <translation type="unfinished"></translation>
+        <translation>Локальний (UTC)</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1200"/>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1207"/>
         <source>Timezone</source>
-        <translation type="unfinished"></translation>
+        <translation>Часовий пояс</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1232"/>
         <source>Select Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати фільтр</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1238"/>
@@ -485,7 +572,7 @@
     <message>
         <location filename="mainwindow.ui" line="1305"/>
         <source>Table Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Фільтр</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1311"/>
@@ -499,7 +586,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="1344"/>
-        <location filename="mainwindow.cpp" line="4017"/>
+        <location filename="mainwindow.cpp" line="4179"/>
         <source>Reset sorting</source>
         <translation>Скинути сортування</translation>
     </message>
@@ -511,7 +598,7 @@
     <message>
         <location filename="mainwindow.ui" line="1523"/>
         <source>APN</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1537"/>
@@ -520,7 +607,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="1588"/>
-        <location filename="mainwindow.ui" line="1768"/>
+        <location filename="mainwindow.ui" line="1751"/>
         <source>Speed [baud]</source>
         <translation>Швидкість [бод]</translation>
     </message>
@@ -551,1562 +638,1669 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="1637"/>
-        <location filename="mainwindow.ui" line="1785"/>
+        <location filename="mainwindow.ui" line="1768"/>
         <source>Read Time Out [ms]</source>
         <translation>Очікування Читання [сек]</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1657"/>
-        <location filename="mainwindow.ui" line="1808"/>
+        <location filename="mainwindow.ui" line="1690"/>
+        <location filename="mainwindow.ui" line="1791"/>
         <source>Read Block Time Out [ms]</source>
         <translation>Очікування Читання Блоку [сек]</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1690"/>
+        <location filename="mainwindow.ui" line="1683"/>
         <source>Metric</source>
         <translation>Метрика</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1697"/>
+        <location filename="mainwindow.ui" line="1710"/>
         <source>Make primary GSM modem interface</source>
         <translation>Зробити GSM модем первинним інтерфейсом</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1717"/>
         <source>Multiplier</source>
         <translation>Множник</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1831"/>
+        <location filename="mainwindow.ui" line="1814"/>
         <source>Protocol detector</source>
         <translation>Детектор протоколу</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1838"/>
+        <location filename="mainwindow.ui" line="1821"/>
         <source>process unknown protocol as data</source>
         <translation>обробляти невідомий протокол як дані</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1901"/>
+        <location filename="mainwindow.ui" line="1884"/>
         <source>Direct Access service</source>
         <translation>Сервіс Прямого Доступу</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1920"/>
+        <location filename="mainwindow.ui" line="1903"/>
         <source>Always ready</source>
         <translation>Завжди готовий</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1930"/>
+        <location filename="mainwindow.ui" line="1913"/>
         <source>Always ready + Magic sequence</source>
         <translation>Завжди готовий + Магічна послідовність</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1940"/>
+        <location filename="mainwindow.ui" line="1923"/>
         <source>Magic sequence</source>
         <translation>Магічна послідовність</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1950"/>
+        <location filename="mainwindow.ui" line="1933"/>
         <source>Disable always ready mode</source>
         <translation>Вимкнути завжди готовий режим</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1957"/>
+        <location filename="mainwindow.ui" line="1940"/>
         <source>In hex</source>
         <translation>В HEX</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1967"/>
+        <location filename="mainwindow.ui" line="1950"/>
         <source>Direct Access over Matilda</source>
         <translation>Прямий Доступ по протоколу Матільда</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1973"/>
+        <location filename="mainwindow.ui" line="1956"/>
         <source>Only Local IPv4</source>
         <translation>Тільки локальний IPv4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1983"/>
+        <location filename="mainwindow.ui" line="1966"/>
         <source>Only Local IPv6</source>
         <translation>Тільки локальний IPv6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2003"/>
+        <location filename="mainwindow.ui" line="1986"/>
         <source>All interfaces</source>
         <translation>Усі інтерфейси</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2046"/>
-        <location filename="mainwindow.cpp" line="2278"/>
+        <location filename="mainwindow.ui" line="2029"/>
+        <location filename="mainwindow.cpp" line="2281"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2063"/>
+        <location filename="mainwindow.ui" line="2050"/>
         <source>State: Closed</source>
         <translation>Стан: Закрито</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2090"/>
+        <location filename="mainwindow.ui" line="2077"/>
         <source>Enable Direct Access Socket</source>
         <translation>Увімкнути Клієнта Прямого Доступу</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2103"/>
+        <location filename="mainwindow.ui" line="2090"/>
         <source>Direct Access Service List</source>
         <translation>Список Сервісів для Прямого Доступу</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2128"/>
-        <location filename="mainwindow.ui" line="2219"/>
-        <location filename="mainwindow.ui" line="2510"/>
-        <location filename="mainwindow.ui" line="2759"/>
+        <location filename="mainwindow.ui" line="2115"/>
+        <location filename="mainwindow.ui" line="2217"/>
+        <location filename="mainwindow.ui" line="2519"/>
+        <location filename="mainwindow.ui" line="2779"/>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2150"/>
-        <location filename="mainwindow.ui" line="2532"/>
+        <location filename="mainwindow.ui" line="2141"/>
+        <location filename="mainwindow.ui" line="2545"/>
         <source>IPv4:Port or [IPv4 or IPv6]:Port or URL:Port</source>
         <translation>IPv4:Порт або [IPv4 або IPv6]:Порт або URL:порт</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2160"/>
-        <location filename="mainwindow.ui" line="2372"/>
-        <location filename="mainwindow.ui" line="2542"/>
-        <location filename="mainwindow.ui" line="2771"/>
-        <location filename="mainwindow.ui" line="3396"/>
+        <location filename="mainwindow.ui" line="2151"/>
+        <location filename="mainwindow.ui" line="2374"/>
+        <location filename="mainwindow.ui" line="2555"/>
+        <location filename="mainwindow.ui" line="2795"/>
+        <location filename="mainwindow.ui" line="3459"/>
         <source>Add</source>
         <translation>Додати</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2210"/>
-        <location filename="mainwindow.ui" line="2602"/>
+        <location filename="mainwindow.ui" line="2208"/>
+        <location filename="mainwindow.ui" line="2622"/>
         <source>Day Profiles</source>
         <translation>Денні Профілі</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2231"/>
-        <location filename="mainwindow.ui" line="2690"/>
-        <location filename="mainwindow.ui" line="4034"/>
+        <location filename="mainwindow.ui" line="2233"/>
+        <location filename="mainwindow.ui" line="2710"/>
+        <location filename="mainwindow.ui" line="4101"/>
         <source>From</source>
         <translation>З</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2238"/>
-        <location filename="mainwindow.ui" line="2252"/>
-        <location filename="mainwindow.ui" line="2697"/>
-        <location filename="mainwindow.ui" line="2711"/>
-        <location filename="mainwindow.ui" line="4041"/>
-        <location filename="mainwindow.ui" line="4058"/>
+        <location filename="mainwindow.ui" line="2240"/>
+        <location filename="mainwindow.ui" line="2254"/>
+        <location filename="mainwindow.ui" line="2717"/>
+        <location filename="mainwindow.ui" line="2731"/>
+        <location filename="mainwindow.ui" line="4108"/>
+        <location filename="mainwindow.ui" line="4125"/>
         <source>HH:mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2245"/>
-        <location filename="mainwindow.ui" line="2704"/>
-        <location filename="mainwindow.ui" line="4051"/>
+        <location filename="mainwindow.ui" line="2247"/>
+        <location filename="mainwindow.ui" line="2724"/>
+        <location filename="mainwindow.ui" line="4118"/>
         <source>To</source>
         <translation>До</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2306"/>
-        <location filename="mainwindow.ui" line="2610"/>
-        <location filename="mainwindow.ui" line="3961"/>
+        <location filename="mainwindow.ui" line="2308"/>
+        <location filename="mainwindow.ui" line="2630"/>
+        <location filename="mainwindow.ui" line="4028"/>
         <source>Mon</source>
         <translation>Пн</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2313"/>
-        <location filename="mainwindow.ui" line="2617"/>
-        <location filename="mainwindow.ui" line="3968"/>
+        <location filename="mainwindow.ui" line="2315"/>
+        <location filename="mainwindow.ui" line="2637"/>
+        <location filename="mainwindow.ui" line="4035"/>
         <source>Tue</source>
         <translation>Вт</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2320"/>
-        <location filename="mainwindow.ui" line="2624"/>
-        <location filename="mainwindow.ui" line="3975"/>
+        <location filename="mainwindow.ui" line="2322"/>
+        <location filename="mainwindow.ui" line="2644"/>
+        <location filename="mainwindow.ui" line="4042"/>
         <source>Wed</source>
         <translation>Ср</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2327"/>
-        <location filename="mainwindow.ui" line="2631"/>
-        <location filename="mainwindow.ui" line="3982"/>
+        <location filename="mainwindow.ui" line="2329"/>
+        <location filename="mainwindow.ui" line="2651"/>
+        <location filename="mainwindow.ui" line="4049"/>
         <source>Thu</source>
         <translation>Чт</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2334"/>
-        <location filename="mainwindow.ui" line="2638"/>
-        <location filename="mainwindow.ui" line="3989"/>
+        <location filename="mainwindow.ui" line="2336"/>
+        <location filename="mainwindow.ui" line="2658"/>
+        <location filename="mainwindow.ui" line="4056"/>
         <source>Fri</source>
         <translation>Пт</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2341"/>
-        <location filename="mainwindow.ui" line="2645"/>
-        <location filename="mainwindow.ui" line="3996"/>
+        <location filename="mainwindow.ui" line="2343"/>
+        <location filename="mainwindow.ui" line="2665"/>
+        <location filename="mainwindow.ui" line="4063"/>
         <source>Sat</source>
         <translation>Сб</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2348"/>
-        <location filename="mainwindow.ui" line="2652"/>
-        <location filename="mainwindow.ui" line="4003"/>
+        <location filename="mainwindow.ui" line="2350"/>
+        <location filename="mainwindow.ui" line="2672"/>
+        <location filename="mainwindow.ui" line="4070"/>
         <source>Sun</source>
         <translation>Нд</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2404"/>
+        <location filename="mainwindow.ui" line="2413"/>
         <source>Connect to remote service: Days of week</source>
         <translation>З&apos;єдання до віддаленого пристрою: Дні тижня</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2413"/>
-        <location filename="mainwindow.ui" line="2812"/>
-        <location filename="mainwindow.ui" line="3464"/>
+        <location filename="mainwindow.ui" line="2422"/>
+        <location filename="mainwindow.ui" line="2843"/>
+        <location filename="mainwindow.ui" line="3531"/>
         <source>Name</source>
         <translation>Назва</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2429"/>
+        <location filename="mainwindow.ui" line="2438"/>
         <source>Connect to remote service: Time Interval</source>
         <translation>З&apos;єдання до віддаленого пристрою: Часовий проміжок</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2494"/>
+        <location filename="mainwindow.ui" line="2503"/>
         <source>Enable Matilda Active Socket</source>
         <translation>Увімкнути Клієнта Матільди</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2501"/>
+        <location filename="mainwindow.ui" line="2510"/>
         <source>Svaha Service List</source>
         <translation>Список Серверів Сваха</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2674"/>
+        <location filename="mainwindow.ui" line="2694"/>
         <source>Connect to Svaha service: Time Interval</source>
         <translation>З&apos;єдання до серверів Сваха: Часовий проміжок</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2796"/>
+        <location filename="mainwindow.ui" line="2827"/>
         <source>Connect to Svaha service: Days of week</source>
         <translation>З&apos;єдання до серверів Сваха: Дні тижня</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2886"/>
+        <location filename="mainwindow.ui" line="2917"/>
         <source>Command</source>
         <translation>Команда</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2892"/>
+        <location filename="mainwindow.ui" line="2923"/>
         <source>Daemon Restart</source>
         <translation>Перезапустити Демона</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2902"/>
+        <location filename="mainwindow.ui" line="2937"/>
         <source>Reboot</source>
         <translation>Перезавантажитись</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2912"/>
+        <location filename="mainwindow.ui" line="2951"/>
         <source>Restart GSM</source>
         <translation>Перезапустити GSM</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2919"/>
+        <location filename="mainwindow.ui" line="2962"/>
         <source>Restart Embee</source>
         <translation>Перезапустити Embee</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2948"/>
+        <location filename="mainwindow.ui" line="2995"/>
         <source>Device Commands</source>
         <translation>Команди пристрою</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3000"/>
+        <location filename="mainwindow.ui" line="3051"/>
         <source>Command line</source>
         <translation>Командний рядок</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3013"/>
+        <location filename="mainwindow.ui" line="3064"/>
         <source>Please press &quot;Read&quot; to show help</source>
         <translation>Будь-ласка натисніть &quot;Зчитати&quot; для перегляду довідки</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3023"/>
+        <location filename="mainwindow.ui" line="3074"/>
         <source>UDP beacon</source>
         <translation>UDP маячок</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3029"/>
+        <location filename="mainwindow.ui" line="3080"/>
         <source>Enable UDP beacon</source>
         <translation>Увімкнути UDP маячок</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3066"/>
+        <location filename="mainwindow.ui" line="3125"/>
         <source>Serial Number</source>
         <translation>Серійний Номер</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3072"/>
+        <location filename="mainwindow.ui" line="3131"/>
         <source>SN#</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3136"/>
+        <location filename="mainwindow.ui" line="3199"/>
         <source>Meter Retry</source>
         <translation>Повтори</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3143"/>
+        <location filename="mainwindow.ui" line="3206"/>
         <source>Poll wait (sec)</source>
         <translation>Очікування на опитування (сек)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3160"/>
+        <location filename="mainwindow.ui" line="3223"/>
         <source>HardAddressing</source>
         <translation>Жорстка адресація</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3188"/>
+        <location filename="mainwindow.ui" line="3251"/>
         <source>Wait4Embee</source>
         <translation>Очікування на Ембі</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3195"/>
+        <location filename="mainwindow.ui" line="3258"/>
         <source>Retry before</source>
         <translation>Повтори до</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3219"/>
+        <location filename="mainwindow.ui" line="3282"/>
         <source>Retry after</source>
         <translation>Повтори після</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3243"/>
+        <location filename="mainwindow.ui" line="3306"/>
         <source>Time correction</source>
         <translation>Корекція часу</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3270"/>
+        <location filename="mainwindow.ui" line="3333"/>
         <source>Max Difference</source>
         <translation>Макс. Різниця</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3300"/>
+        <location filename="mainwindow.ui" line="3363"/>
         <source>Meter Retry (FA)</source>
         <translation>Повтори до першої відповіді</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3317"/>
+        <location filename="mainwindow.ui" line="3380"/>
         <source>Forwarding</source>
         <translation>Переадресація</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3335"/>
+        <location filename="mainwindow.ui" line="3398"/>
         <source>Meter Address [from protocol]</source>
         <translation>Адреса Лічильника [з протоколу]</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3342"/>
-        <location filename="mainwindow.ui" line="3376"/>
+        <location filename="mainwindow.ui" line="3405"/>
+        <location filename="mainwindow.ui" line="3439"/>
         <source>HEX</source>
         <translation>HEX</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3359"/>
+        <location filename="mainwindow.ui" line="3422"/>
         <source>Modem Address [forward to]</source>
         <translation>Адреса Модема [переадресувати на]</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3432"/>
+        <location filename="mainwindow.ui" line="3495"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3471"/>
+        <location filename="mainwindow.ui" line="3538"/>
+        <location filename="mainwindow.cpp" line="2486"/>
         <source>On/Off</source>
         <translation>Увм/Вимк</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3478"/>
+        <location filename="mainwindow.ui" line="3545"/>
         <source>Interval</source>
         <translation>Інтервал</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3485"/>
+        <location filename="mainwindow.ui" line="3552"/>
         <source>Priority</source>
         <translation>Пріоритет</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3492"/>
+        <location filename="mainwindow.ui" line="3559"/>
         <source>Depth</source>
         <translation>Глибина [діб] (для профілю На Кінець Місяця: [місяців])</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3499"/>
-        <location filename="mainwindow.cpp" line="426"/>
+        <location filename="mainwindow.ui" line="3566"/>
+        <location filename="mainwindow.cpp" line="428"/>
         <source>Now</source>
         <translation>Поточні</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3506"/>
-        <location filename="mainwindow.ui" line="3596"/>
-        <location filename="mainwindow.ui" line="3652"/>
-        <location filename="mainwindow.ui" line="3716"/>
-        <location filename="mainwindow.ui" line="3808"/>
-        <location filename="mainwindow.ui" line="3901"/>
+        <location filename="mainwindow.ui" line="3573"/>
+        <location filename="mainwindow.ui" line="3663"/>
+        <location filename="mainwindow.ui" line="3719"/>
+        <location filename="mainwindow.ui" line="3783"/>
+        <location filename="mainwindow.ui" line="3875"/>
+        <location filename="mainwindow.ui" line="3968"/>
         <source>Enable poll</source>
         <translation>Увм. опитування</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3514"/>
-        <location filename="mainwindow.ui" line="3724"/>
-        <location filename="mainwindow.ui" line="3819"/>
+        <location filename="mainwindow.ui" line="3581"/>
+        <location filename="mainwindow.ui" line="3791"/>
+        <location filename="mainwindow.ui" line="3886"/>
         <source>30 minutes</source>
         <translation>30 хвилин</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3519"/>
-        <location filename="mainwindow.ui" line="3729"/>
-        <location filename="mainwindow.ui" line="3824"/>
+        <location filename="mainwindow.ui" line="3586"/>
+        <location filename="mainwindow.ui" line="3796"/>
+        <location filename="mainwindow.ui" line="3891"/>
         <source>1 hour</source>
         <translation>1 година</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3524"/>
-        <location filename="mainwindow.ui" line="3734"/>
-        <location filename="mainwindow.ui" line="3829"/>
+        <location filename="mainwindow.ui" line="3591"/>
+        <location filename="mainwindow.ui" line="3801"/>
+        <location filename="mainwindow.ui" line="3896"/>
         <source>2 hours</source>
         <translation>2 години</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3529"/>
-        <location filename="mainwindow.ui" line="3739"/>
-        <location filename="mainwindow.ui" line="3834"/>
+        <location filename="mainwindow.ui" line="3596"/>
+        <location filename="mainwindow.ui" line="3806"/>
+        <location filename="mainwindow.ui" line="3901"/>
         <source>3 hours</source>
         <translation>3 години</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3534"/>
-        <location filename="mainwindow.ui" line="3744"/>
-        <location filename="mainwindow.ui" line="3839"/>
+        <location filename="mainwindow.ui" line="3601"/>
+        <location filename="mainwindow.ui" line="3811"/>
+        <location filename="mainwindow.ui" line="3906"/>
         <source>4 hours</source>
         <translation>4 години</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3539"/>
-        <location filename="mainwindow.ui" line="3749"/>
-        <location filename="mainwindow.ui" line="3844"/>
+        <location filename="mainwindow.ui" line="3606"/>
+        <location filename="mainwindow.ui" line="3816"/>
+        <location filename="mainwindow.ui" line="3911"/>
         <source>6 hours</source>
         <translation>6 годин</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3544"/>
-        <location filename="mainwindow.ui" line="3754"/>
-        <location filename="mainwindow.ui" line="3849"/>
+        <location filename="mainwindow.ui" line="3611"/>
+        <location filename="mainwindow.ui" line="3821"/>
+        <location filename="mainwindow.ui" line="3916"/>
         <source>8 hours</source>
         <translation>8 годин</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3549"/>
-        <location filename="mainwindow.ui" line="3759"/>
-        <location filename="mainwindow.ui" line="3854"/>
+        <location filename="mainwindow.ui" line="3616"/>
+        <location filename="mainwindow.ui" line="3826"/>
+        <location filename="mainwindow.ui" line="3921"/>
         <source>12 hours</source>
         <translation>12 годин</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3554"/>
-        <location filename="mainwindow.ui" line="3764"/>
-        <location filename="mainwindow.ui" line="3859"/>
+        <location filename="mainwindow.ui" line="3621"/>
+        <location filename="mainwindow.ui" line="3831"/>
+        <location filename="mainwindow.ui" line="3926"/>
         <source>24 hours</source>
         <translation>24 години</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3559"/>
-        <location filename="mainwindow.ui" line="3769"/>
-        <location filename="mainwindow.ui" line="3864"/>
+        <location filename="mainwindow.ui" line="3626"/>
+        <location filename="mainwindow.ui" line="3836"/>
+        <location filename="mainwindow.ui" line="3931"/>
         <source>48 hours</source>
         <translation>48 годин</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3564"/>
-        <location filename="mainwindow.ui" line="3774"/>
-        <location filename="mainwindow.ui" line="3869"/>
+        <location filename="mainwindow.ui" line="3631"/>
+        <location filename="mainwindow.ui" line="3841"/>
+        <location filename="mainwindow.ui" line="3936"/>
         <source>72 hours</source>
         <translation>72 години</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3589"/>
-        <location filename="mainwindow.cpp" line="427"/>
+        <location filename="mainwindow.ui" line="3656"/>
+        <location filename="mainwindow.cpp" line="429"/>
         <source>Day</source>
         <translation>День</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3604"/>
-        <location filename="mainwindow.ui" line="3909"/>
+        <location filename="mainwindow.ui" line="3671"/>
+        <location filename="mainwindow.ui" line="3976"/>
         <source>1 day</source>
         <translation>1 доба</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3609"/>
-        <location filename="mainwindow.ui" line="3914"/>
+        <location filename="mainwindow.ui" line="3676"/>
+        <location filename="mainwindow.ui" line="3981"/>
         <source>2 day</source>
         <translation>2 доби</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3614"/>
-        <location filename="mainwindow.ui" line="3919"/>
+        <location filename="mainwindow.ui" line="3681"/>
+        <location filename="mainwindow.ui" line="3986"/>
         <source>3 day</source>
         <translation>3 доби</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3619"/>
-        <location filename="mainwindow.ui" line="3924"/>
+        <location filename="mainwindow.ui" line="3686"/>
+        <location filename="mainwindow.ui" line="3991"/>
         <source>4 day</source>
         <translation>4 доби</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3624"/>
+        <location filename="mainwindow.ui" line="3691"/>
         <source>5 day</source>
         <translation>5 діб</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3645"/>
-        <location filename="mainwindow.cpp" line="428"/>
+        <location filename="mainwindow.ui" line="3712"/>
+        <location filename="mainwindow.cpp" line="430"/>
         <source>Month</source>
         <translation>На Кінець Місяця</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3660"/>
+        <location filename="mainwindow.ui" line="3727"/>
         <source>1 month</source>
         <translation>1 місяць</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3665"/>
+        <location filename="mainwindow.ui" line="3732"/>
         <source>2 month</source>
         <translation>2 місяці</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3670"/>
+        <location filename="mainwindow.ui" line="3737"/>
         <source>3 month</source>
         <translation>3 місяці</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3675"/>
+        <location filename="mainwindow.ui" line="3742"/>
         <source>4 month</source>
         <translation>4 місяці</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3709"/>
-        <location filename="mainwindow.cpp" line="429"/>
-        <location filename="mainwindow.cpp" line="492"/>
+        <location filename="mainwindow.ui" line="3776"/>
+        <location filename="mainwindow.cpp" line="431"/>
+        <location filename="mainwindow.cpp" line="494"/>
         <source>Power</source>
         <translation>Потужність</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3798"/>
-        <location filename="mainwindow.cpp" line="430"/>
+        <location filename="mainwindow.ui" line="3865"/>
+        <location filename="mainwindow.cpp" line="432"/>
+        <location filename="mainwindow.cpp" line="2481"/>
         <source>Voltage</source>
         <translation>Напруга</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3894"/>
+        <location filename="mainwindow.ui" line="3961"/>
         <source>Meter Log</source>
         <translation>Журнал Лічильників</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3945"/>
+        <location filename="mainwindow.ui" line="4012"/>
         <source>Enable Poll: Days of week</source>
         <translation>Увмк. Опитування: Дні Тижня</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3954"/>
+        <location filename="mainwindow.ui" line="4021"/>
         <source>Every day</source>
         <translation>Щодня</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4025"/>
+        <location filename="mainwindow.ui" line="4092"/>
         <source>Enable Poll: Time Interval</source>
         <translation>Увмк. Опитування: Часовий Інтервал</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4127"/>
+        <location filename="mainwindow.ui" line="4194"/>
         <source>Show/Hide Meter Add Tool</source>
         <translation>Сховати/Показати інструмент додавання лічильника</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4140"/>
+        <location filename="mainwindow.ui" line="4211"/>
         <source>Read Hash Summ</source>
-        <translation type="unfinished"></translation>
+        <translation>Зчитати Хеш Суму</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4160"/>
-        <location filename="mainwindow.ui" line="4988"/>
-        <location filename="mainwindow.ui" line="5523"/>
-        <source>Always comprss</source>
-        <translation type="unfinished"></translation>
+        <location filename="mainwindow.ui" line="4235"/>
+        <location filename="mainwindow.ui" line="4661"/>
+        <location filename="mainwindow.ui" line="5126"/>
+        <location filename="mainwindow.ui" line="5679"/>
+        <source>cmprss</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4167"/>
-        <source>Read/Write byte</source>
-        <translation type="unfinished"></translation>
+        <location filename="mainwindow.ui" line="4242"/>
+        <location filename="mainwindow.ui" line="4668"/>
+        <location filename="mainwindow.ui" line="5133"/>
+        <source>max_len</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4195"/>
+        <location filename="mainwindow.ui" line="4533"/>
+        <source>Undo</source>
+        <translation>Відмінити</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4631"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Group the sequence of physical quantities.&lt;/p&gt;&lt;p&gt;Only for Voltage profile.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Групувати послідовність фізичних величин.&lt;/p&gt;&lt;p&gt;Тільки для Профілю Напруга.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4634"/>
+        <source>Phs. Group</source>
+        <translation>Згрупувати Фази</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4644"/>
+        <source>jns</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6043"/>
+        <source>Help</source>
+        <translation>Допомога</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6046"/>
+        <source>Documentation</source>
+        <translation>Документація</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6049"/>
+        <source>F1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4270"/>
         <source>Add/Change</source>
         <translation>Додати/Замінити</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4202"/>
+        <location filename="mainwindow.ui" line="4281"/>
         <source>Optional</source>
         <translation>Опціонально</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4214"/>
+        <location filename="mainwindow.ui" line="4293"/>
         <source>Serial number</source>
         <translation>Серійний номер</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4279"/>
+        <location filename="mainwindow.ui" line="4358"/>
         <source>Poll</source>
         <translation>Опитувати</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4286"/>
-        <location filename="mainwindow.cpp" line="787"/>
+        <location filename="mainwindow.ui" line="4365"/>
+        <location filename="mainwindow.cpp" line="760"/>
         <source>On</source>
         <translation>Так</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4311"/>
+        <location filename="mainwindow.ui" line="4390"/>
         <source>Required fields</source>
         <translation>Обов&apos;язкові поля</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4330"/>
+        <location filename="mainwindow.ui" line="4409"/>
         <source>Physical values</source>
         <translation>Фізичні величини</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4343"/>
+        <location filename="mainwindow.ui" line="4422"/>
         <source>Model</source>
         <translation>Модель</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4356"/>
+        <location filename="mainwindow.ui" line="4435"/>
         <source>NI</source>
         <translation>NI</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4363"/>
+        <location filename="mainwindow.ui" line="4442"/>
         <source>E</source>
         <translation>Р</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4373"/>
+        <location filename="mainwindow.ui" line="4456"/>
         <source>Tariff count</source>
         <translation>К-ть тарифів</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4423"/>
-        <location filename="mainwindow.ui" line="4900"/>
-        <location filename="mainwindow.ui" line="5271"/>
+        <location filename="mainwindow.ui" line="4506"/>
+        <location filename="mainwindow.ui" line="5011"/>
+        <location filename="mainwindow.ui" line="5413"/>
         <source>Filter</source>
         <translation>Фільтр</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4450"/>
         <source>Redo</source>
         <translation>Відмінити</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4504"/>
-        <location filename="mainwindow.ui" line="4952"/>
+        <location filename="mainwindow.ui" line="4591"/>
+        <location filename="mainwindow.ui" line="5063"/>
         <source>Show/Hide Data Filter</source>
         <translation>Сховати/Показати фільть БД </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4517"/>
-        <location filename="mainwindow.ui" line="4965"/>
+        <location filename="mainwindow.ui" line="4608"/>
+        <location filename="mainwindow.ui" line="5080"/>
         <source>Enable Table Buffering</source>
-        <translation type="unfinished"></translation>
+        <translation>Увм. Буферизацію таблиць</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4540"/>
-        <source>jnstts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="4547"/>
-        <source>Always Comprss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="4554"/>
-        <location filename="mainwindow.ui" line="4995"/>
-        <source>Read len</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="4576"/>
-        <location filename="mainwindow.ui" line="5014"/>
+        <location filename="mainwindow.ui" line="4690"/>
+        <location filename="mainwindow.ui" line="5152"/>
         <source>Select from database</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати з БД</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4618"/>
-        <location filename="mainwindow.ui" line="5090"/>
-        <location filename="mainwindow.ui" line="5370"/>
+        <location filename="mainwindow.ui" line="4702"/>
+        <location filename="mainwindow.ui" line="5228"/>
+        <location filename="mainwindow.ui" line="5522"/>
         <source>Time interval</source>
         <translation>Часовий інтервал</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4653"/>
-        <location filename="mainwindow.ui" line="4676"/>
-        <location filename="mainwindow.ui" line="5125"/>
-        <location filename="mainwindow.ui" line="5148"/>
-        <location filename="mainwindow.ui" line="5405"/>
-        <location filename="mainwindow.ui" line="5428"/>
+        <location filename="mainwindow.ui" line="4737"/>
+        <location filename="mainwindow.ui" line="4760"/>
+        <location filename="mainwindow.ui" line="5263"/>
+        <location filename="mainwindow.ui" line="5286"/>
+        <location filename="mainwindow.ui" line="5557"/>
+        <location filename="mainwindow.ui" line="5580"/>
         <source>yyyy/MM/dd HH:mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4686"/>
-        <location filename="mainwindow.ui" line="5158"/>
-        <location filename="mainwindow.ui" line="5438"/>
+        <location filename="mainwindow.ui" line="4770"/>
+        <location filename="mainwindow.ui" line="5296"/>
+        <location filename="mainwindow.ui" line="5590"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4711"/>
-        <location filename="mainwindow.ui" line="5028"/>
+        <location filename="mainwindow.ui" line="4792"/>
+        <location filename="mainwindow.ui" line="5166"/>
         <source>Select only Meter NI</source>
         <translation>Вибрати тільки NI</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4725"/>
-        <location filename="mainwindow.ui" line="5042"/>
+        <location filename="mainwindow.ui" line="4806"/>
+        <location filename="mainwindow.ui" line="5180"/>
         <source>(0,1,2-11)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4773"/>
-        <location filename="mainwindow.ui" line="5174"/>
-        <location filename="mainwindow.ui" line="5454"/>
+        <location filename="mainwindow.ui" line="4854"/>
+        <location filename="mainwindow.ui" line="5316"/>
+        <location filename="mainwindow.ui" line="5610"/>
         <source>Time from now</source>
         <translation>З поточного часу</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4789"/>
-        <location filename="mainwindow.ui" line="5190"/>
-        <location filename="mainwindow.ui" line="5470"/>
+        <location filename="mainwindow.ui" line="4870"/>
+        <location filename="mainwindow.ui" line="5332"/>
+        <location filename="mainwindow.ui" line="5626"/>
         <source>Minute(s)</source>
         <translation>Хвилин(и)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4794"/>
-        <location filename="mainwindow.ui" line="5195"/>
-        <location filename="mainwindow.ui" line="5475"/>
+        <location filename="mainwindow.ui" line="4875"/>
+        <location filename="mainwindow.ui" line="5337"/>
+        <location filename="mainwindow.ui" line="5631"/>
         <source>Hour(s)</source>
         <translation>Годин</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4799"/>
-        <location filename="mainwindow.ui" line="5200"/>
-        <location filename="mainwindow.ui" line="5480"/>
+        <location filename="mainwindow.ui" line="4880"/>
+        <location filename="mainwindow.ui" line="5342"/>
+        <location filename="mainwindow.ui" line="5636"/>
         <source>Day(s)</source>
         <translation>Діб</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4804"/>
-        <location filename="mainwindow.ui" line="5205"/>
-        <location filename="mainwindow.ui" line="5485"/>
+        <location filename="mainwindow.ui" line="4885"/>
+        <location filename="mainwindow.ui" line="5347"/>
+        <location filename="mainwindow.ui" line="5641"/>
         <source>Month(s)</source>
         <translation>Місяців</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4874"/>
-        <location filename="mainwindow.ui" line="5245"/>
+        <location filename="mainwindow.ui" line="4985"/>
+        <location filename="mainwindow.ui" line="5387"/>
         <source>Selected Data</source>
         <translation>Вибрані Дані</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5325"/>
-        <location filename="mainwindow.cpp" line="1172"/>
-        <location filename="mainwindow.cpp" line="1416"/>
+        <location filename="mainwindow.ui" line="5103"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Видалити NI, evnt_code, meter_model (показати тільки події UCM), і текст після першого пробілу в comment, ігнорувати event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5106"/>
+        <source>smpl</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5113"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0 - ignore&lt;/p&gt;&lt;p&gt;1 - Remove NI, &lt;/p&gt;&lt;p&gt;2 - Remove NI, evnt_code, &lt;/p&gt;&lt;p&gt;3 - Remove NI, evnt_code, meter_model (show only UCM events), &lt;/p&gt;&lt;p&gt;4 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, &lt;/p&gt;&lt;p&gt;5 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5427"/>
+        <source>Event comment</source>
+        <translation>Коментарій до подій</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5477"/>
+        <location filename="mainwindow.cpp" line="1148"/>
+        <location filename="mainwindow.cpp" line="1396"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5510"/>
+        <location filename="mainwindow.ui" line="5666"/>
         <source>Table names</source>
         <translation>Назви таблиць</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5577"/>
+        <location filename="mainwindow.ui" line="5733"/>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5584"/>
+        <location filename="mainwindow.ui" line="5740"/>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5604"/>
+        <location filename="mainwindow.ui" line="5760"/>
         <source>Clear</source>
         <translation>Очистити</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5629"/>
+        <location filename="mainwindow.ui" line="5785"/>
         <source>Font size</source>
         <translation>Розмір шрифту</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5710"/>
-        <location filename="mainwindow.ui" line="5759"/>
+        <location filename="mainwindow.ui" line="5866"/>
+        <location filename="mainwindow.ui" line="5915"/>
         <source>Change</source>
         <translation>Змінити</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5727"/>
+        <location filename="mainwindow.ui" line="5883"/>
         <source>the quick brown fox jumps over the lazy dog </source>
         <translation>Хвацький юшковар Філіп щодня на ґанку готує сім&apos;ї вечерю з жаб </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5746"/>
+        <location filename="mainwindow.ui" line="5902"/>
         <source>Language</source>
         <translation>Мова</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5779"/>
+        <location filename="mainwindow.ui" line="5935"/>
         <source>About</source>
         <translation>Про</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5850"/>
+        <location filename="mainwindow.ui" line="6007"/>
         <source>Device</source>
         <translation>Пристрій</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5859"/>
+        <location filename="mainwindow.ui" line="6016"/>
         <source>Home</source>
         <translation>Домівка</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5868"/>
+        <location filename="mainwindow.ui" line="6025"/>
         <source>Log</source>
         <translation>Лог</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5877"/>
+        <location filename="mainwindow.ui" line="6034"/>
         <source>Options</source>
         <translation>Опції</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="341"/>
+        <location filename="mainwindow.cpp" line="343"/>
         <source>Last R/W: last operation read/wrie to socket&lt;br&gt;Total R/W: total received/sended bytes&lt;br&gt;R/W (NC): uncompressed data (shows how much occupied uncompressed data)</source>
         <translation>Остан. О/П: останні операції отримання з/передавання до TCP сокету&lt;br&gt;Заг.О/П: загально отримано/передано байт&lt;br&gt;П/О (НС): не стиснені дані (показує скільки займали б не стиснені дані)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="349"/>
+        <location filename="mainwindow.cpp" line="351"/>
         <source>Not connected.</source>
         <translation>Не з&apos;єднано.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="423"/>
+        <location filename="mainwindow.cpp" line="425"/>
         <source>Model,Serial Number,NI,Memo,Password,On/Off,Physical values</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель,Серійний номер,NI,Пам&apos;ятка,Пароль,Увм/Вимк,Фізичні величини</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="446"/>
+        <location filename="mainwindow.cpp" line="448"/>
         <source>Active import,Active export,Reactive import,Reactive export</source>
         <translation>Активна імпорт (A+),Активана експорт (A+),Реактивна імпорт (R+),Реактивна експорт (R-)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="451"/>
+        <location filename="mainwindow.cpp" line="453"/>
         <source>Voltage,Current,Active Power,Reactive Power,cos φ</source>
         <translation>Напруга,Струм,Активна Потужність,Реактивна потужність,cos φ</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="452"/>
+        <location filename="mainwindow.cpp" line="454"/>
         <source>A,B,C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="455"/>
+        <location filename="mainwindow.cpp" line="457"/>
         <source>Phs %1 %2,</source>
         <translation>Фаза %1 %2,</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="457"/>
+        <location filename="mainwindow.cpp" line="459"/>
         <source>Frequency</source>
         <translation>Частота</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="462"/>
-        <location filename="mainwindow.cpp" line="502"/>
+        <location filename="mainwindow.cpp" line="464"/>
+        <location filename="mainwindow.cpp" line="2437"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="489"/>
-        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="491"/>
+        <location filename="mainwindow.cpp" line="497"/>
         <source>Summ</source>
         <translation>Сума</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="490"/>
+        <location filename="mainwindow.cpp" line="492"/>
         <source>Tariff 1</source>
         <translation>Тариф 1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="491"/>
+        <location filename="mainwindow.cpp" line="493"/>
         <source>T</source>
         <translation>Т</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="497"/>
         <source>Tariff %1</source>
         <translation>Тариф %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="503"/>
+        <location filename="mainwindow.cpp" line="2438"/>
         <source>Other</source>
         <translation>Інші</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="504"/>
+        <location filename="mainwindow.cpp" line="2439"/>
         <source>Meter open</source>
         <translation>Корпус лічильника</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="505"/>
+        <location filename="mainwindow.cpp" line="2440"/>
         <source>Klema open</source>
         <translation>Клемна коробка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="506"/>
+        <location filename="mainwindow.cpp" line="2441"/>
         <source>Bat. Low</source>
         <translation>Бат. розряджена</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="507"/>
+        <location filename="mainwindow.cpp" line="2442"/>
         <source>EEPROM Error</source>
         <translation>Помилка EEPROM</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="508"/>
+        <location filename="mainwindow.cpp" line="2443"/>
         <source>Magnet</source>
         <translation>Магніт</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="509"/>
+        <location filename="mainwindow.cpp" line="2444"/>
         <source>Hardware Error</source>
         <translation>Апаратна Помилка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="510"/>
+        <location filename="mainwindow.cpp" line="2445"/>
         <source>Access</source>
         <translation>Доступ</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="511"/>
+        <location filename="mainwindow.cpp" line="2446"/>
         <source>Relay</source>
         <translation>Реле</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="512"/>
+        <location filename="mainwindow.cpp" line="2447"/>
         <source>Internal error</source>
         <translation>Внутрішня Помилка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="513"/>
+        <location filename="mainwindow.cpp" line="2448"/>
         <source>Date corrected</source>
         <translation>Дату змінено</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="514"/>
+        <location filename="mainwindow.cpp" line="2449"/>
         <source>Date need to correct</source>
         <translation>Дата: необхідно скорегувати</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="516"/>
+        <location filename="mainwindow.cpp" line="2451"/>
         <source>Unknown protocol</source>
         <translation>Невідомий протокол</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="560"/>
+        <location filename="mainwindow.cpp" line="519"/>
         <source>Area,Region,UTC offset,Country,Has DST,Comment</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="573"/>
+        <location filename="mainwindow.cpp" line="532"/>
         <source>Yes</source>
         <translation>Так</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="573"/>
+        <location filename="mainwindow.cpp" line="532"/>
         <source>No</source>
         <translation>Ні</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="764"/>
+        <location filename="mainwindow.cpp" line="626"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Matilda Configuration Dev&lt;/p&gt;&lt;p&gt;Version %1&lt;/p&gt;&lt;p&gt;%2 KTS Intek Ltd, %3&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://kts-intek.com.ua&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://kts-intek.com.ua&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Матільда Конф Розробник&lt;/p&gt;&lt;p&gt;Версія %1&lt;/p&gt;&lt;p&gt;%2 ТОВ КТС-Інтек, %3&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://kts-intek.com.ua&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://kts-intek.com.ua&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="737"/>
         <source>#  Plugin	Create Date and Time		Info		Meter models		RegExp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="784"/>
+        <location filename="mainwindow.cpp" line="757"/>
         <source>%1, UTC offset %2, DST is %3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="787"/>
+        <location filename="mainwindow.cpp" line="760"/>
         <source>Off</source>
         <translation>Ні</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="793"/>
+        <location filename="mainwindow.cpp" line="766"/>
         <source>%1, Time difference: %2 s</source>
         <translation>%1, Різниця у часі: %2 сек</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="799"/>
+        <location filename="mainwindow.cpp" line="772"/>
         <source>No data</source>
         <translation>Нема даних</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="801"/>
+        <location filename="mainwindow.cpp" line="774"/>
         <source>Device time zone: %1 (%2, %3)</source>
         <translation>Часовий пояс пристрою: %1 (%2, %3)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="807"/>
+        <location filename="mainwindow.cpp" line="780"/>
         <source>Device time zone: n/a</source>
         <translation>Часовий пояс пристрою: н/з</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="847"/>
-        <location filename="mainwindow.cpp" line="2107"/>
+        <location filename="mainwindow.cpp" line="823"/>
+        <location filename="mainwindow.cpp" line="2110"/>
         <source>&lt;b&gt;%1&lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="850"/>
-        <location filename="mainwindow.cpp" line="2110"/>
+        <location filename="mainwindow.cpp" line="826"/>
+        <location filename="mainwindow.cpp" line="2113"/>
         <source>&lt;b&gt;%1&lt;b&gt; (Not found!)</source>
         <translation>&lt;b&gt;%1&lt;b&gt; (Не знайдено!)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="946"/>
-        <location filename="mainwindow.cpp" line="984"/>
+        <location filename="mainwindow.cpp" line="922"/>
+        <location filename="mainwindow.cpp" line="960"/>
         <source>Remote host;Day Profile Name;Status</source>
         <translation>Віддалений хост;Назва Денного Профілі;Стан</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="963"/>
-        <location filename="mainwindow.cpp" line="1001"/>
+        <location filename="mainwindow.cpp" line="939"/>
+        <location filename="mainwindow.cpp" line="977"/>
         <source>Name;Schedule</source>
         <translation>Назва;Розклад</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1167"/>
-        <location filename="mainwindow.cpp" line="1411"/>
-        <location filename="mainwindow.cpp" line="1573"/>
-        <location filename="mainwindow.cpp" line="1717"/>
-        <location filename="mainwindow.cpp" line="1807"/>
+        <location filename="mainwindow.cpp" line="1143"/>
+        <location filename="mainwindow.cpp" line="1391"/>
+        <location filename="mainwindow.cpp" line="1555"/>
+        <location filename="mainwindow.cpp" line="1705"/>
+        <location filename="mainwindow.cpp" line="1800"/>
         <location filename="mainwindow.cpp" line="1957"/>
         <source>Corrupted data.</source>
         <translation>Пошкоджені дані.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1208"/>
+        <location filename="mainwindow.cpp" line="1184"/>
         <source>Corrupted packet!</source>
         <translation>Пошкоджений пакет!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1318"/>
-        <location filename="mainwindow.cpp" line="1534"/>
-        <location filename="mainwindow.cpp" line="1628"/>
-        <location filename="mainwindow.cpp" line="1776"/>
-        <location filename="mainwindow.cpp" line="1844"/>
+        <location filename="mainwindow.cpp" line="1297"/>
+        <location filename="mainwindow.cpp" line="1516"/>
+        <location filename="mainwindow.cpp" line="1613"/>
+        <location filename="mainwindow.cpp" line="1766"/>
+        <location filename="mainwindow.cpp" line="1840"/>
         <location filename="mainwindow.cpp" line="1961"/>
         <source>Done.</source>
         <translation>Виконано.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1337"/>
-        <location filename="mainwindow.cpp" line="1646"/>
+        <location filename="mainwindow.cpp" line="1316"/>
+        <location filename="mainwindow.cpp" line="1631"/>
         <source>Total count: %1 values.&lt;br&gt;Last Table ID: %2, Last Meter ID: %3.</source>
         <translation>Загальна кількість: %1 значень.&lt;br&gt;ІД останньої таблиці: %2, ІД останнього лічильника: %3.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1364"/>
-        <location filename="mainwindow.cpp" line="1672"/>
+        <location filename="mainwindow.cpp" line="1343"/>
+        <location filename="mainwindow.cpp" line="1657"/>
         <source>No table.</source>
         <translation>Нема таблиці.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1372"/>
-        <location filename="mainwindow.cpp" line="1680"/>
+        <location filename="mainwindow.cpp" line="1351"/>
+        <location filename="mainwindow.cpp" line="1665"/>
         <source>Total count: %1 tables, Downloaded: 0 tables</source>
         <translation>Загальна кількість: %1 таблиць, Завантажено: 0 таблиць</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1388"/>
-        <location filename="mainwindow.cpp" line="1689"/>
+        <location filename="mainwindow.cpp" line="1368"/>
+        <location filename="mainwindow.cpp" line="1677"/>
         <source>Selected: %1 tables</source>
         <translation>Вибрано: %1 таблиць</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1538"/>
+        <location filename="mainwindow.cpp" line="1520"/>
         <source>Total count: %1 tables, %2: %3 tables.&lt;br&gt;Block: %4, Last ID: %5.</source>
         <translation>Загальна кількість: %1 таблиць, %2: %3 таблиць.&lt;br&gt;Блок: %4, Останній ІД: %5.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1539"/>
-        <location filename="mainwindow.cpp" line="1780"/>
+        <location filename="mainwindow.cpp" line="1521"/>
+        <location filename="mainwindow.cpp" line="1770"/>
         <source>Parsed</source>
-        <translation type="unfinished"></translation>
+        <translation>Оброблено</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1539"/>
-        <location filename="mainwindow.cpp" line="1780"/>
+        <location filename="mainwindow.cpp" line="1521"/>
+        <location filename="mainwindow.cpp" line="1770"/>
         <source>Downloaded</source>
         <translation>Завантажено</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1779"/>
+        <location filename="mainwindow.cpp" line="1769"/>
         <source>Total count: %1 tables, %2: %3 tables.&lt;br&gt;Block: %4, Last RowID: %5.</source>
         <translation>Загальна кількість: %1 таблиць, %2: %3 таблиць.&lt;br&gt;Блок: %4, Останній ІД: %5.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1798"/>
+        <location filename="mainwindow.cpp" line="1788"/>
         <source>Model,NI,Serial Number,Memo,Password,On/Off,Physical values,Tariff Count,Meter Version</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1833"/>
+        <location filename="mainwindow.cpp" line="1827"/>
         <source>Total count: %1 meters, Downloaded: %2 meters</source>
         <translation>Загальна кількість: %1 лічильників, Завантажено: %2 лічильників</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1914"/>
+        <location filename="mainwindow.cpp" line="1910"/>
         <source>Hash alg.: %1
    Table name   	  Hash summ(base64)  	Hash summ (hex)  </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1922"/>
+        <location filename="mainwindow.cpp" line="1918"/>
         <source>Corrupted data. Ignoring...</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошкоджені дані. Ігнорую...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1938"/>
+        <location filename="mainwindow.cpp" line="1934"/>
         <source>Done</source>
         <translation>Виконано</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1988"/>
+        <location filename="mainwindow.cpp" line="1991"/>
         <source>Total count: %1 meters, Uploaded: %2 meters</source>
         <translation>Загальна кількість: %1 лічильників, Вивантажено: %2 лічильників</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2003"/>
-        <location filename="mainwindow.cpp" line="2030"/>
+        <location filename="mainwindow.cpp" line="2006"/>
+        <location filename="mainwindow.cpp" line="2033"/>
         <source>Command %1. Database not opened.</source>
         <translation>Команда %1. БД не відкрита.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2004"/>
-        <location filename="mainwindow.cpp" line="2031"/>
+        <location filename="mainwindow.cpp" line="2007"/>
+        <location filename="mainwindow.cpp" line="2034"/>
         <source>Command %1. Incorrect request.</source>
         <translation>Команда %1. Неправильний запит.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2005"/>
-        <location filename="mainwindow.cpp" line="2032"/>
+        <location filename="mainwindow.cpp" line="2008"/>
+        <location filename="mainwindow.cpp" line="2035"/>
         <source>Command %1. Internal error.</source>
         <translation>Команда %1. Внутрішня помилка.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2006"/>
-        <location filename="mainwindow.cpp" line="2033"/>
+        <location filename="mainwindow.cpp" line="2009"/>
+        <location filename="mainwindow.cpp" line="2036"/>
         <source>Command %1. Data not found.</source>
         <translation>Команда %1. Даних не знайдено.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2010"/>
-        <location filename="mainwindow.cpp" line="2037"/>
+        <location filename="mainwindow.cpp" line="2013"/>
+        <location filename="mainwindow.cpp" line="2040"/>
         <source>Command %1. Table count limit</source>
         <translation>Команда %1. Обмеження кількості таблиць</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2011"/>
-        <location filename="mainwindow.cpp" line="2038"/>
+        <location filename="mainwindow.cpp" line="2014"/>
+        <location filename="mainwindow.cpp" line="2041"/>
         <source>Command %1. Corrupted data</source>
         <translation>Команда %1. Пошкоджені дані</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2012"/>
-        <location filename="mainwindow.cpp" line="2039"/>
+        <location filename="mainwindow.cpp" line="2015"/>
+        <location filename="mainwindow.cpp" line="2042"/>
         <source>Command %1. Duplicating NI</source>
         <translation>Команда %1. Повтори NI</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2013"/>
-        <location filename="mainwindow.cpp" line="2040"/>
+        <location filename="mainwindow.cpp" line="2016"/>
+        <location filename="mainwindow.cpp" line="2043"/>
         <source>Command %1. Duplicating SN</source>
         <translation>Команда %1. Повтори SN</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2014"/>
-        <location filename="mainwindow.cpp" line="2041"/>
+        <location filename="mainwindow.cpp" line="2017"/>
+        <location filename="mainwindow.cpp" line="2044"/>
         <source>Command %1. Date not valid</source>
         <translation>Команда %1. Дата не правильна</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2015"/>
-        <location filename="mainwindow.cpp" line="2016"/>
-        <location filename="mainwindow.cpp" line="2017"/>
-        <location filename="mainwindow.cpp" line="2042"/>
-        <location filename="mainwindow.cpp" line="2043"/>
-        <location filename="mainwindow.cpp" line="2044"/>
+        <location filename="mainwindow.cpp" line="2018"/>
+        <location filename="mainwindow.cpp" line="2019"/>
+        <location filename="mainwindow.cpp" line="2020"/>
+        <location filename="mainwindow.cpp" line="2045"/>
+        <location filename="mainwindow.cpp" line="2046"/>
+        <location filename="mainwindow.cpp" line="2047"/>
         <source>Command %1. Command not allowed</source>
         <translation>Команда %1. Команду не дозволено</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2020"/>
-        <location filename="mainwindow.cpp" line="2047"/>
+        <location filename="mainwindow.cpp" line="2023"/>
+        <location filename="mainwindow.cpp" line="2050"/>
         <source>Command %1. Done!</source>
         <translation>Команда %1. Виконано!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2021"/>
-        <location filename="mainwindow.cpp" line="2048"/>
+        <location filename="mainwindow.cpp" line="2024"/>
+        <location filename="mainwindow.cpp" line="2051"/>
         <source>Command %1. Unknown error. Error code: %2</source>
         <translation>Команда %1. Невідома помилка. Код: %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2051"/>
+        <location filename="mainwindow.cpp" line="2054"/>
         <source>&lt;br&gt;Device: %1</source>
         <translation>&lt;br&gt;Пристрій: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2056"/>
+        <location filename="mainwindow.cpp" line="2059"/>
         <source>The meter list hash summ is %1 (base64)&lt;br&gt;%2(hex)&lt;br&gt;Alg.: %3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2071"/>
+        <location filename="mainwindow.cpp" line="2074"/>
         <source>Total count: %1 tables, Deleted: %2 tables.&lt;br&gt;Speed: %3 tables per secound.</source>
         <translation>Загальна кількість: %1 таблиць, Видалено: %2 таблиць.&lt;br&gt;Швидкість: %3 таблиць за секунду.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2145"/>
+        <location filename="mainwindow.cpp" line="2148"/>
         <source>Meter Address;Modem Address</source>
         <translation>Адреса Лічильника;Адреса Модема (NI)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2171"/>
-        <location filename="mainwindow.cpp" line="2208"/>
+        <location filename="mainwindow.cpp" line="2174"/>
+        <location filename="mainwindow.cpp" line="2211"/>
         <source>No answer from device.</source>
         <translation>Нема відповіді від пристрою.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2243"/>
+        <location filename="mainwindow.cpp" line="2246"/>
         <source>Last R/W: %1/%2 bytes, R/W (NC): %3/%4; Total R/W: %5/%6, R/W (NC): %7/%8, Saving: %9</source>
         <translation>Остан. О/П: %1/%2 байт, О/П(НС): %3/%4; Заг. О/П: %5/%6, О/П (НС): %7/%8, Збереж.: %9</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2278"/>
+        <location filename="mainwindow.cpp" line="2281"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2686"/>
+        <location filename="mainwindow.cpp" line="2454"/>
+        <source>No event for this day</source>
+        <translation>Відсутні події на сьогоднішню добу</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2455"/>
+        <source>Meter done</source>
+        <translation>Лічильник опитано</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2482"/>
+        <source>Changed configuration</source>
+        <translation>Конфігурацію змінено</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2483"/>
+        <source>Climate</source>
+        <translation>Клімат</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2484"/>
+        <source>Metering</source>
+        <translation>Вимірювання</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2485"/>
+        <source>DST state</source>
+        <translation>Літній час</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2487"/>
+        <source>Parameters fault</source>
+        <translation>Збій параметрів</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2489"/>
+        <source>Billing</source>
+        <translation>Оплата</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2490"/>
+        <source>Module open</source>
+        <translation>Зовн. модуль відкрито</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2494"/>
+        <source>Need to correct time</source>
+        <translation>Необхідно скорегувати час</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2495"/>
+        <source>Correct time: error</source>
+        <translation>Коррекція часу: помилка</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2496"/>
+        <source>Correct time: done</source>
+        <translation>Коррекція часу: виконано</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2791"/>
         <source>Device disconnected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пристрій від&apos;єднано.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2870"/>
-        <location filename="mainwindow.cpp" line="2890"/>
+        <location filename="mainwindow.cpp" line="2970"/>
+        <location filename="mainwindow.cpp" line="2990"/>
         <source>IP: %1, Port: %2, Login: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>IP: %1, Порт: %2, Логін: %3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3080"/>
-        <location filename="mainwindow.cpp" line="3101"/>
-        <location filename="mainwindow.cpp" line="3197"/>
-        <location filename="mainwindow.cpp" line="3218"/>
-        <location filename="mainwindow.cpp" line="3323"/>
-        <location filename="mainwindow.cpp" line="3345"/>
-        <location filename="mainwindow.cpp" line="3410"/>
-        <location filename="mainwindow.cpp" line="3431"/>
+        <location filename="mainwindow.cpp" line="3185"/>
+        <location filename="mainwindow.cpp" line="3206"/>
+        <location filename="mainwindow.cpp" line="3318"/>
+        <location filename="mainwindow.cpp" line="3339"/>
+        <location filename="mainwindow.cpp" line="3465"/>
+        <location filename="mainwindow.cpp" line="3487"/>
+        <location filename="mainwindow.cpp" line="3561"/>
+        <location filename="mainwindow.cpp" line="3582"/>
         <source>The time interval is incorrect.&lt;br&gt;</source>
         <translation>Часовий інтервал не правильний.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3110"/>
-        <location filename="mainwindow.cpp" line="3227"/>
-        <location filename="mainwindow.cpp" line="3354"/>
-        <location filename="mainwindow.cpp" line="3440"/>
+        <location filename="mainwindow.cpp" line="3215"/>
+        <location filename="mainwindow.cpp" line="3348"/>
+        <location filename="mainwindow.cpp" line="3496"/>
+        <location filename="mainwindow.cpp" line="3591"/>
         <source>Can&apos;t calculte date.&lt;br&gt;</source>
         <translation>Не можу вирахувати дату.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3121"/>
-        <location filename="mainwindow.cpp" line="3238"/>
+        <location filename="mainwindow.cpp" line="3226"/>
+        <location filename="mainwindow.cpp" line="3359"/>
         <source>The tariff list is empty.&lt;br&gt;</source>
         <translation>Список тарифів пустий.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3133"/>
-        <location filename="mainwindow.cpp" line="3250"/>
+        <location filename="mainwindow.cpp" line="3258"/>
+        <location filename="mainwindow.cpp" line="3392"/>
         <source>The energy list is empty.&lt;br&gt;</source>
         <translation>Список енергій пустий.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3146"/>
-        <location filename="mainwindow.cpp" line="3261"/>
-        <location filename="mainwindow.cpp" line="3362"/>
+        <location filename="mainwindow.cpp" line="3271"/>
+        <location filename="mainwindow.cpp" line="3403"/>
+        <location filename="mainwindow.cpp" line="3504"/>
         <source>The NI filter: incorrect data.&lt;br&gt;</source>
         <translation>NI фільтр: хибні дані.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3448"/>
+        <location filename="mainwindow.cpp" line="3599"/>
         <source>Table list is empty</source>
         <translation>Список таблиць порожній</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3490"/>
+        <location filename="mainwindow.cpp" line="3641"/>
         <source>APN is empty. This will disable the GPRS modem!. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>APN є порожнім. Це деактивує GPRS модем!. Продовжити?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3519"/>
+        <location filename="mainwindow.cpp" line="3673"/>
         <source>Priority: duplicate values.&lt;br&gt;Please fill the fields priorities unique values.</source>
         <translation>Пріоритет: повтор значень.&lt;br&gt;Будь ласка заповніть поля пріоритету унікальними значеннями.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3605"/>
+        <location filename="mainwindow.cpp" line="3759"/>
         <source>Days of week is empty!</source>
         <translation>Дні тижня: значення не знайдено!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3618"/>
+        <location filename="mainwindow.cpp" line="3772"/>
         <source>You really want to clear the list of electric meters?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви дійсно хочете очистити список лічильників?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3795"/>
+        <location filename="mainwindow.cpp" line="3957"/>
         <source>Statistic of exchange</source>
         <translation>Статистика обміну</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3796"/>
+        <location filename="mainwindow.cpp" line="3958"/>
         <source>CSV Files(*.csv</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3803"/>
+        <location filename="mainwindow.cpp" line="3965"/>
         <source>Statistic of exchange;</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика обміну</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3861"/>
+        <location filename="mainwindow.cpp" line="4023"/>
         <source>Model: invalid index.&lt;br&gt;</source>
         <translation>Модель: хибний індекс.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3868"/>
+        <location filename="mainwindow.cpp" line="4030"/>
         <source>NI is empty.&lt;br&gt;</source>
         <translation>NI є порожнім.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3880"/>
+        <location filename="mainwindow.cpp" line="4042"/>
         <source>Physical values: invalid index.&lt;br&gt;</source>
         <translation>Фізичні величини: хибний індекс.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3887"/>
+        <location filename="mainwindow.cpp" line="4049"/>
         <source>MAX_METER_COUNT=%1.&lt;br&gt;</source>
         <translation>Макс. к-ть лічильників=%1.&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3896"/>
+        <location filename="mainwindow.cpp" line="4058"/>
         <source>The meter with SN: %1, already exists. Replace?</source>
         <translation>Лічильник з Серійним Номером: %1, уже є. Замінити?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3907"/>
+        <location filename="mainwindow.cpp" line="4069"/>
         <source>The meter with NI: %1, already exists. Replace?</source>
         <translation>Лічильник з NI: %1, уже є. Замінити?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4007"/>
+        <location filename="mainwindow.cpp" line="4169"/>
         <source>Edit</source>
         <translation>Змінити</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4008"/>
+        <location filename="mainwindow.cpp" line="4170"/>
         <source>Selected: poll on</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділені: увм. опитування</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4009"/>
+        <location filename="mainwindow.cpp" line="4171"/>
         <source>Selected: poll off</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділене: Вимк. Опитування</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4012"/>
+        <location filename="mainwindow.cpp" line="4174"/>
         <source>Selected: insert to list</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділені: вставити до списку</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4013"/>
+        <location filename="mainwindow.cpp" line="4175"/>
         <source>Selected: insert to list with Poll off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4014"/>
+        <location filename="mainwindow.cpp" line="4176"/>
         <source>Selected: insert to list with Poll on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4015"/>
+        <location filename="mainwindow.cpp" line="4177"/>
         <source>Selected: delete from list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4018"/>
+        <location filename="mainwindow.cpp" line="4180"/>
         <source>Delete selected</source>
         <translation>Видалити виділене</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4085"/>
+        <location filename="mainwindow.cpp" line="4247"/>
         <source>Max size is 50. Meter count is %1</source>
         <translation>Макс. розмір 50 лічильників. К-ть лічильників %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4118"/>
-        <location filename="mainwindow.cpp" line="4147"/>
-        <location filename="mainwindow.cpp" line="4176"/>
+        <location filename="mainwindow.cpp" line="4280"/>
+        <location filename="mainwindow.cpp" line="4309"/>
+        <location filename="mainwindow.cpp" line="4338"/>
         <source>Max size is %1. Meter count is %2</source>
         <translation>Макс. розмір %1. К-ть лічильників %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4179"/>
+        <location filename="mainwindow.cpp" line="4341"/>
         <source>R U really want to delete this meter from list?&lt;br&gt;This will be delete this meter directly from remote device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4361"/>
-        <location filename="mainwindow.cpp" line="4524"/>
+        <location filename="mainwindow.cpp" line="4523"/>
+        <location filename="mainwindow.cpp" line="4686"/>
         <source>No day profile&lt;br&gt;</source>
         <translation>Денний профіль не задано&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4366"/>
-        <location filename="mainwindow.cpp" line="4393"/>
-        <location filename="mainwindow.cpp" line="4531"/>
-        <location filename="mainwindow.cpp" line="4558"/>
+        <location filename="mainwindow.cpp" line="4528"/>
+        <location filename="mainwindow.cpp" line="4555"/>
+        <location filename="mainwindow.cpp" line="4693"/>
+        <location filename="mainwindow.cpp" line="4720"/>
         <source>remote address not found&lt;br&gt;</source>
         <translation>віддалену адресу не знайдено&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4396"/>
-        <location filename="mainwindow.cpp" line="4561"/>
+        <location filename="mainwindow.cpp" line="4558"/>
+        <location filename="mainwindow.cpp" line="4723"/>
         <source>remote port not found&lt;br&gt;</source>
         <translation>віддалений порт не знайдено&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4399"/>
-        <location filename="mainwindow.cpp" line="4437"/>
-        <location filename="mainwindow.cpp" line="4601"/>
+        <location filename="mainwindow.cpp" line="4561"/>
+        <location filename="mainwindow.cpp" line="4599"/>
+        <location filename="mainwindow.cpp" line="4763"/>
         <source>Max. client count is %1</source>
         <translation>Макс. к-ть клієнтів є %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4411"/>
-        <location filename="mainwindow.cpp" line="4576"/>
+        <location filename="mainwindow.cpp" line="4573"/>
+        <location filename="mainwindow.cpp" line="4738"/>
         <source>Add remote host</source>
         <translation>Додати віддалений хост</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4411"/>
-        <location filename="mainwindow.cpp" line="4576"/>
+        <location filename="mainwindow.cpp" line="4573"/>
+        <location filename="mainwindow.cpp" line="4738"/>
         <source>This address already exists.&lt;br&gt;Overwrite?</source>
         <translation>Ця адреса уже задана.&lt;br&gt;Перезаписати?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4446"/>
-        <location filename="mainwindow.cpp" line="4611"/>
+        <location filename="mainwindow.cpp" line="4608"/>
+        <location filename="mainwindow.cpp" line="4773"/>
         <source>Name is empty&lt;br&gt;</source>
         <translation>Назва є пустою&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4449"/>
-        <location filename="mainwindow.cpp" line="4614"/>
+        <location filename="mainwindow.cpp" line="4611"/>
+        <location filename="mainwindow.cpp" line="4776"/>
         <source>All days disabled&lt;br&gt;</source>
         <translation>Усі дні деактивовано&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4452"/>
-        <location filename="mainwindow.cpp" line="4515"/>
-        <location filename="mainwindow.cpp" line="4617"/>
+        <location filename="mainwindow.cpp" line="4614"/>
+        <location filename="mainwindow.cpp" line="4677"/>
+        <location filename="mainwindow.cpp" line="4779"/>
         <source>Max. profile count is %1&lt;br&gt;</source>
         <translation>Макс. к-ть профілів є %1&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4466"/>
-        <location filename="mainwindow.cpp" line="4631"/>
+        <location filename="mainwindow.cpp" line="4628"/>
+        <location filename="mainwindow.cpp" line="4793"/>
         <source>Add day profile</source>
         <translation>Додати денний профіль</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4466"/>
-        <location filename="mainwindow.cpp" line="4631"/>
+        <location filename="mainwindow.cpp" line="4628"/>
+        <location filename="mainwindow.cpp" line="4793"/>
         <source>This name already exists.&lt;br&gt;Overwrite?</source>
         <translation>Ця назва уже задана.&lt;br&gt;Перезаписати?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4564"/>
+        <location filename="mainwindow.cpp" line="4726"/>
         <source>Max. client count is %1&lt;br&gt;</source>
         <translation>Макс. к-ть клієнтів є %1&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4679"/>
+        <location filename="mainwindow.cpp" line="4841"/>
         <source>Max. profile count is %1</source>
         <translation>Макс. к-ть профілів є %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4832"/>
+        <location filename="mainwindow.cpp" line="4994"/>
         <source>Meter address not valid: can&apos;t convert from HEX&lt;br&gt;</source>
         <translation>Адреса лічильника є хибною: помилка конвертації з HEX&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4841"/>
+        <location filename="mainwindow.cpp" line="5003"/>
         <source>Modem address not valid: can&apos;t convert from HEX&lt;br&gt;</source>
         <translation>Адреса модема є хибною: помилка конвертації з HEX&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4845"/>
+        <location filename="mainwindow.cpp" line="5007"/>
         <source>Meter Address not valid&lt;br&gt;</source>
         <translation>Адреса Лічильника є хибною&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4848"/>
+        <location filename="mainwindow.cpp" line="5010"/>
         <source>Modem Address not valid&lt;br&gt;</source>
         <translation>Адреса Модема є хибною&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4860"/>
+        <location filename="mainwindow.cpp" line="5022"/>
         <source>The meter address %1 is already exists. Replace?</source>
         <translation>Адреса лічильника %1 уже задана. Замінити?</translation>
     </message>
@@ -2116,12 +2310,12 @@
     <message>
         <location filename="scanipdialog.ui" line="14"/>
         <source>UDP Scan Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="scanipdialog.ui" line="22"/>
         <source>scan</source>
-        <translation type="unfinished"></translation>
+        <translation>сканувати</translation>
     </message>
     <message>
         <location filename="scanipdialog.ui" line="32"/>
@@ -2683,17 +2877,17 @@
     <message>
         <location filename="showmesshelper.cpp" line="233"/>
         <source>A+;A-;R+;R-</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="showmesshelper.cpp" line="239"/>
         <source>∑T %1 [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="showmesshelper.cpp" line="241"/>
         <source>T%1 %2 [%3]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="showmesshelper.cpp" line="245"/>
@@ -2893,12 +3087,12 @@
     <message>
         <location filename="showmesshelper.cpp" line="505"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="showmesshelper.cpp" line="508"/>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="showmesshelper.cpp" line="554"/>
@@ -2964,7 +3158,7 @@
     <message>
         <location filename="showmesshelper.cpp" line="647"/>
         <source>Meter case open</source>
-        <translation type="unfinished"></translation>
+        <translation>Лічильник відкрито</translation>
     </message>
     <message>
         <location filename="showmesshelper.cpp" line="648"/>
@@ -4150,7 +4344,7 @@
         <location filename="matildaclient.cpp" line="158"/>
         <location filename="matildaclient.cpp" line="174"/>
         <source>Received uncorrect request</source>
-        <translation type="unfinished"></translation>
+        <translation>Отримано хибну відповідь</translation>
     </message>
     <message>
         <location filename="matildaclient.cpp" line="197"/>
