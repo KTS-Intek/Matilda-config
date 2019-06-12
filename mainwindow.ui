@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1579</width>
-    <height>705</height>
+    <width>1237</width>
+    <height>634</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -566,7 +566,7 @@
                     </sizepolicy>
                    </property>
                    <property name="text">
-                    <string>Protocol v2</string>
+                    <string>Protocol v2 (2...5)</string>
                    </property>
                   </widget>
                  </item>
@@ -757,8 +757,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>982</width>
-                 <height>612</height>
+                 <width>747</width>
+                 <height>541</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2028,10 +2028,6 @@
                          <property name="text">
                           <string>Open</string>
                          </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-yellow.svg</normaloff>:/katynko/svg/flag-yellow.svg</iconset>
-                         </property>
                          <property name="checkable">
                           <bool>true</bool>
                          </property>
@@ -2114,10 +2110,6 @@
                          <property name="text">
                           <string>x</string>
                          </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
-                         </property>
                          <property name="autoRaise">
                           <bool>false</bool>
                          </property>
@@ -2149,13 +2141,6 @@
                           <widget class="QToolButton" name="tbAdd2SvahaService_2">
                            <property name="text">
                             <string>Add</string>
-                           </property>
-                           <property name="icon">
-                            <iconset resource="res.qrc">
-                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
-                           </property>
-                           <property name="toolButtonStyle">
-                            <enum>Qt::ToolButtonTextBesideIcon</enum>
                            </property>
                            <property name="autoRaise">
                             <bool>false</bool>
@@ -2215,10 +2200,6 @@
                          </property>
                          <property name="text">
                           <string>x</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
                          </property>
                          <property name="autoRaise">
                           <bool>false</bool>
@@ -2373,13 +2354,6 @@
                            <property name="text">
                             <string>Add</string>
                            </property>
-                           <property name="icon">
-                            <iconset resource="res.qrc">
-                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
-                           </property>
-                           <property name="toolButtonStyle">
-                            <enum>Qt::ToolButtonTextBesideIcon</enum>
-                           </property>
                            <property name="autoRaise">
                             <bool>false</bool>
                            </property>
@@ -2518,10 +2492,6 @@
                          <property name="text">
                           <string>x</string>
                          </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
-                         </property>
                          <property name="autoRaise">
                           <bool>false</bool>
                          </property>
@@ -2553,13 +2523,6 @@
                           <widget class="QToolButton" name="tbAdd2SvahaService">
                            <property name="text">
                             <string>Add</string>
-                           </property>
-                           <property name="icon">
-                            <iconset resource="res.qrc">
-                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
-                           </property>
-                           <property name="toolButtonStyle">
-                            <enum>Qt::ToolButtonTextBesideIcon</enum>
                            </property>
                            <property name="autoRaise">
                             <bool>false</bool>
@@ -2778,10 +2741,6 @@
                          <property name="text">
                           <string>x</string>
                          </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
-                         </property>
                          <property name="autoRaise">
                           <bool>false</bool>
                          </property>
@@ -2793,13 +2752,6 @@
                           <widget class="QToolButton" name="tbAddDayProfile">
                            <property name="text">
                             <string>Add</string>
-                           </property>
-                           <property name="icon">
-                            <iconset resource="res.qrc">
-                             <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
-                           </property>
-                           <property name="toolButtonStyle">
-                            <enum>Qt::ToolButtonTextBesideIcon</enum>
                            </property>
                            <property name="autoRaise">
                             <bool>false</bool>
@@ -2922,10 +2874,6 @@
                          <property name="text">
                           <string>Daemon Restart</string>
                          </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-red.svg</normaloff>:/katynko/svg/flag-red.svg</iconset>
-                         </property>
                          <property name="flat">
                           <bool>false</bool>
                          </property>
@@ -2935,10 +2883,6 @@
                         <widget class="QPushButton" name="pbReboot">
                          <property name="text">
                           <string>Reboot</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-red.svg</normaloff>:/katynko/svg/flag-red.svg</iconset>
                          </property>
                          <property name="flat">
                           <bool>false</bool>
@@ -2950,20 +2894,12 @@
                          <property name="text">
                           <string>Restart GSM</string>
                          </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-yellow.svg</normaloff>:/katynko/svg/flag-yellow.svg</iconset>
-                         </property>
                         </widget>
                        </item>
                        <item>
                         <widget class="QPushButton" name="pbResetEmbee">
                          <property name="text">
                           <string>Restart Embee</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-yellow.svg</normaloff>:/katynko/svg/flag-yellow.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -3011,10 +2947,6 @@
                           <widget class="QPushButton" name="pbDevCommands">
                            <property name="text">
                             <string>Read</string>
-                           </property>
-                           <property name="icon">
-                            <iconset resource="res.qrc">
-                             <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
                            </property>
                           </widget>
                          </item>
@@ -3086,20 +3018,12 @@
                          <property name="text">
                           <string>Read</string>
                          </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
-                         </property>
                         </widget>
                        </item>
                        <item>
                         <widget class="QPushButton" name="pbWriteUdp">
                          <property name="text">
                           <string>Write</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-red.svg</normaloff>:/katynko/svg/flag-red.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -3143,10 +3067,6 @@
                         <widget class="QPushButton" name="pbReadSn">
                          <property name="text">
                           <string>Read</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -3459,8 +3379,8 @@
                        <string>Add</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="res.qrc">
-                        <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
+                       <iconset>
+                        <normaloff>:/img/img/edit_add.png</normaloff>:/img/img/edit_add.png</iconset>
                       </property>
                      </widget>
                     </item>
@@ -3493,10 +3413,6 @@
                         </property>
                         <property name="text">
                          <string>Del</string>
-                        </property>
-                        <property name="icon">
-                         <iconset resource="res.qrc">
-                          <normaloff>:/katynko/svg/edit-delete.svg</normaloff>:/katynko/svg/edit-delete.svg</iconset>
                         </property>
                        </widget>
                       </item>
@@ -4193,10 +4109,6 @@
                         <property name="text">
                          <string>Show/Hide Meter Add Tool</string>
                         </property>
-                        <property name="icon">
-                         <iconset resource="res.qrc">
-                          <normaloff>:/katynko/svg2/arrow-up-double.svg</normaloff>:/katynko/svg2/arrow-up-double.svg</iconset>
-                        </property>
                         <property name="checkable">
                          <bool>true</bool>
                         </property>
@@ -4209,10 +4121,6 @@
                        <widget class="QPushButton" name="pbReadHashSumm">
                         <property name="text">
                          <string>Read Hash Summ</string>
-                        </property>
-                        <property name="icon">
-                         <iconset resource="res.qrc">
-                          <normaloff>:/katynko/svg/flag-green.svg</normaloff>:/katynko/svg/flag-green.svg</iconset>
                         </property>
                        </widget>
                       </item>
@@ -4232,14 +4140,14 @@
                       <item>
                        <widget class="QCheckBox" name="cbCmprssMeterList">
                         <property name="text">
-                         <string>cmprss</string>
+                         <string>Always comprss</string>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="label_17">
                         <property name="text">
-                         <string>max_len</string>
+                         <string>Read/Write byte</string>
                         </property>
                        </widget>
                       </item>
@@ -4268,10 +4176,6 @@
                         <widget class="QPushButton" name="pbAddMeter">
                          <property name="text">
                           <string>Add/Change</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="res.qrc">
-                           <normaloff>:/katynko/svg/draw-cross.svg</normaloff>:/katynko/svg/draw-cross.svg</iconset>
                          </property>
                         </widget>
                        </item>
@@ -4441,10 +4345,6 @@
                             <property name="text">
                              <string>E</string>
                             </property>
-                            <property name="icon">
-                             <iconset resource="res.qrc">
-                              <normaloff>:/katynko/svg/document-edit.svg</normaloff>:/katynko/svg/document-edit.svg</iconset>
-                            </property>
                            </widget>
                           </item>
                           <item row="0" column="1">
@@ -4530,11 +4430,7 @@
                       <item>
                        <widget class="QPushButton" name="pbRedo">
                         <property name="text">
-                         <string>Undo</string>
-                        </property>
-                        <property name="icon">
-                         <iconset resource="res.qrc">
-                          <normaloff>:/katynko/svg/edit-undo.svg</normaloff>:/katynko/svg/edit-undo.svg</iconset>
+                         <string>Redo</string>
                         </property>
                        </widget>
                       </item>
@@ -4590,10 +4486,6 @@
                         <property name="text">
                          <string>Show/Hide Data Filter</string>
                         </property>
-                        <property name="icon">
-                         <iconset resource="res.qrc">
-                          <normaloff>:/katynko/svg2/arrow-up-double.svg</normaloff>:/katynko/svg2/arrow-up-double.svg</iconset>
-                        </property>
                         <property name="checkable">
                          <bool>true</bool>
                         </property>
@@ -4626,23 +4518,7 @@
                        </spacer>
                       </item>
                       <item>
-                       <widget class="QCheckBox" name="cbxGroupPhase">
-                        <property name="toolTip">
-                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Group the sequence of physical quantities.&lt;/p&gt;&lt;p&gt;Only for Voltage profile.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                        </property>
-                        <property name="text">
-                         <string>Phs. Group</string>
-                        </property>
-                        <property name="checked">
-                         <bool>true</bool>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
                        <widget class="QCheckBox" name="cbChop">
-                        <property name="toolTip">
-                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;jns&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;0-ignore&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;1-joinstts&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2-ommitNIandjoinstts&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;3-joinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;4-omitNIandjoinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;5-joinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-,joindatawith&amp;quot;|&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;6-omitNIandjoinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-,joindatawith&amp;quot;|&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                        </property>
                         <property name="text">
                          <string>jns</string>
                         </property>
@@ -4650,28 +4526,25 @@
                       </item>
                       <item>
                        <widget class="QSpinBox" name="sbJns">
-                        <property name="toolTip">
-                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;jns&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;0-ignore&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;1-joinstts&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2-ommitNIandjoinstts&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;3-joinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;4-omitNIandjoinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;5-joinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-,joindatawith&amp;quot;|&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;6-omitNIandjoinsttsandenrgkeysequenceTx_A+,Tx_A-,Tx_R+,Tx_R-,joindatawith&amp;quot;|&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                        </property>
                         <property name="maximum">
                          <number>6</number>
                         </property>
                         <property name="value">
-                         <number>3</number>
+                         <number>1</number>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QCheckBox" name="cbCmprssDb">
                         <property name="text">
-                         <string>cmprss</string>
+                         <string>Always Comprss</string>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="label_18">
                         <property name="text">
-                         <string>max_len</string>
+                         <string>Read len</string>
                         </property>
                        </widget>
                       </item>
@@ -4696,6 +4569,36 @@
                        <string>Select from database</string>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_12">
+                       <item row="1" column="2" rowspan="3">
+                        <widget class="QListView" name="lvMeterDataTariff">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <pointsize>12</pointsize>
+                          </font>
+                         </property>
+                         <property name="editTriggers">
+                          <set>QAbstractItemView::NoEditTriggers</set>
+                         </property>
+                         <property name="showDropIndicator" stdset="0">
+                          <bool>false</bool>
+                         </property>
+                         <property name="alternatingRowColors">
+                          <bool>true</bool>
+                         </property>
+                         <property name="selectionMode">
+                          <enum>QAbstractItemView::NoSelection</enum>
+                         </property>
+                         <property name="resizeMode">
+                          <enum>QListView::Adjust</enum>
+                         </property>
+                        </widget>
+                       </item>
                        <item row="1" column="1" rowspan="2">
                         <widget class="QGroupBox" name="gbMeterDataFromTo">
                          <property name="sizePolicy">
@@ -4775,13 +4678,16 @@
                             <property name="text">
                              <string>...</string>
                             </property>
-                            <property name="icon">
-                             <iconset resource="res.qrc">
-                              <normaloff>:/katynko/svg/view-refresh.svg</normaloff>:/katynko/svg/view-refresh.svg</iconset>
-                            </property>
                            </widget>
                           </item>
                          </layout>
+                        </widget>
+                       </item>
+                       <item row="1" column="3" colspan="2">
+                        <widget class="QLineEdit" name="leAddMeterPhysicalVal">
+                         <property name="clearButtonEnabled">
+                          <bool>true</bool>
+                         </property>
                         </widget>
                        </item>
                        <item row="0" column="0" colspan="7">
@@ -4818,7 +4724,7 @@
                        <item row="1" column="0" rowspan="3">
                         <widget class="QListView" name="lvMeterDataProfile">
                          <property name="sizePolicy">
-                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
@@ -4909,10 +4815,10 @@
                          </layout>
                         </widget>
                        </item>
-                       <item row="1" column="2" rowspan="3">
-                        <widget class="QListView" name="lvMeterDataTariff">
+                       <item row="2" column="3" rowspan="2" colspan="3">
+                        <widget class="QListView" name="lvMeterDataPhVal">
                          <property name="sizePolicy">
-                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
@@ -4939,48 +4845,18 @@
                          </property>
                         </widget>
                        </item>
-                       <item row="2" column="3" rowspan="2" colspan="4">
-                        <widget class="QListView" name="lvMeterDataPhVal">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                           <horstretch>19</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
+                       <item row="1" column="6" rowspan="3">
+                        <spacer name="horizontalSpacer_14">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
                          </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>12</pointsize>
-                          </font>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>130</width>
+                           <height>20</height>
+                          </size>
                          </property>
-                         <property name="editTriggers">
-                          <set>QAbstractItemView::NoEditTriggers</set>
-                         </property>
-                         <property name="showDropIndicator" stdset="0">
-                          <bool>false</bool>
-                         </property>
-                         <property name="alternatingRowColors">
-                          <bool>true</bool>
-                         </property>
-                         <property name="selectionMode">
-                          <enum>QAbstractItemView::NoSelection</enum>
-                         </property>
-                         <property name="resizeMode">
-                          <enum>QListView::Adjust</enum>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="3" colspan="4">
-                        <widget class="QLineEdit" name="leAddMeterPhysicalVal">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                           <horstretch>18</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="clearButtonEnabled">
-                          <bool>true</bool>
-                         </property>
-                        </widget>
+                        </spacer>
                        </item>
                       </layout>
                      </widget>
@@ -5068,10 +4944,6 @@
                         <property name="text">
                          <string>Show/Hide Data Filter</string>
                         </property>
-                        <property name="icon">
-                         <iconset resource="res.qrc">
-                          <normaloff>:/katynko/svg2/arrow-up-double.svg</normaloff>:/katynko/svg2/arrow-up-double.svg</iconset>
-                        </property>
                         <property name="checkable">
                          <bool>true</bool>
                         </property>
@@ -5106,7 +4978,7 @@
                       <item>
                        <widget class="QCheckBox" name="cbxEvSmpl">
                         <property name="toolTip">
-                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;ignore&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;1&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;Remove&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;NI,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;видаляю&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;при&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;вибірці&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;1,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;evnt_code,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;видаляю&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;при&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;вибірці&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;3&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;meter_model&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;(show&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;only&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;UCM&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;events),&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;4&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;meter_model&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;(show&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;only&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;UCM&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;events),&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;and&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;text&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;after&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;first&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;space&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;comment&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;(ignore&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;space&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;&amp;lt;meter&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;done&amp;gt;)&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;5&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;4,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;and&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;text&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;after&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;first&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;space&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;comment,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;remove&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;event_code&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                         </property>
                         <property name="text">
                          <string>smpl</string>
@@ -5116,27 +4988,24 @@
                       <item>
                        <widget class="QSpinBox" name="sbEvSmpl">
                         <property name="toolTip">
-                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;ignore&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;1&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;Remove&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;NI,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;видаляю&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;при&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;вибірці&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;1,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;evnt_code,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;видаляю&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;при&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;вибірці&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;3&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;meter_model&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;(show&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;only&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;UCM&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;events),&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;4&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;2,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;meter_model&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;(show&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;only&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;UCM&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;events),&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;and&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;text&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;after&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;first&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;space&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;comment&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;(ignore&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;space&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;&amp;lt;meter&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;done&amp;gt;)&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#008000;&quot;&gt;5&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;4,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;and&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;text&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;after&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;first&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;space&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;comment,&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;remove&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;event_code&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;/&gt;&lt;span style=&quot; color:#008000;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0 - ignore&lt;/p&gt;&lt;p&gt;1 - Remove NI, &lt;/p&gt;&lt;p&gt;2 - Remove NI, evnt_code, &lt;/p&gt;&lt;p&gt;3 - Remove NI, evnt_code, meter_model (show only UCM events), &lt;/p&gt;&lt;p&gt;4 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, &lt;/p&gt;&lt;p&gt;5 - Remove NI, evnt_code, meter_model (show only UCM events), and text after the first space in comment, ignore event_code &lt;span style=&quot; color:#000080;&quot;&gt;ZBR_EVENT_DAY_DONE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                         </property>
                         <property name="maximum">
-                         <number>6</number>
-                        </property>
-                        <property name="value">
-                         <number>6</number>
+                         <number>5</number>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QCheckBox" name="cbCmprssMeterLog">
                         <property name="text">
-                         <string>cmprss</string>
+                         <string>Always comprss</string>
                         </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="label_19">
                         <property name="text">
-                         <string>max_len</string>
+                         <string>Read len</string>
                         </property>
                        </widget>
                       </item>
@@ -5300,10 +5169,6 @@
                            <widget class="QToolButton" name="toolButton_10">
                             <property name="text">
                              <string>...</string>
-                            </property>
-                            <property name="icon">
-                             <iconset resource="res.qrc">
-                              <normaloff>:/katynko/svg/view-refresh.svg</normaloff>:/katynko/svg/view-refresh.svg</iconset>
                             </property>
                            </widget>
                           </item>
@@ -5595,10 +5460,6 @@
                              <property name="text">
                               <string>...</string>
                              </property>
-                             <property name="icon">
-                              <iconset resource="res.qrc">
-                               <normaloff>:/katynko/svg/view-refresh.svg</normaloff>:/katynko/svg/view-refresh.svg</iconset>
-                             </property>
                             </widget>
                            </item>
                           </layout>
@@ -5682,7 +5543,7 @@
                     <item row="0" column="1">
                      <widget class="QCheckBox" name="cbCmprssHsh">
                       <property name="text">
-                       <string>cmprss</string>
+                       <string>Always comprss</string>
                       </property>
                      </widget>
                     </item>
@@ -5979,8 +5840,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1579</width>
-     <height>19</height>
+     <width>1237</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

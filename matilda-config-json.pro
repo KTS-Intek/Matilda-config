@@ -30,7 +30,12 @@ SOURCES += main.cpp\
     langdialog.cpp \
     showmesshelper.cpp \
     helpform.cpp \
-    webtextdocument.cpp
+    webtextdocument.cpp \
+    src/matilda/classmanagerhelper.cpp \
+    src/meter/meteroperations.cpp \
+    src/matilda/showmesshelper4wdgt.cpp \
+    src/meter/meterstatehelper.cpp \
+    src/meter/numberconvertation.cpp
 
 HEADERS  += mainwindow.h \
     ../../matilda-bbb/moji_defy.h \
@@ -51,7 +56,16 @@ HEADERS  += mainwindow.h \
     showmesshelper.h \
     ucmetereventcodes.h \
     helpform.h \
-    webtextdocument.h
+    webtextdocument.h \
+    src/matilda/classmanagerhelper.h \
+    src/matilda/classmanagertypes.h \
+    src/matilda-conf/classmanagersharedobjects.h \
+    src/meter/meteroperations.h \
+    src/matilda/showmesshelper4wdgt.h \
+    src/meter/definedpollcodes.h \
+    src/meter/meterstatehelper.h \
+    src/meter/numberconvertation.h \
+    src/matilda/matildalimits.h
 
 FORMS    += mainwindow.ui \
     energydialog.ui \

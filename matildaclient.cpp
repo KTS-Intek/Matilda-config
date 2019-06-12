@@ -59,8 +59,10 @@ void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QStr
 
 
         emit onConnectedStateChanged(true);
-        loginPasswd.append(QCryptographicHash::hash(login.simplified().trimmed().toLocal8Bit(), QCryptographicHash::Sha3_256));
-        loginPasswd.append(QCryptographicHash::hash( passwd.simplified().trimmed().toLocal8Bit(), QCryptographicHash::Sha3_256));
+
+        loginPasswd.append(QCryptographicHash::hash(login.simplified().trimmed().toLocal8Bit(), QCryptographicHash::Keccak_256));// ::Sha3_256));
+        loginPasswd.append(QCryptographicHash::hash( passwd.simplified().trimmed().toLocal8Bit(), QCryptographicHash::Keccak_256));//QCryptographicHash::Sha3_256));
+
         loginPasswd.append("");
         allowCompress = allwCmprss;
         stopAll = false;
@@ -225,8 +227,8 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                     QJsonObject jObj;
 
                     int remoteDevProtocolVersion = jobj.value("version").toInt();
-                    if(allowProtocolV2 && remoteDevProtocolVersion == MATILDA_PROTOCOL_VERSION_V2)
-                        jObj.insert("version",  MATILDA_PROTOCOL_VERSION_V2);
+                    if(allowProtocolV2 && remoteDevProtocolVersion >= MATILDA_PROTOCOL_VERSION_V1)
+                        jObj.insert("version", qMin(MATILDA_PROTOCOL_VERSION, remoteDevProtocolVersion));
                     else
                         jObj.insert("version", MATILDA_PROTOCOL_VERSION_V1);//  remoteDevProtocolVersion);
 
@@ -235,7 +237,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                     if(emptyHsh)
                         jObj.insert("hsh", "");//!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     else
-                        jObj.insert("hsh", QString(QCryptographicHash::hash(loginPasswd.at(0) + "\n" + dataArr + "\n" + loginPasswd.at(1), QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals)));
+                        jObj.insert("hsh", QString(QCryptographicHash::hash(loginPasswd.at(0) + "\n" + dataArr + "\n" + loginPasswd.at(1), QCryptographicHash::Keccak_256).toBase64(QByteArray::OmitTrailingEquals)));
 
                     jObj.insert("plg", true); //Передати інфо по плагінам (не обов’язкове значення, але потрібне для додавання лічильників)
                     if(allowCompress){
@@ -250,7 +252,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
             }
         }
 
-        qDebug() << jobj.value("version").toInt() << jobj.value("version").toString() << QString::number(MATILDA_PROTOCOL_VERSION);
+        qDebug() << "version unknown=" << jobj.value("version").toInt() << jobj.value("version").toString() << QString::number(MATILDA_PROTOCOL_VERSION);
 
         emit infoAboutObj(tr("DateTime: %1 (UTC %2) <br>Version: %3 <br> Black List: %4 <br> Counter: %5")
                           .arg( QDateTime( QDate::fromString( jobj.value("UTC").toString().left(10), "yyyy-MM-dd"), QTime::fromString(jobj.value("UTC").toString().right(8), "hh:mm:ss"  ), Qt::UTC ).addSecs(jobj.value("UOFT").toInt()).toString("yyyy-MM-dd hh:mm:ss"))
@@ -471,10 +473,10 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
     case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
     case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
     case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-    case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-    case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-    case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-    case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Keccak_224).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Keccak_256).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Keccak_384).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+    case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Keccak_512).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
     default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
     }
 
@@ -504,10 +506,10 @@ void matildaclient::mWrite2SocketJSON(QJsonObject jObj, const quint16 s_command)
         case 4: { writeArr.append(", \"Sha256\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha256\":\"0\"}"  , QCryptographicHash::Sha256  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
         case 5: { writeArr.append(", \"Sha384\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha384\":\"0\"}"  , QCryptographicHash::Sha384  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
         case 6: { writeArr.append(", \"Sha512\":\""   + QCryptographicHash::hash( writeArr + ", \"Sha512\":\"0\"}"  , QCryptographicHash::Sha512  ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-        case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Sha3_224).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-        case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Sha3_256).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-        case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Sha3_384).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
-        case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Sha3_512).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 7: { writeArr.append(", \"Sha3_224\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_224\":\"0\"}", QCryptographicHash::Keccak_224).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 8: { writeArr.append(", \"Sha3_256\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_256\":\"0\"}", QCryptographicHash::Keccak_256).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 9: { writeArr.append(", \"Sha3_384\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_384\":\"0\"}", QCryptographicHash::Keccak_384).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
+        case 10:{ writeArr.append(", \"Sha3_512\":\"" + QCryptographicHash::hash( writeArr + ", \"Sha3_512\":\"0\"}", QCryptographicHash::Keccak_512).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
         default:{ writeArr.append(", \"Md5\":\""      + QCryptographicHash::hash( writeArr + ", \"Md5\":\"0\"}"     , QCryptographicHash::Md5     ).toBase64(QByteArray::OmitTrailingEquals) + "\"}" ); break;}
         }
 

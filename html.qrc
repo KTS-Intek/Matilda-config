@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>help/help-uk.html</file>
         <file>help/help-uk.pdf</file>
+        <file>help/help-ru.html</file>
+        <file>help/help-ru.pdf</file>
     </qresource>
 </RCC>
