@@ -443,7 +443,7 @@ void MainWindow::initializeMatilda()
     listKeys.append(QString("A+,A-,R+,R-"));
     listKeys.append(QString("A+,A-,R+,R-"));
     listKeys.append(QString("A+,A-,R+,R-"));
-    listKeys.append(QString("UA,UB,UC,IA,IB,IC,PA,PB,PC,QA,QB,QC,cos_fA,cos_fB,cos_fC,F"));
+    listKeys.append(QString("UA,UB,UC,IA,IB,IC,PA,PB,PC,QA,QB,QC,cos_fA,cos_fB,cos_fC,F,THD"));
 
     QStringList listKeys2;
     QString str = tr("Active import,Active export,Reactive import,Reactive export");
@@ -457,7 +457,7 @@ void MainWindow::initializeMatilda()
         for(int j = 0; j < 3; j++)
             str.append(tr("Phs %1 %2,").arg(list3.at(j)).arg(list2.at(i)));
     }
-    str.append(tr("Frequency"));
+    str.append(tr("Frequency,THD"));
     listKeys2.append(str);
 
 
@@ -610,7 +610,7 @@ void MainWindow::initializeMatilda()
      ui->sbTimeOut->setValue(h.value("to", 15).toInt());
 
      h = connHashG.value("mac").toHash();
-     ui->leIp_2->setText(h.value("ip", "svaha2.ddns.net").toString());
+     ui->leIp_2->setText(h.value("ip", "kts-m2m.ddns.net").toString());
      ui->sbPort_2->setValue(h.value("p", 65000).toInt());
      ui->leObjectName_2->setText(h.value("obj", "matilda1").toString());
      ui->sbTimeOut_2->setValue(h.value("to", 15).toInt());
@@ -626,7 +626,7 @@ void MainWindow::initializeMatilda()
                     "<p>Version %1</p><p>%2 KTS Intek Ltd, %3</p>"
                     "<p><a href=\"http://kts-intek.com.ua\">"
                     "<span style=\" text-decoration: underline; color:#2980b9;\">"
-                    "http://kts-intek.com.ua</span></a></p></body></html>").arg("0.0.7").arg(QString::fromUtf8("©")).arg("2017") ;
+                    "http://kts-intek.com.ua</span></a></p></body></html>").arg("0.0.10").arg(QString::fromUtf8("©")).arg("2020") ;
 
      ui->lblAbout->setText(s );
 }

@@ -38,7 +38,6 @@ SOURCES += main.cpp\
     src/meter/numberconvertation.cpp
 
 HEADERS  += mainwindow.h \
-    ../../matilda-bbb/moji_defy.h \
     energydialog.h \
     matildaclient.h \
     mysortfilterproxymodel.h \

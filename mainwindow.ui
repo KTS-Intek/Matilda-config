@@ -354,7 +354,7 @@
                    <item row="2" column="1" rowspan="2">
                     <widget class="QLineEdit" name="leIp_2">
                      <property name="text">
-                      <string>svaha2.ddns.net</string>
+                      <string>kts-m2m.ddns.net</string>
                      </property>
                      <property name="placeholderText">
                       <string>svaha service IP or URL</string>
@@ -566,7 +566,7 @@
                     </sizepolicy>
                    </property>
                    <property name="text">
-                    <string>Protocol v2 (2...5)</string>
+                    <string>Protocol v2 (2...10)</string>
                    </property>
                   </widget>
                  </item>
@@ -757,8 +757,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>747</width>
-                 <height>541</height>
+                 <width>773</width>
+                 <height>540</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -5841,7 +5841,7 @@
      <x>0</x>
      <y>0</y>
      <width>1237</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
