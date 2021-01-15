@@ -2,12 +2,14 @@
 #include "ui_insertmeterdialog.h"
 #include "moji_defy.h"
 
-InsertMeterDialog::InsertMeterDialog(QVariantList hm, QWidget *parent) :
+InsertMeterDialog::InsertMeterDialog(quint16 command, QVariantList hm, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InsertMeterDialog)
 {
     ui->setupUi(this);
     hashmeter = hm;
+    wcommand = command;
+
 }
 
 InsertMeterDialog::~InsertMeterDialog()
@@ -40,5 +42,5 @@ void InsertMeterDialog::on_buttonBox_accepted()
     h.insert("c", collision);
 
 
-    emit data2matilda(COMMAND_WRITE_METER_LIST_ONE_PART, h);
+    emit data2matilda(wcommand, h);
 }

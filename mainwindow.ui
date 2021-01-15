@@ -786,7 +786,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>24</number>
+                   <number>26</number>
                   </property>
                   <widget class="QWidget" name="page_3">
                    <layout class="QGridLayout" name="gridLayout_3"/>

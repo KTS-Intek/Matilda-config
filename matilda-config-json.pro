@@ -13,10 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    addeditlampdlg.cpp \
+    ledlamplistwidget.cpp \
         mainwindow.cpp \
     energydialog.cpp \
     matildaclient.cpp \
     mysortfilterproxymodel.cpp \
+    templates/addminutesdialog.cpp \
+    templates/insermodeselector.cpp \
+    templates/integereditdlg.cpp \
+    templates/settemporarypwr4groups.cpp \
     wait4answerdialog.cpp \
     insertmeterdialog.cpp \
     directaccesmatildaservice.cpp \
@@ -38,9 +44,16 @@ SOURCES += main.cpp\
     src/meter/numberconvertation.cpp
 
 HEADERS  += mainwindow.h \
+    addeditlampdlg.h \
+    definedpollcodes.h \
     energydialog.h \
+    ledlamplistwidget.h \
     matildaclient.h \
     mysortfilterproxymodel.h \
+    templates/addminutesdialog.h \
+    templates/insermodeselector.h \
+    templates/integereditdlg.h \
+    templates/settemporarypwr4groups.h \
     wait4answerdialog.h \
     insertmeterdialog.h \
     directaccesmatildaservice.h \
@@ -67,7 +80,12 @@ HEADERS  += mainwindow.h \
     src/matilda/matildalimits.h
 
 FORMS    += mainwindow.ui \
+    addeditlampdlg.ui \
     energydialog.ui \
+    ledlamplistwidget.ui \
+    templates/insermodeselector.ui \
+    templates/integereditdlg.ui \
+    templates/settemporarypwr4groups.ui \
     wait4answerdialog.ui \
     insertmeterdialog.ui \
     selectdevbymacaddrdialog.ui \

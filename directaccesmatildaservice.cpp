@@ -24,7 +24,7 @@ void DirectAccesMatildaService::startServerNow(qint8 mode, quint16 port)
     }
 
     if(!listen(hAddr, port)){
-        emit showMess(tr("Can't start server. Error: %1").arg(errorString()));
+        emit showMessage(tr("Can't start server. Error: %1").arg(errorString()));
     }
     QString str;
     switch(mode){

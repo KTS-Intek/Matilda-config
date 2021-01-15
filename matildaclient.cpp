@@ -88,7 +88,7 @@ void matildaclient::conn2thisDev(int hashIndx, QString objN, QString login, QStr
         }
     }else{
 
-        emit showMess(tr("Can't connect to device. Error: %1").arg(errorString()));
+        emit showMessage(tr("Can't connect to device. Error: %1").arg(errorString()));
         close();
         return;
     }
@@ -105,7 +105,7 @@ void matildaclient::closeConnection()
     block4activeClient = false;
 
     onDisconn();
-    emit showMess(tr("Done."));
+    emit showMessage(tr("Done."));
 }
 //################################################################################################
 void matildaclient::stopAllNow()
@@ -157,7 +157,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
             command = (quint16)jobj.take("cmd").toInt();
 
         }else{
-            emit showMess(tr("Received uncorrect request"));
+            emit showMessage(tr("Received uncorrect request"));
             return;
         }
 
@@ -173,7 +173,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     }
 
     if(!messHshIsValid(jobj, dataArr)){
-        emit showMess(tr("Received uncorrect request"));
+        emit showMessage(tr("Received uncorrect request"));
         return;
     }
 
@@ -186,7 +186,8 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
     if(command != COMMAND_READ_DATABASE_GET_VAL && command != COMMAND_READ_DATABASE && command != COMMAND_READ_DATABASE_GET_TABLES && command != COMMAND_READ_METER_LIST_FRAMED
             && command != COMMAND_WRITE_METER_LIST_FRAMED && command != COMMAND_WRITE_DROP_TABLE  && command != COMMAND_WRITE_DROP_TABLE_GET_COUNT
             && command != COMMAND_READ_METER_LOGS_GET_TABLES && command != COMMAND_READ_METER_LOGS_GET_VAL && command != COMMAND_I_NEED_MORE_TIME
-            && command != COMMAND_READ_METER_LOGS && command != COMMAND_READ_TABLE_HASH_SUMM && (accessLevel != 0 && command != COMMAND_ZULU ) && command != COMMAND_READ_DA_DATA_FROM_COORDINATOR){
+            && command != COMMAND_READ_METER_LOGS && command != COMMAND_READ_TABLE_HASH_SUMM && (accessLevel != 0 && command != COMMAND_ZULU )
+            && command != COMMAND_READ_DA_DATA_FROM_COORDINATOR && command != COMMAND_READ_LEDLAMPLIST_FRAMED && command != COMMAND_WRITE_LEDLAMPLIST_FRAMED){
         if(!(daOpened && command == COMMAND_WRITE_DA_OPEN_CLOSE))
             emit hideAnimation();
     }
@@ -206,7 +207,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
 
                 qDebug() << jobj.value("err").toString();
 
-                emit showMess(jobj.value("message").toString());
+                emit showMessage(jobj.value("message").toString());
                 onDisconn();
                 return;
             }else{
@@ -262,7 +263,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                           .arg( jobj.value("CNTR").toInt() )
                           );
 
-        emit showMess(tr("Unknown device."));
+        emit showMessage(tr("Unknown device."));
         onDisconn();
         break;}
 
@@ -289,7 +290,7 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
                 return;
 
             }else{
-                emit showMess(tr("Can't connect to device. Error: %1").arg(errorString()));
+                emit showMessage(tr("Can't connect to device. Error: %1").arg(errorString()));
                  close();
                 return;
             }
@@ -316,23 +317,23 @@ void matildaclient::decodeReadDataJSON(const QByteArray &dataArr)
         case MTD_USER_ADMIN:{
             emit authrizeAccess(jobj.value("a").toInt());
             emit data2gui(command, jobj);
-            emit showMess(tr("Hello, you admin!"));
+            emit showMessage(tr("Hello, you admin!"));
             break;}
         case MTD_USER_OPER:{
             emit authrizeAccess(jobj.value("a").toInt());
             emit data2gui(command, jobj);
-            emit showMess(tr("Hello, you only operator!"));
+            emit showMessage(tr("Hello, you only operator!"));
             break;}
 
         case MTD_USER_GUEST:{
             emit authrizeAccess(jobj.value("a").toInt());
             emit data2gui(command, jobj);
-            emit showMess(tr("Hello, you only guest!"));
+            emit showMessage(tr("Hello, you only guest!"));
             break;}
 
         default: {
             emit authrizeAccess(0);
-            emit showMess(tr("Session closed."));
+            emit showMessage(tr("Session closed."));
             onDisconn();
             break;}
         }
@@ -423,7 +424,7 @@ void matildaclient::mReadyRead()
 
     if(razivDuzkaR < 1){
         emit changeCounters(readarr.length(), -1 , true);
-        emit showMess("corrupted data.");
+        emit showMessage("corrupted data.");
         qDebug()<< "readServer:"<< readarr;
         return ;
     }else{

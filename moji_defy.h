@@ -139,6 +139,19 @@
 
 #define COMMAND_READ_DEVICE_SERIAL_NUMBER       68
 
+
+//protocol v4
+#define COMMAND_READ_TEMP_LED_SHCEDULE          91//get the temporary schedule of led groups
+
+//protocol v6
+///updated commands
+#define COMMAND_READ_LEDLAMPLIST_FRAMED         69
+#define COMMAND_READ_GROUP_SCHEDULE             70
+///new commands
+#define COMMAND_READ_GROUP_RESCUE_SCHEDULE      105
+#define COMMAND_READ_FIREFLY_SCHEDULESTATE      108
+
+
 //ROOT || OPERATOR WRITE
 #define COMMAND_WRITE_FIRST_4_OPERATOR      40000
 #define COMMAND_WRITE_POLL_SCHEDULE         40001
@@ -159,7 +172,25 @@
 #define COMMAND_WRITE_FRWRD_SETT            40016
 
 
+//protocol v4
+#define COMMAND_WRITE_NEW_QUEUE_4_LAMPPOLL  40025
+#define COMMAND_WRITE_ACTVT_BEACON_MODE     40026
+#define COMMAND_WRITE_CANCEL_TASKS          40027//firefly
+#define COMMAND_WRITE_TEMP_LED_SHCEDULE     40028
 
+//protocol v6
+///updated commands
+#define COMMAND_WRITE_LEDLAMPLIST_FRAMED    40017
+#define COMMAND_WRITE_GROUP_SCHEDULE        40018
+///new commands
+#define COMMAND_WRITE_GROUP_RESCUE_SCHEDULE 40042
+#define COMMAND_WRITE_FIREFLY_INSERT_LAMPS  40043//insert a part of the LEDLAMPLIST
+#define COMMAND_WRITE_FIREFLY_INSERT_NIS    40044//insert a NIs list with default grp, tna, pna  to LEDLAMPLIST, it contains pair NI to coordinate
+#define COMMAND_WRITE_FIREFLY_REMOVE_NIS    40045//QSL of NIs to remove
+#define COMMAND_WRITE_FIREFLY_LIST_POLL_ON  40049
+#define COMMAND_WRITE_FIREFLY_LIST_POLL_OFF 40050
+#define COMMAND_WRITE_FIREFLY_START_POLL    40052//firefly
+#define COMMAND_WRITE_ADD_DEL_TEMPSCHEDULE  40053//firefly
 
 
 //ROOT: ONLY WRITE

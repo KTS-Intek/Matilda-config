@@ -13,7 +13,7 @@ class InsertMeterDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit InsertMeterDialog(QVariantList hm, QWidget *parent = 0);
+    explicit InsertMeterDialog(quint16 command, QVariantList hm, QWidget *parent = 0);
     ~InsertMeterDialog();
 
 
@@ -27,6 +27,7 @@ private slots:
 private:
     Ui::InsertMeterDialog *ui;
     QVariantList hashmeter;
+    quint16 wcommand;
 };
 
 #endif // INSERTMETERDIALOG_H

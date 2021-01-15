@@ -16,7 +16,7 @@ signals:
     void onConnectedStateChanged(bool);
     void data2gui(quint16,QJsonObject);
     void onErrorWrite();
-    void showMess(QString);
+    void showMessage(QString);
     void authrizeAccess(int); //0 - closed, 1 - root, 2 - operator, 3 - guest
     void addThisLogin2list(QString,QString,QString,QString,quint16);
 

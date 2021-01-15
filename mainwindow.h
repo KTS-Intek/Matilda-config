@@ -9,6 +9,8 @@
 #include "treemodel.h"
 #include "lastdevinfo.h"
 
+#include "ledlamplistwidget.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -239,8 +241,8 @@ public slots:
 
     void data2gui(quint16 command, QJsonObject jobj);
     void onErrorWrite();
-    void showMess(QString mess);
-    void showMessSmpl(QString mess);
+    void showMessage(QString message);
+    void showMessSmpl(QString message);
 
     void authrizeAccess(int accessLevel); //0 - closed, 1 - root, 2 - operator, 3 - guest
 
@@ -301,6 +303,8 @@ private:
 private:
     Ui::MainWindow *ui;
 
+    void createAddSmartLightingWidgets();
+
     QStandardItemModel *modelDevOptions;
     TreeModel *modelDevOptionsTree;
     QStandardItemModel *modelAddMeter;
@@ -360,6 +364,8 @@ private:
     bool youAreRoot, youAreOper;
     int joingStts;
 
+
+    LedLampListWidget *lcuwdgt;
 
 };
 

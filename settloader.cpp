@@ -207,6 +207,13 @@ QStringList SettLoader::simplePagesList()
     l.append( QString("Meter list") );
     l.append( QString("Database") );
     l.append( QString("Meter logs") );
+
+    l.append( QString("LCUs"));
+    l.append( QString("Schedule for groups"));
+    l.append( QString("Temporary schedule"));
+    l.append( QString("Rescue schedules"));
+    l.append( QString("Schedule state"));
+
     return l;
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -247,6 +254,11 @@ QStringList SettLoader::listPath2icon()
     l.append( ":/katynko/svg2/lc_dbtableedit.svg" );
 
 
+    l.append( ":/katynko/svg/format-justify-fill.svg" );
+    l.append( ":/katynko/svg2/dashboard-show.svg" );
+    l.append( ":/katynko/svg4/dashboard-red.svg" );
+    l.append( ":/katynko/svg2/exwarning.svg");
+    l.append( ":/katynko/svg4/kt-queue-manager-red.svg");
 
 
     for(int i = 0, iMax = l.size(); i < iMax; i++){
@@ -313,7 +325,7 @@ QHash<QString, QStringList> SettLoader::pageName4devTree()
     l.clear();
     l.append( QString("Database") );
     l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+//    l.append( QString("Hash summ" ) );
     lKeys.append(tr("Poll data"));
     h.insert(lKeys.last(), l);
 
@@ -333,15 +345,26 @@ QHash<QString, QStringList> SettLoader::pageName4devTree()
 
     l.clear();
 
-    l.append( QString("Poll") );
+    l.append( QString("Meter Poll") );
     l.append( QString("Forward"));
     l.append( QString("Poll schedule") );
     l.append( QString("Meter list") );
+
+
     lKeys.append(tr("General settings"));
     h.insert(lKeys.last(), l);
 
     l.clear();
+    l.append( QString("LCUs"));
+    l.append( QString("Schedule for groups"));
+    l.append( QString("Temporary schedule"));
+    l.append( QString("Rescue schedules"));
+    l.append( QString("Schedule state"));
 
+    lKeys.append(tr("Lamp controllers"));
+    h.insert(lKeys.last(), l);
+
+    l.clear();
 
     h.insert("\r\nlKeys\r\n", lKeys);
     return h;
@@ -374,7 +397,7 @@ QStringList SettLoader::realPageNameDevStor()
 
     l.append( QString("Database") );
     l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+//    l.append( QString("Hash summ" ) );
 
 
     return l;
@@ -456,7 +479,12 @@ QStringList SettLoader::realPageNameDevEmul2()
     l.append( QString("Meter list") );
     l.append( QString("Database") );
     l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+
+
+
+//    l.append( QString("Hash summ" ) );
+
+
     return l;
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------
@@ -492,8 +520,14 @@ QStringList SettLoader::realPageName()
     l.append( QString("Meter list") );
     l.append( QString("Database") );
     l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+//    l.append( QString("Hash summ" ) );
 //size 33
+    l.append( QString("LCUs"));
+    l.append( QString("Schedule for groups"));
+    l.append( QString("Temporary schedule"));
+    l.append( QString("Rescue schedules"));
+    l.append( QString("Schedule state"));
+
 
     return l;
 }
@@ -526,8 +560,13 @@ QStringList SettLoader::localPageName()
     l.append( tr("Meter list") );
     l.append( tr("Data base") );
     l.append( tr("Meter logs") );
-    l.append( tr("Hash summ" ) );
+//    l.append( tr("Hash summ" ) );
 
+    l.append( tr("LCUs"));
+    l.append( tr("Schedule for groups"));
+    l.append( tr("Temporary schedule"));
+    l.append( tr("Rescue schedules"));
+    l.append( tr("Schedule state"));
 
 
     return l;
@@ -612,7 +651,13 @@ QList<int> SettLoader::getPageCanWrite()
     listInt.append( COMMAND_WRITE_METER_LIST_FRAMED );
     listInt.append( 0 );
     listInt.append( 0 );
+//    listInt.append( 0 ); COMMAND_READ_TABLE_HASH_SUMM
+    listInt.append( COMMAND_WRITE_LEDLAMPLIST_FRAMED );
+    listInt.append( COMMAND_WRITE_GROUP_SCHEDULE );
+    listInt.append( COMMAND_WRITE_TEMP_LED_SHCEDULE );
+    listInt.append( COMMAND_WRITE_GROUP_RESCUE_SCHEDULE );
     listInt.append( 0 );
+
 
     return listInt;
 }
@@ -645,7 +690,14 @@ QList<int> SettLoader::getPageCanRead()
     listInt.append( COMMAND_READ_METER_LIST_FRAMED );
     listInt.append( COMMAND_READ_DATABASE );
     listInt.append( COMMAND_READ_METER_LOGS_GET_TABLES );
-    listInt.append( COMMAND_READ_TABLE_HASH_SUMM );
+//    listInt.append( COMMAND_READ_TABLE_HASH_SUMM );
+
+    listInt.append( COMMAND_READ_LEDLAMPLIST_FRAMED );
+    listInt.append( COMMAND_READ_GROUP_SCHEDULE );
+    listInt.append( COMMAND_READ_TEMP_LED_SHCEDULE );
+    listInt.append( COMMAND_READ_GROUP_RESCUE_SCHEDULE );
+    listInt.append( COMMAND_READ_FIREFLY_SCHEDULESTATE );
+
     return listInt;
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------

@@ -22,7 +22,7 @@ signals:
 
     void data2coordiantor(QByteArray);
     void dataFromCoordinator(QByteArray);
-    void showMess(QString);
+    void showMessage(QString);
 
     void onDasStarted(QString);
     void onDasStopped();
