@@ -14,12 +14,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     addeditlampdlg.cpp \
+    fireflygroupschedulewdgt.cpp \
+    fireflyschedulestatuswdgt.cpp \
+    instantpower4lampswdgt.cpp \
     ledlamplistwidget.cpp \
         mainwindow.cpp \
     energydialog.cpp \
     matildaclient.cpp \
     mysortfilterproxymodel.cpp \
+    rescuescheduleswdgt.cpp \
+    src/firefly/convert2humanreadablefirefly.cpp \
     templates/addminutesdialog.cpp \
+    templates/fireflyaddeditprofilewdgt.cpp \
     templates/insermodeselector.cpp \
     templates/integereditdlg.cpp \
     templates/settemporarypwr4groups.cpp \
@@ -47,10 +53,16 @@ HEADERS  += mainwindow.h \
     addeditlampdlg.h \
     definedpollcodes.h \
     energydialog.h \
+    fireflygroupschedulewdgt.h \
+    fireflyschedulestatuswdgt.h \
+    instantpower4lampswdgt.h \
     ledlamplistwidget.h \
     matildaclient.h \
     mysortfilterproxymodel.h \
+    rescuescheduleswdgt.h \
+    src/firefly/convert2humanreadablefirefly.h \
     templates/addminutesdialog.h \
+    templates/fireflyaddeditprofilewdgt.h \
     templates/insermodeselector.h \
     templates/integereditdlg.h \
     templates/settemporarypwr4groups.h \
@@ -82,7 +94,12 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     addeditlampdlg.ui \
     energydialog.ui \
+    fireflygroupschedulewdgt.ui \
+    fireflyschedulestatuswdgt.ui \
+    instantpower4lampswdgt.ui \
     ledlamplistwidget.ui \
+    rescuescheduleswdgt.ui \
+    templates/fireflyaddeditprofilewdgt.ui \
     templates/insermodeselector.ui \
     templates/integereditdlg.ui \
     templates/settemporarypwr4groups.ui \

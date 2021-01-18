@@ -1856,6 +1856,12 @@ COMMAND_READ_METER_LOGS_GET_TABLES;+
 
         break;}
 
+
+    case COMMAND_READ_GROUP_RESCUE_SCHEDULE: lcuRescue->setPageSett(jobj); break;
+    case COMMAND_READ_FIREFLY_SCHEDULESTATE: lcuStatus->setPageData(jobj); break;
+    case COMMAND_READ_GROUP_SCHEDULE: lcuGroups->setPageSett(jobj); break;
+    case COMMAND_READ_TEMP_LED_SHCEDULE: lcuTemporary->setPageSett(jobj); break;
+
     default:
         qDebug() << "data2gui unknown command " << command << jobj;
         break;
@@ -1892,6 +1898,8 @@ void MainWindow::authrizeAccess(int accessLevel)
 
     youAreRoot = (accessLevel == MTD_USER_ADMIN);
     youAreOper = (accessLevel == MTD_USER_OPER);
+
+    lcuwdgt->setCanWriteOperatorCommands((youAreOper || youAreRoot));
 
     ui->stackedWidget->setCurrentIndex((accessLevel > 0) ? 1 : 0);
 
@@ -2634,6 +2642,20 @@ void MainWindow::createAddSmartLightingWidgets()
     lcuwdgt = new LedLampListWidget(this);
     connect(lcuwdgt, &LedLampListWidget::mWrite2RemoteDev, this ,&MainWindow::mWrite2RemoteDev);
     ui->swDeviceOperations->addWidget(lcuwdgt);
+
+
+    lcuGroups = new FireFlyGroupScheduleWdgt(this);
+    ui->swDeviceOperations->addWidget(lcuGroups);
+
+    lcuTemporary = new InstantPower4lampsWdgt(this);
+    ui->swDeviceOperations->addWidget(lcuTemporary);
+
+
+    lcuRescue = new RescueSchedulesWdgt(this);
+    ui->swDeviceOperations->addWidget(lcuRescue);
+
+    lcuStatus = new FireflyScheduleStatusWdgt(this);
+    ui->swDeviceOperations->addWidget(lcuStatus);
 
 }
 
@@ -3545,17 +3567,28 @@ void MainWindow::on_pbWrite_clicked()
         if(jobj.isEmpty()){
             if(row >= rowCount){
                 showMessage(tr("Corrupted data."));
-                 break;
+                 return;
             }
         }
         jobj.insert("t", rowCount);//firts message comes with t
 
-          if(rowCount > 0)
-        emit uploadProgress( ((row * 100) / rowCount), tr("Total count: %1, Uploaded: %2")
-                             .arg(rowCount).arg(row) );
+
 
 
         break;}
+
+    case COMMAND_WRITE_GROUP_RESCUE_SCHEDULE:{
+        jobj = lcuRescue->getPageSettings();
+        break;}
+
+    case COMMAND_WRITE_GROUP_SCHEDULE: {
+        jobj = lcuGroups->getPageSettings();
+        if(jobj.isEmpty()){
+            showMessage(tr("There is no data. Please press the Read button, before writing"));
+             return;
+        }
+        break;}
+    case COMMAND_WRITE_TEMP_LED_SHCEDULE: jobj = lcuTemporary->getPageSettings(); break;
 
 
     case COMMAND_WRITE_MATILDA_AC_SETT:{

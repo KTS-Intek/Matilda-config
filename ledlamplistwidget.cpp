@@ -32,6 +32,17 @@ LedLampListWidget::~LedLampListWidget()
     delete ui;
 }
 
+void LedLampListWidget::setupObjectTv(QTableView *tv)
+{
+    tv->setAlternatingRowColors(true);
+    tv->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tv->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tv->setSortingEnabled(true);
+    tv->setCornerButtonEnabled(true);
+    tv->setCornerWidget(new QWidget());
+    tv->setContextMenuPolicy(Qt::CustomContextMenu);
+}
+
 //--------------------------------------------------------------
 
 QString LedLampListWidget::map2jsonLine(const QVariantMap &map)
@@ -265,6 +276,7 @@ void LedLampListWidget::initPage()
 
     ui->tvTable->setModel(proxy_model);
 
+    setupObjectTv(ui->tvTable);
     editWdgt = new AddEditLampDlg(this);
     connect(editWdgt, &AddEditLampDlg::addLamp, this, &LedLampListWidget::addLamp);
 
@@ -512,11 +524,12 @@ void LedLampListWidget::setTempSchedule4theseGroups(QStringList groups, int powe
 
 void LedLampListWidget::sendCOMMAND_WRITE_ADD_DEL_TEMPSCHEDULE(const QStringList &sdp, const QStringList &dtsl, const QStringList &idsr)
 {
-    QVariantHash h;
-    h.insert("idsr", idsr);
-    h.insert("sdp", sdp);
-    h.insert("dtsl", dtsl);
-    //    gHelper->mWrite2RemoteDevSlot(COMMAND_WRITE_ADD_DEL_TEMPSCHEDULE, h, this);
+    QJsonObject json;
+    json.insert("idsr", idsr.join(" "));// QJsonArray::fromStringList(idsr));
+    json.insert("sdp", QJsonArray::fromStringList(sdp));
+    json.insert("dtsl", QJsonArray::fromStringList(dtsl));
+
+    emit mWrite2RemoteDev(COMMAND_WRITE_ADD_DEL_TEMPSCHEDULE, json);
 }
 
 //--------------------------------------------------------------
@@ -537,37 +550,35 @@ void LedLampListWidget::setPower4selectedExt(int value, int tag, QVariant data)
 {
     Q_UNUSED(tag);
 
-    QVariantHash hash = data.toHash();
+    QJsonObject json = QJsonObject::fromVariantHash(data.toHash());
 
-    QVariantMap map = hash.value("map").toMap();
+//    QVariantMap map = hash.value("map").toMap();
 
     const int power = (value < 5) ? 0 : value;
 
 
 
-    switch(hash.value("code").toInt()){
+    switch(json.value("cmcode").toInt()){
     case POLL_CODE_FF_WRITE_POWER_TO_GROUPS:{
 
-        QStringList grps = map.value("-ns").toStringList();
+        QStringList grps = json.value("cmns").toString().split(" ", QString::SkipEmptyParts);
         QMap<int, int> groupId2power;
         for(int i = 0, imax = grps.size(); i < imax; i++)
             groupId2power.insert(grps.at(i).toInt(), power);
 
-
-        map.insert("-ns", QString("this_is_a_unique_ni_for_power2groups").split("\t")); // !empty qstringlist
-        map.insert("-operation", map2jsonLine(getPower2groups(groupId2power)));
+        json.insert("cmns", QString("this_is_a_unique_ni_for_power2groups")); // !empty qstringlist
+        json.insert("cmoperation", map2jsonLine(getPower2groups(groupId2power)));
         break;}
 
     case POLL_CODE_FF_WRITE_POWER_TO_LAMP:{
         QVariantMap pwrmap ;
         pwrmap.insert("lastLampPower", power);
-        map.insert("-operation", map2jsonLine(pwrmap));
+
+        json.insert("cmoperation", map2jsonLine(pwrmap));
         break;}
     }
 
-    hash.insert("map", map);
-
-//    gHelper->mWrite2RemoteDevSlot(COMMAND_WRITE_FIREFLY_START_POLL, hash, this);
+    emit mWrite2RemoteDev(COMMAND_WRITE_FIREFLY_START_POLL, json);
 
 }
 
@@ -633,7 +644,6 @@ void LedLampListWidget::on_tvTable_customContextMenuRequested(const QPoint &pos)
 
         if(getProtocolVersion() >= MATILDA_PROTOCOL_VERSION_V6 ){
             menu->addMenu(getMenuSelected(menu, youHaveApower, hasSelItems));
-            menu->addMenu(getMenuAdditionalCommand(menu, youHaveApower, hasSelItems));
             menu->addMenu(getMenuTempSchedule(menu, youHaveApower, hasSelItems));
 
         }
@@ -749,8 +759,11 @@ void LedLampListWidget::blymBlym4selected()
     QString s;
     if(!getSelectedNI4lampsSmart(s))
         return;
+    QJsonObject json;
+    json.insert("cmns", s); //NI space separeted
 
-//    gHelper->mWrite2RemoteDevSlot(COMMAND_WRITE_ACTVT_BEACON_MODE, s, this);
+    emit mWrite2RemoteDev(COMMAND_WRITE_ACTVT_BEACON_MODE, json);
+
 }
 
 
@@ -766,12 +779,12 @@ void LedLampListWidget::onActWriteSeleted()
     int rowCount = 0;
     int row = 0;
     const QVariantList meters =  getPageSett(row, rowCount, MAX_PACKET_LEN).toVariantMap().value("m").toList();
-    QHash<QString, QVariantList> ni2sett;
+    QVariantHash ni2sett;
 
     for(int i = 0, imax = meters.size(); i < imax; i++){
         const QVariantList onelcu = meters.at(i).toList();
         if(nis.contains(onelcu.at(1).toString()))
-            ni2sett.insert(onelcu.at(1).toString(), onelcu);
+            ni2sett.insert(onelcu.at(1).toString(), meters.at(i));
     }
 
     QVariantList l;
@@ -797,8 +810,11 @@ void LedLampListWidget::onActWriteSeletedOn()
     QStringList nis = getSelectedNis(MAX_METER_COUNT);
     if(nis.isEmpty())
         return;
-    nis.prepend("2");//2 mode by ni ? 1 mode by SN
-//    gHelper->mWrite2RemoteDevSlot(COMMAND_WRITE_FIREFLY_LIST_POLL_ON, nis.join(" "));
+//    nis.prepend("2");//2 mode by ni ? 1 mode by SN
+
+    QJsonObject json;
+    json.insert("cmns", nis.join(" "));
+    emit mWrite2RemoteDev(COMMAND_WRITE_FIREFLY_LIST_POLL_ON, json);
 }
 
 //--------------------------------------------------------------
@@ -808,8 +824,12 @@ void LedLampListWidget::onActWriteSeletedOff()
     QStringList nis = getSelectedNis(MAX_METER_COUNT);
     if(nis.isEmpty())
         return;
-    nis.prepend("2");//2 mode by ni ? 1 mode by SN
-//    gHelper->mWrite2RemoteDevSlot(COMMAND_WRITE_FIREFLY_LIST_POLL_OFF, nis.join(" "));
+//    nis.prepend("2");//2 mode by ni ? 1 mode by SN
+
+    QJsonObject json;
+    json.insert("cmns", nis.join(" "));
+    emit mWrite2RemoteDev(COMMAND_WRITE_FIREFLY_LIST_POLL_OFF, json);
+
 }
 
 //--------------------------------------------------------------
@@ -830,23 +850,15 @@ void LedLampListWidget::onActWriteSeletedDeletePart()
             return;
 
         l.removeDuplicates();
-        l.prepend("2");//2 mode by ni ? 1 mode by SN
+//        l.prepend("2");//2 mode by ni ? 1 mode by SN
 
-//        gHelper->questionWithTimeDlgSlot(tr("Delete LCUs from the remote device"),
-//                                         tr("Do you really want to delete these LCUs from the remote device?<br>This will delete these LCUs directly from the remote device.<br>Would you like to continue?"),
-//                                         3, COMMAND_WRITE_FIREFLY_REMOVE_NIS, l.join(" ") );
+        QJsonObject json;
+        json.insert("cmns", l.join(" ")); //single line
+        emit mWrite2RemoteDev(COMMAND_WRITE_FIREFLY_REMOVE_NIS, json);
+
     }
 }
 
-//--------------------------------------------------------------
-
-void LedLampListWidget::onActAdditionalCommands()
-{
-    QAction *a = qobject_cast<QAction *>(QObject::sender());
-    if(a){
-        tryToSendAdditionalCommand(a->data().toList(), a->text());
-    }
-}
 
 //--------------------------------------------------------------
 
@@ -854,29 +866,30 @@ void LedLampListWidget::tryToSendAdditionalCommand(const QVariantList &varl, con
 {
     if(varl.isEmpty())
         return;//error
-    QVariantHash hash;
-    hash.insert("code", varl.at(0));
+    QJsonObject json;// hash;
+    json.insert("cmcode", varl.at(0).toInt());
 
     if(varl.size() > 1){
-        QVariantMap map;
-        map.insert("-ns", varl.at(1).toStringList());
-        hash.insert("map", map);
+        json.insert("cmns", varl.at(1).toStringList().join(" "));
+//        QVariantMap map;
+//        map.insert("-ns", varl.at(1).toStringList());
+//        hash.insert("map", map);
 
-        switch(hash.value("code").toInt()){
+        switch(varl.at(0).toInt()){
 
         case POLL_CODE_FF_WRITE_POWER_TO_GROUPS :
         case POLL_CODE_FF_WRITE_POWER_TO_LAMP   :{
 
             AddMinutesDialog *d = new AddMinutesDialog( 4, 100, tr("Power [%]"), tr("Off"), this);
             connect(d, &AddMinutesDialog::setInteger4selectedExt, this, &LedLampListWidget::setPower4selectedExt);
-            hash.insert("name", text);
-            d->setThisData(hash);
+            json.insert("cmname", text);
+            d->setThisData(json.toVariantHash());
 
             d->exec();
             return;}
         }
 
-//        gHelper->mWrite2RemoteDevSlot(COMMAND_WRITE_FIREFLY_START_POLL, hash, this);
+        emit mWrite2RemoteDev(COMMAND_WRITE_FIREFLY_START_POLL, json);
 
 
     }
@@ -942,70 +955,6 @@ QMenu *LedLampListWidget::getMenuSelected(QWidget *prnt, const bool &youHaveApow
     return menu;
 }
 
-//--------------------------------------------------------------
-
-
-QMenu *LedLampListWidget::getMenuAdditionalCommand(QWidget *prnt, const bool &youHaveApower, const bool &hasSelItems)
-{
-    QMenu *menu = new QMenu(tr("Temporary operations (for selected only)"), prnt);
-
-
-    QList<QAction*> actions;
-
-    if(hasSelItems){
-        const QStringList nis = getSelectedRowsText(1);
-        if(nis.length() > 1){
-            actions.append(new QAction(tr("Dimm the lamps '%1'").arg(nis.length()), menu));
-            actions.last()->setData(QVariantList() << POLL_CODE_FF_WRITE_POWER_TO_LAMP << nis);
-        }
-
-        const QStringList grps = getUniqGroupIds();
-        if(grps.length() > 1){
-            actions.append(new QAction(tr("Dimm the groups '%1'").arg(grps.length()), menu));
-            actions.last()->setData(QVariantList() << POLL_CODE_FF_WRITE_POWER_TO_GROUPS << grps);
-        }
-
-
-    }
-
-
-    const int srcrow = proxy_model->mapToSource(ui->tvTable->currentIndex()).row();
-    if(srcrow >= 0){
-        const QString memo = model->item(srcrow, getKeysLedLampV2().indexOf("memo"))->text();
-
-
-        QStringList nis = QStringList() << model->item(srcrow, 1)->text();
-
-        actions.append(new QAction(tr("Dimm the lamp with NI '%1'%2").arg(nis.last()).arg(memo.isEmpty() ? QString() : tr(", '%1'").arg(memo)), menu));
-        actions.last()->setData(QVariantList() << POLL_CODE_FF_WRITE_POWER_TO_LAMP << nis);
-
-
-        QStringList grps = QStringList() << model->item(srcrow, 2)->text();//grpw
-
-        const int matches = getMatches4ThisCellText(2, grps.last(), -1);
-
-        actions.append(new QAction(tr("Dimm the group with ID '%1', %2").arg(grps.last()).arg((matches > 1) ? tr("'%1' lamps").arg(matches) : tr("'%1'").arg(memo)), menu));
-        actions.last()->setData(QVariantList() << POLL_CODE_FF_WRITE_POWER_TO_GROUPS << grps);
-
-
-
-    }
-
-    actions.append(new QAction(tr("Cancel the lamp dimming"), menu));
-    actions.last()->setData(QVariantList() << POLL_CODE_FF_WRITE_POWER_TO_LAMP);
-
-    actions.append(new QAction(tr("Cancel the group dimming"), menu));
-    actions.last()->setData(QVariantList() << POLL_CODE_FF_WRITE_POWER_TO_GROUPS);
-
-
-    for(int i = 0, imax = actions.size(); i < imax; i++){
-        connect(actions.at(i), SIGNAL(triggered(bool)), this, SLOT(onActAdditionalCommands()));
-        actions.at(i)->setEnabled(youHaveApower);
-        menu->addAction(actions.at(i));
-    }
-
-    return menu;
-}
 
 //--------------------------------------------------------------
 

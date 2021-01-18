@@ -10,6 +10,10 @@
 #include "lastdevinfo.h"
 
 #include "ledlamplistwidget.h"
+#include "rescuescheduleswdgt.h"
+#include "fireflyschedulestatuswdgt.h"
+#include "fireflygroupschedulewdgt.h"
+#include "instantpower4lampswdgt.h"
 
 namespace Ui {
 class MainWindow;
@@ -366,6 +370,11 @@ private:
 
 
     LedLampListWidget *lcuwdgt;
+    FireFlyGroupScheduleWdgt *lcuGroups;
+    InstantPower4lampsWdgt *lcuTemporary;
+    RescueSchedulesWdgt *lcuRescue;
+    FireflyScheduleStatusWdgt *lcuStatus;
+
 
 };
 

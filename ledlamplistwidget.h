@@ -6,7 +6,7 @@
 #include <QStandardItemModel>
 #include <QJsonObject>
 #include <QJsonDocument>
-
+#include <QTableView>
 
 #include "mysortfilterproxymodel.h"
 
@@ -29,6 +29,7 @@ public:
     int protocolVersion;
 
     bool canWriteOperatorCommands;
+    void setupObjectTv(QTableView *tv);
 
     QString map2jsonLine(const QVariantMap &map);
 
@@ -125,7 +126,6 @@ private slots:
     void onActWriteSeletedDeletePart();
 
 
-    void onActAdditionalCommands();
 
     void tryToSendAdditionalCommand(const QVariantList &varl, const QString &text);
 
@@ -143,7 +143,6 @@ private:
 
     QMenu *getMenuSelected(QWidget *prnt, const bool &youHaveApower, const bool &hasSelItems);
 
-    QMenu *getMenuAdditionalCommand(QWidget *prnt, const bool &youHaveApower, const bool &hasSelItems);
 
     QMenu *getMenuTempSchedule(QWidget *prnt, const bool &youHaveApower, const bool &hasSelItems);
 

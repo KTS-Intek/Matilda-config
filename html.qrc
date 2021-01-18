@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>help/help-uk.html</file>
-        <file>help/help-uk.pdf</file>
-        <file>help/help-ru.html</file>
-        <file>help/help-ru.pdf</file>
+        <file>help/images/image1.png</file>
+        <file>help/images/image2.png</file>
+        <file>help/help-en.html</file>
+        <file>help/help-en.pdf</file>
     </qresource>
 </RCC>
